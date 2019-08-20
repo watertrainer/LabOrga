@@ -8,13 +8,15 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Main
 {
     public transient static Main inst;
     @Expose
-    private ArrayList<MainSubject> aSubjects;
+    private HashMap<String,MainSubject> aSubjects;
     @Expose
     private ArrayList<Day> aDays;
     @Expose
@@ -28,7 +30,7 @@ public class Main
     @Expose
     private int maxIngs;
 
-    public void setaSubjects(ArrayList<MainSubject> aSubjects) {
+    public void setaSubjects(HashMap<String,MainSubject> aSubjects) {
         this.aSubjects = aSubjects;
     }
 
@@ -47,7 +49,7 @@ public class Main
     public Main() {
 
         inst = this;
-        aSubjects = new ArrayList<MainSubject>();
+        aSubjects = new HashMap<String, MainSubject>();
         aDays = new ArrayList<Day>();
         aAss = new ArrayList<Auftrag>();
         f=new JFileChooser();
@@ -78,7 +80,8 @@ public class Main
         for(Auftrag a:aAss){
             a.init();
         }
-        for(MainSubject s :aSubjects){
+        for (MainSubject s : aSubjects.values()) {
+
             s.init();
         }
     }
@@ -93,8 +96,8 @@ public class Main
         aAss.add(a);
         a.getSubject().addAuftrag();
     }
-    public ArrayList<MainSubject> getaSubjects() {
-        return aSubjects;
+    public Collection<MainSubject> getaSubjects() {
+        return aSubjects.values();
     }
 
     public ArrayList<Day> getaDays() {
@@ -105,17 +108,13 @@ public class Main
         return aAss;
     }
     public MainSubject getMainSubject(String s){
-        for(MainSubject m :aSubjects){
-            if(m.getName().equals(s))
-                return m;
-        }
-        return null;
+        return aSubjects.get(s);
     }
     public void addMainSubject(MainSubject s){
-        aSubjects.add(s);
+        aSubjects.put(s.getName(),s);
     }
     public void addSubject(Subject s){
-        for(MainSubject m:aSubjects){
+        for(MainSubject m:aSubjects.values()){
             if(m.equals(s.getMainSub()))
                 m.addSubject(s);
         }
