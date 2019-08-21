@@ -19,6 +19,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/plugins/java/lib/jgoodies-common-1.4.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/lib/jgoodies-forms-1.6.0.jar!/" />
         </CLASSES>
         <JAVADOC />
