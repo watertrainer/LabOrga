@@ -18,7 +18,7 @@ public class Main
     @Expose
     private HashMap<String,MainSubject> aSubjects;
     @Expose
-    private ArrayList<Day> aDays;
+    private ArrayList<Day> aDays; //todo convretToHashMap
     @Expose
     private ArrayList<Auftrag> aAss;
     @Expose
@@ -119,7 +119,16 @@ public class Main
                 m.addSubject(s);
         }
     }
-
+    public boolean removeMainSub(String s){
+        MainSubject m = getMainSubject(s);
+        if(m.removeMe()){
+            aSubjects.remove(s);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
     public JFileChooser getFileChooser() {
         return f;
     }

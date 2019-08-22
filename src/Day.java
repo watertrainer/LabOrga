@@ -18,11 +18,6 @@ public class Day implements ActionListener {
     private String Day;
 
     private transient JPanel content;
-    private transient int row;
-
-
-
-    private transient CellConstraints cc;
 
 
 
@@ -30,22 +25,20 @@ public class Day implements ActionListener {
         this.Day = Day;
         this.content = content;
         Subjects = new ArrayList<Subject>();
-        row = 1;
-        cc = new CellConstraints();
+
         if(Main.inst.first)
         Main.inst.addDay(this);
         for(int i = 0;i<Subjects.size();i++){
-            Subjects.get(i).addToGUI(content,row,cc);
-            row++;
+            Subjects.get(i).addToGUI(content);
         }
     }
     public void init(){
-        for(int i = 0;i<Subjects.size();i++){
-            Subjects.get(i).init();
-            Subjects.get(i).addToGUI(content,row,cc);
-            Subjects.get(i).getMainSub().addSubject(Subjects.get(i));
-            row++;
+        for(Subject s :Subjects){
+            s.init();
+            s.addToGUI(content);
+            s.getMainSub().addSubject(s);
         }
+        System.out.println(Subjects);
     }
 
 
@@ -61,8 +54,7 @@ public class Day implements ActionListener {
 
         if(!Subjects.contains(h)){
             Subjects.add(h);
-            h.addToGUI(content,this.row,cc);
-            row++;
+            h.addToGUI(content);
             System.out.println(Subjects);
         }
     }

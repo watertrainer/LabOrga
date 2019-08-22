@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class MainSubject{
     @Expose
     private String name;
-    @Expose
     private Color color;
     @Expose
     private boolean hasAssign = false;
@@ -40,13 +39,23 @@ public class MainSubject{
         stdgui = new StundenGUI(this);
 
     }
-
+    public boolean removeMe(){
+        if(Subjects.size()>0){
+            return false;
+        }else{
+            Main.inst.gui.StundenPanel.remove(stdgui.content);
+            Main.inst.gui.StundenPanel.revalidate();
+            Main.inst.gui.StundenPanel.repaint();
+            return true;
+        }
+    }
     public void init(){
         stdgui = new StundenGUI(this);
 
         Main.inst.gui.StundenPanel.add(stdgui.content);
         Main.inst.gui.StundenPanel.revalidate();
         Main.inst.gui.StundenPanel.repaint();
+        updateHasAssign();
     }
     public void updateHasAssign(){
         for(Subject s:Subjects){

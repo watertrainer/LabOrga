@@ -46,7 +46,7 @@ public class Subject extends JLabel {
         setHasAssign(true);
     }
 
-    public void addToGUI(JPanel p, int row, CellConstraints cc){
+    public void addToGUI(JPanel p){
         this.updateColor();
        // p.add(this, cc.xy(1,row));
         p.add(this);
