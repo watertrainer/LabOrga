@@ -85,7 +85,7 @@ public class Day implements ActionListener {
 
     public void removeSubject(Subject s){
         Subjects.remove(s);
-        content.remove(s);
+        content.remove(s.content);
         s.getMainSub().removeSubject(s);
         content.revalidate();
     }

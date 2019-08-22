@@ -7,10 +7,7 @@ import javax.swing.*;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.nio.Buffer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 public class Main
 {
@@ -44,6 +41,8 @@ public class Main
 
     public transient GUI gui;
     private transient JFileChooser f;
+    private int d;
+    private boolean ch;
 
 
     public Main() {
@@ -56,14 +55,19 @@ public class Main
         BufferedReader br = null;
         first = true;
 
-
         Thread t = new Thread(() -> {
             while(true){
                 if(Main.inst.gui !=null)
                 if(Main.inst.gui.panel1!=null)
                 Main.inst.gui.panel1.repaint();
+                if(Calendar.getInstance().get(7)!=d){
+                    setCh(false);
+                    d = Calendar.getInstance().get(7);
+                }
+                else
+                    setCh(true);
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(400);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -161,5 +165,21 @@ public class Main
 
     public void setMaxIngs(int maxIngs) {
         this.maxIngs = maxIngs;
+    }
+
+    public int getD() {
+        return d;
+    }
+
+    public void setD(int d) {
+        this.d = d;
+    }
+
+    public boolean isCh() {
+        return ch;
+    }
+
+    public void setCh(boolean ch) {
+        this.ch = ch;
     }
 }
