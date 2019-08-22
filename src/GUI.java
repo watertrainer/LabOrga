@@ -90,45 +90,6 @@ public class GUI extends JFrame {
         });
 
 
-        cnMn.setLayout(new BoxLayout(cnMn, BoxLayout.Y_AXIS));
-        cnDn.setLayout(new BoxLayout(cnDn, BoxLayout.Y_AXIS));
-        cnMt.setLayout(new BoxLayout(cnMt, BoxLayout.Y_AXIS));
-        cnDon.setLayout(new BoxLayout(cnDon, BoxLayout.Y_AXIS));
-        cnFr.setLayout(new BoxLayout(cnFr, BoxLayout.Y_AXIS));
-        btnMn = new JButton("+");
-        btnDn = new JButton("+");
-        btnMt = new JButton("+");
-        btnDon = new JButton("+");
-        btnFr = new JButton("+");
-        btnMn.setMaximumSize(new Dimension(Short.MAX_VALUE, 25));
-        btnDn.setMaximumSize(new Dimension(Short.MAX_VALUE, 25));
-        btnMt.setMaximumSize(new Dimension(Short.MAX_VALUE, 25));
-        btnDon.setMaximumSize(new Dimension(Short.MAX_VALUE, 25));
-        btnFr.setMaximumSize(new Dimension(Short.MAX_VALUE, 25));
-        cnMn.add(btnMn);
-        cnDn.add(btnDn);
-        cnMt.add(btnMt);
-        cnDon.add(btnDon);
-        cnFr.add(btnFr);
-        if (Main.inst.first) {
-            btnMn.addActionListener(new Day("Montag", cnMn));
-            btnDn.addActionListener(new Day("Dienstag", cnDn));
-            btnMt.addActionListener(new Day("Mittwoch", cnMt));
-            btnDon.addActionListener(new Day("Donnerstag", cnDon));
-            btnFr.addActionListener(new Day("Freitag", cnFr));
-        } else {
-            btnMn.addActionListener(Main.inst.getaDays().get(Main.inst.indexOfDay("Montag")));
-
-            btnDn.addActionListener(Main.inst.getaDays().get(Main.inst.indexOfDay("Dienstag")));
-            btnMt.addActionListener(Main.inst.getaDays().get(Main.inst.indexOfDay("Mittwoch")));
-            btnDon.addActionListener(Main.inst.getaDays().get(Main.inst.indexOfDay("Donnerstag")));
-            btnFr.addActionListener(Main.inst.getaDays().get(Main.inst.indexOfDay("Freitag")));
-            Main.inst.getaDays().get(Main.inst.indexOfDay("Montag")).setContent(cnMn);
-            Main.inst.getaDays().get(Main.inst.indexOfDay("Dienstag")).setContent(cnDn);
-            Main.inst.getaDays().get(Main.inst.indexOfDay("Mittwoch")).setContent(cnMt);
-            Main.inst.getaDays().get(Main.inst.indexOfDay("Donnerstag")).setContent(cnDon);
-            Main.inst.getaDays().get(Main.inst.indexOfDay("Freitag")).setContent(cnFr);
-        }
         setiCreaSub.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -197,11 +158,19 @@ public class GUI extends JFrame {
     }
 
     private void createUIComponents() {
-        cnMn = new JPanel();
-        cnDn = new JPanel();
-        cnMt = new JPanel();
-        cnDon = new JPanel();
-        cnFr = new JPanel();
+        if (Main.inst.first) {
+            cnMn = new Day("Montag", new JPanel()).getContent();
+            cnDn = new Day("Dienstag", new JPanel()).getContent();
+            cnMt = new Day("Mittwoch", new JPanel()).getContent();
+            cnDon = new Day("Donnerstag", new JPanel()).getContent();
+            cnFr = new Day("Freitag", new JPanel()).getContent();
+        } else {
+            cnMn = Main.inst.getDay("Montag").getContent();
+            cnDn = Main.inst.getDay("Dienstag").getContent();
+            cnMt = Main.inst.getDay("Mittwoch").getContent();
+            cnDon = Main.inst.getDay("Donnerstag").getContent();
+            cnFr = Main.inst.getDay("Freitag").getContent();
+        }
         AuftragPanel = new JPanel();
         this.progressBar1 = new JProgressBar();
         if (Main.inst.first) {
@@ -253,8 +222,6 @@ public class GUI extends JFrame {
         panel4.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
         panel4.add(scrollPane1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        cnMn = new JPanel();
-        cnMn.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         scrollPane1.setViewportView(cnMn);
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));

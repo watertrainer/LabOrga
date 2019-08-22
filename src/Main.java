@@ -18,7 +18,7 @@ public class Main
     @Expose
     private HashMap<String,MainSubject> aSubjects;
     @Expose
-    private ArrayList<Day> aDays; //todo convretToHashMap
+    private HashMap<String,Day> aDays; //todo convretToHashMap
     @Expose
     private ArrayList<Auftrag> aAss;
     @Expose
@@ -34,7 +34,7 @@ public class Main
         this.aSubjects = aSubjects;
     }
 
-    public void setaDays(ArrayList<Day> aDays) {
+    public void setaDays(HashMap<String,Day> aDays) {
         this.aDays = aDays;
     }
 
@@ -50,7 +50,7 @@ public class Main
 
         inst = this;
         aSubjects = new HashMap<String, MainSubject>();
-        aDays = new ArrayList<Day>();
+        aDays = new HashMap<String, Day>();
         aAss = new ArrayList<Auftrag>();
         f=new JFileChooser();
         BufferedReader br = null;
@@ -99,8 +99,8 @@ public class Main
         return aSubjects.values();
     }
 
-    public ArrayList<Day> getaDays() {
-        return aDays;
+    public Collection<Day> getaDays() {
+        return aDays.values();
     }
 
     public ArrayList<Auftrag> getaAss() {
@@ -109,8 +109,14 @@ public class Main
     public MainSubject getMainSubject(String s){
         return aSubjects.get(s);
     }
+    public Day getDay(String s){
+        return aDays.get(s);
+    }
     public void addMainSubject(MainSubject s){
         aSubjects.put(s.getName(),s);
+    }
+    public void addDay(Day s){
+        aDays.put(s.getDay(),s);
     }
     public void addSubject(Subject s){
         for(MainSubject m:aSubjects.values()){
@@ -132,9 +138,6 @@ public class Main
         return f;
     }
 
-    public void addDay(Day s){
-        aDays.add(s);
-    }
 
     public int getLessonsDone() {
         return lessonsDone;

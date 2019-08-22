@@ -2,6 +2,7 @@ import com.google.gson.annotations.Expose;
 import com.jgoodies.forms.layout.CellConstraints;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class Day implements ActionListener {
     private ArrayList<Subject> Subjects;
     @Expose
     public boolean substi = false;
-
+    private JButton btn;
 
 
     @Expose
@@ -32,13 +33,22 @@ public class Day implements ActionListener {
             Subjects.get(i).addToGUI(content);
         }
     }
+    public Day(){
+        this.content = new JPanel();
+        Subjects = new ArrayList<Subject>();
+        this.Day = "";
+    }
     public void init(){
+        content.setLayout(new BoxLayout(content,BoxLayout.Y_AXIS));
+        btn = new JButton("+");
+        btn.setMaximumSize(new Dimension(Short.MAX_VALUE,25));
+        content.add(btn);
+        btn.addActionListener(this::actionPerformed);
         for(Subject s :Subjects){
             s.init();
             s.addToGUI(content);
             s.getMainSub().addSubject(s);
         }
-        System.out.println(Subjects);
     }
 
 
@@ -82,5 +92,9 @@ public class Day implements ActionListener {
     @Override
     public String toString(){
         return getDay();
+    }
+
+    public JPanel getContent(){
+        return content;
     }
 }
