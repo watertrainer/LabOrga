@@ -1,4 +1,8 @@
+import com.sun.javafx.css.converters.FontConverter;
+import com.sun.javafx.font.FontFactory;
+
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,7 +80,18 @@ public class AuftragGUI {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                tillDeadline.setText(Math.round(a.getRemaining()) + " Tage");
+                int x = Math.round(a.getRemaining());
+                if (x > 5)
+                    tillDeadline.setText(x + " Tage");
+                else {
+                    tillDeadline.setText(x + " Tage");
+                    tillDeadline.setOpaque(true);
+                    tillDeadline.setBackground(Color.red);
+                    tillDeadline.setForeground(Color.white);
+
+                    g.setColor(Color.red);
+                    g.fillOval(content.getWidth() - 30, tillDeadline.getY(), 20, 20);
+                }
                 lessonsDone.setText(a.getLessonsDone() + "");
             }
         };

@@ -13,11 +13,6 @@ public class GUI extends JFrame {
     public JTabbedPane tabbedPane1;
     public JPanel panel1;
     public JButton setiCreaSub;
-    public JButton btnMn;
-    public JButton btnDn;
-    public JButton btnMt;
-    public JButton btnDon;
-    public JButton btnFr;
     public JPanel cnMn;
     public JPanel cnDn;
     public JPanel cnMt;

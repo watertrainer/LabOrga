@@ -6,8 +6,8 @@ import java.awt.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-
-public class Subject extends JLabel {
+//todo convert to JPanel
+public class Subject extends JLabel  {
     @Expose
     private String teacher;
     @Expose
