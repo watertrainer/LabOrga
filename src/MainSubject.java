@@ -15,6 +15,7 @@ public class MainSubject{
     private int rgbValue;
     @Expose
     private int lessonsDone;
+    private ArrayList<Auftrag> Auftrage;
     private ArrayList<Subject> Subjects;
     private StundenGUI stdgui;
 
@@ -25,7 +26,7 @@ public class MainSubject{
         this.color = color;
         this.rgbValue = color.getRGB();
         Subjects = new ArrayList<Subject>();
-
+        Auftrage = new ArrayList<Auftrag>();
         init();
 
     }
@@ -37,6 +38,7 @@ public class MainSubject{
         this.hasAssign = false;
         Subjects = new ArrayList<Subject>();
         stdgui = new StundenGUI(this);
+        Auftrage = new ArrayList<Auftrag>();
 
     }
     public boolean removeMe(){
@@ -58,12 +60,13 @@ public class MainSubject{
         updateHasAssign();
     }
     public void updateHasAssign(){
-        for(Subject s:Subjects){
-            s.setHasAssign(hasAssign);
-        }
+        setHasAssign(Auftrage.size()>0);
     }
     public void addSubject(Subject s){
         Subjects.add(s);
+    }
+    public void removeSubject(Subject s){
+        Subjects.remove(s);
     }
     @Override
     public String toString(){
@@ -112,9 +115,13 @@ public class MainSubject{
         }
 
     }
-    public void addAuftrag(){
-        System.out.println("Hello2");
-        setHasAssign(true);
+    public void addAuftrag(Auftrag a){
+        Auftrage.add(a);
+        updateHasAssign();
+    }
+    public void removeAuftrag(Auftrag a){
+        Auftrage.remove(a);
+        updateHasAssign();
     }
     public int getRgbValue() {
         return rgbValue;

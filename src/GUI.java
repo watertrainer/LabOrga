@@ -172,6 +172,14 @@ public class GUI extends JFrame {
 
             }
         });
+        löscheFachAusPlanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Day w = (((Day) JOptionPane.showInputDialog(null, "Wähle einen Tag aus", "Selection", JOptionPane.DEFAULT_OPTION, null, Main.inst.getaDays().toArray(), "0")));
+                Subject s = (((Subject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection", JOptionPane.DEFAULT_OPTION, null, w.getSubjects().toArray(), "0")));
+                w.removeSubject(s);
+            }
+        });
     }
 
 

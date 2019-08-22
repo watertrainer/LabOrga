@@ -54,7 +54,7 @@ public class Subject extends JLabel {
     }
     @Override
     public String toString(){
-        return ""+this.getMainSub().getName();
+        return this.getText();
     }
     public Subject clone(String t){
         return new Subject(t, getMainSub());

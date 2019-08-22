@@ -94,7 +94,6 @@ public class Main
     }
     public void addAuftrag(Auftrag a){
         aAss.add(a);
-        a.getSubject().addAuftrag();
     }
     public Collection<MainSubject> getaSubjects() {
         return aSubjects.values();

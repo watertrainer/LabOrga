@@ -53,6 +53,15 @@ public class AuftragGUI {
         content.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         content.setOpaque(true);
         content.setBorder(BorderFactory.createLineBorder(ms.getColor(), 3));
+        AuftragDone.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ms.removeAuftrag(a);
+                Main.inst.getaAss().remove(a);
+                Main.inst.gui.getAuftragPanel().remove(content);
+                Main.inst.gui.getAuftragPanel().revalidate();
+            }
+        });
     }
 
 
@@ -103,7 +112,7 @@ public class AuftragGUI {
         tillDeadline.setText("Label");
         content.add(tillDeadline, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         AuftragDone = new JButton();
-        AuftragDone.setText("Button");
+        AuftragDone.setText("Fertig");
         content.add(AuftragDone, new com.intellij.uiDesigner.core.GridConstraints(3, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         plus = new JButton();
         plus.setText("+");
@@ -118,4 +127,5 @@ public class AuftragGUI {
     public JComponent $$$getRootComponent$$$() {
         return content;
     }
+
 }

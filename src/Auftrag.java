@@ -44,7 +44,7 @@ public class Auftrag {
     public void init(){
         System.out.println("Hello1");
         subject = Main.inst.getMainSubject(subjects);
-        subject.addAuftrag();
+        subject.addAuftrag(this);
         augui = new AuftragGUI(this,subject);
 
         Main.inst.gui.getAuftragPanel().add(augui.content);

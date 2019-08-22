@@ -68,10 +68,19 @@ public class Day implements ActionListener {
         Subjects.add(s);
 
     }
+
+    public ArrayList<Subject> getSubjects() {
+        return Subjects;
+    }
+
     public void removeSubject(Subject s){
         Subjects.remove(s);
+        content.remove(s);
+        s.getMainSub().removeSubject(s);
+        content.revalidate();
     }
-    public void removeSubject(int index){
-        Subjects.remove(index);
+    @Override
+    public String toString(){
+        return getDay();
     }
 }
