@@ -1,12 +1,7 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
-import jdk.nashorn.internal.parser.JSONParser;
 
 import javax.swing.*;
-import java.io.*;
-import java.lang.reflect.Array;
-import java.nio.Buffer;
+import java.io.BufferedReader;
 import java.util.*;
 
 public class Main
@@ -15,7 +10,7 @@ public class Main
     @Expose
     private HashMap<String,MainSubject> aSubjects;
     @Expose
-    private HashMap<String,Day> aDays; //todo convretToHashMap
+    private HashMap<String,Day> aDays;
     @Expose
     private ArrayList<Auftrag> aAss;
     @Expose
@@ -60,9 +55,10 @@ public class Main
                 if(Main.inst.gui !=null)
                 if(Main.inst.gui.panel1!=null)
                 Main.inst.gui.panel1.repaint();
-                if(Calendar.getInstance().get(7)!=d){
+                if(Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK)!=d){
                     setCh(false);
-                    d = Calendar.getInstance().get(7);
+                    d = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK);
+
                 }
                 else
                     setCh(true);
@@ -128,6 +124,7 @@ public class Main
                 m.addSubject(s);
         }
     }
+
     public boolean removeMainSub(String s){
         MainSubject m = getMainSubject(s);
         if(m.removeMe()){
@@ -141,7 +138,6 @@ public class Main
     public JFileChooser getFileChooser() {
         return f;
     }
-
 
     public int getLessonsDone() {
         return lessonsDone;

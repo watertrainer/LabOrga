@@ -89,7 +89,20 @@ public class MainSubject{
 
     }
 
-
+    public Color getDrawAttColor(){
+        if(getAuftrage().size() == 0){
+            return Color.gray;
+        }
+        else{
+            for (Auftrag a: getAuftrage()
+                 ) {
+                if(a.needAttention()){
+                    return Color.red;
+                }
+            }
+            return Color.green;
+        }
+    }
     public Subject getAsSubject(){
         return new Subject("",this);
     }
@@ -148,7 +161,7 @@ public class MainSubject{
         this.lessonsDone = lessonsDone;
     }
 
-
-
-
+    public ArrayList<Auftrag> getAuftrage() {
+        return Auftrage;
+    }
 }

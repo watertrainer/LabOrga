@@ -1,5 +1,4 @@
 import com.google.gson.annotations.Expose;
-import com.jgoodies.forms.layout.CellConstraints;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +12,7 @@ public class Day implements ActionListener {
     @Expose
     public boolean substi = false;
     private JButton btn;
+    private boolean enabled;
 
 
     @Expose
@@ -96,5 +96,13 @@ public class Day implements ActionListener {
 
     public JPanel getContent(){
         return content;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

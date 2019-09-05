@@ -16,6 +16,7 @@ public class Subject {
     private String subjectSt;
     private MainSubject MainSub;
     private JLabel label;
+    private boolean enabled;
 
     private boolean hasAssign;
 
@@ -129,7 +130,7 @@ public class Subject {
         content = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
-                g.setColor(Color.red);
+                g.setColor(MainSub.getDrawAttColor());
                 g.fillOval(content.getWidth() - 30, 0, content.getHeight(), content.getHeight());
             }
         };
@@ -160,4 +161,11 @@ public class Subject {
         return content;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 }

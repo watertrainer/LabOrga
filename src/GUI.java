@@ -64,7 +64,7 @@ public class GUI extends JFrame {
             }
 
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
         c.gui = this;
         $$$setupUI$$$();
@@ -195,31 +195,32 @@ public class GUI extends JFrame {
                 if (Main.inst.isCh())
                     return;
                 switch (Main.inst.getD()) {
-                    case 1:
+                    case 2:
                         MonLab.setOpaque(true);
                         MonLab.setBackground(Color.GREEN);
+                        Main.inst.getDay("Montag").setEnabled(true);
                         break;
-                    case 2:
+                    case 3:
                         MonLab.setOpaque(false);
                         DienLab.setOpaque(true);
                         DienLab.setBackground(Color.green);
                         break;
-                    case 3:
+                    case 4:
                         DienLab.setOpaque(false);
                         MitLab.setOpaque(true);
                         MitLab.setBackground(Color.green);
                         break;
-                    case 4:
+                    case 5:
                         MitLab.setOpaque(false);
                         DonLab.setOpaque(true);
                         DonLab.setBackground(Color.green);
                         break;
-                    case 5:
+                    case 6:
                         DonLab.setOpaque(false);
                         FreiLab.setOpaque(true);
                         FreiLab.setBackground(Color.green);
                         break;
-                    case 6:
+                    case 7:
                         FreiLab.setOpaque(false);
                         break;
 
@@ -245,7 +246,7 @@ public class GUI extends JFrame {
         createUIComponents();
         panel1 = new JPanel();
         panel1.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.setPreferredSize(new Dimension(270, 204));
+        panel1.setPreferredSize(new Dimension(900, 500));
         tabbedPane1 = new JTabbedPane();
         panel1.add(tabbedPane1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
         final JPanel panel2 = new JPanel();

@@ -73,7 +73,9 @@ public class Auftrag {
     public String getDescription() {
         return description;
     }
-
+    public boolean needAttention(){
+        return  getRemaining() <5;
+    }
     public AuftragGUI getAugui() {
         return augui;
     }
