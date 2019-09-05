@@ -1,12 +1,8 @@
-import javafx.scene.control.ComboBox;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Vector;
 
 public class CreateAuftrag extends JDialog {
     private JPanel contentPane;
@@ -59,8 +55,8 @@ public class CreateAuftrag extends JDialog {
         // add your code here
         try {
             Date dead = new SimpleDateFormat("dd.MM.yyyy").parse(abgabedatumTextField.getText());
-            if (!dead.after(new Date(System.currentTimeMillis())))
-                throw new Exception();
+        //    if (!dead.after(new Date(System.currentTimeMillis())))
+         //       throw new Exception();
             int lessons = Integer.parseInt(anzhalStundenTextField.getText());
             String des = kurzeBeschreibungTextArea.getText();
             Auftrag a = new Auftrag(dead, lessons, des, Main.inst.getMainSubject(((MainSubject) comboBox1.getSelectedItem()).getName()));

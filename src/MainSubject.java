@@ -1,7 +1,5 @@
 import com.google.gson.annotations.Expose;
-import com.jgoodies.forms.layout.CellConstraints;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -90,19 +88,21 @@ public class MainSubject{
     }
 
     public Color getDrawAttColor(){
-        if(getAuftrage().size() == 0){
-            return Color.gray;
-        }
-        else{
-            for (Auftrag a: getAuftrage()
-                 ) {
-                if(a.needAttention()){
-                    return Color.red;
+        Color ret = Color.green;
+        if(Auftrage.size() == 0)
+            ret = Color.gray;
+            for (Auftrag a: getAuftrage()) {
+                if(a.needAttention() == 1){
+                    ret =  Color.red;
+                }
+                else if(a.needAttention() == 2){
+                    if(!ret.equals(Color.red))
+                    ret =  Color.orange;
                 }
             }
-            return Color.green;
+            return ret;
         }
-    }
+
     public Subject getAsSubject(){
         return new Subject("",this);
     }

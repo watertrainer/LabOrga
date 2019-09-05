@@ -1,15 +1,16 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.jgoodies.forms.layout.CellConstraints;
-import com.jgoodies.forms.layout.FormLayout;
 
 import javax.swing.*;
-import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GUI extends JFrame {
     public JTabbedPane tabbedPane1;
@@ -35,6 +36,7 @@ public class GUI extends JFrame {
     public JPanel PlanPanel;
     public Subject y;
     public JLabel a;
+    boolean sort = false;
 
     public GUI() {
         Main c = null;
@@ -76,6 +78,7 @@ public class GUI extends JFrame {
                 if (f == null) {
                     JOptionPane.showMessageDialog(Main.inst.gui, "Bitte wähle eine Datei zum Speichern deiner Daten aus");
                     Main.inst.getFileChooser().showOpenDialog(Main.inst.gui);
+                    return;
                 }
                 try {
                     f.createNewFile();
@@ -93,25 +96,47 @@ public class GUI extends JFrame {
         });
 
 
-        setiCreaSub.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFrame f = new JFrame();
-                f.setContentPane(new CreateSubjectDialog(f).content);
-                f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                f.pack();
-                f.setVisible(true);
-            }
+        setiCreaSub.addActionListener(e -> {
+            JFrame f = new JFrame();
+            f.setContentPane(new CreateSubjectDialog(f).content);
+            f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            f.pack();
+            f.setVisible(true);
         });
-        wähleZielDateiButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.inst.getFileChooser().showOpenDialog(Main.inst.gui);
-
-            }
-        });
+        wähleZielDateiButton.addActionListener(e -> Main.inst.getFileChooser().showOpenDialog(Main.inst.gui));
 
         AuftragPanel.setLayout(new BoxLayout(AuftragPanel, BoxLayout.Y_AXIS));
+        JButton btn = new JButton();
+        btn.setText("Sortieren: Tage");
+        Main.inst.getaGuis().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
+        for (AuftragGUI a : Main.inst.getaGuis()) {
+            AuftragPanel.remove(a.content);
+            AuftragPanel.add(a.content);
+
+        }
+        btn.addActionListener(e -> {
+            sort = !sort;
+            if (sort) {
+                btn.setText("Sortieren: Tage");
+                Main.inst.getaGuis().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
+                for (AuftragGUI a : Main.inst.getaGuis()) {
+                    AuftragPanel.remove(a.content);
+                    AuftragPanel.add(a.content);
+
+                }
+
+            } else {
+                btn.setText("Sortieren: Fach");
+                Main.inst.getaGuis().sort((a, b) -> Long.compare(a.getA().getRemaining(), b.getA().getRemaining()));
+                Main.inst.getaGuis().sort(Comparator.comparing(a -> a.getA().getSubject().getName()));
+                for (AuftragGUI a : Main.inst.getaGuis()) {
+                    AuftragPanel.remove(a.content);
+                    AuftragPanel.add(a.content);
+
+                }
+            }
+        });
+        AuftragPanel.add(btn);
         StundenPanel.setLayout(new BoxLayout(StundenPanel, BoxLayout.Y_AXIS));
 
         neuerLabAuftragButton.addActionListener(new ActionListener() {

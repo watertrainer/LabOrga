@@ -13,6 +13,7 @@ public class Main
     private HashMap<String,Day> aDays;
     @Expose
     private ArrayList<Auftrag> aAss;
+    private ArrayList<AuftragGUI> aGuis;
     @Expose
     public boolean first;
     @Expose
@@ -46,6 +47,7 @@ public class Main
         aSubjects = new HashMap<String, MainSubject>();
         aDays = new HashMap<String, Day>();
         aAss = new ArrayList<Auftrag>();
+        aGuis = new ArrayList<AuftragGUI>();
         f=new JFileChooser();
         BufferedReader br = null;
         first = true;
@@ -177,5 +179,9 @@ public class Main
 
     public void setCh(boolean ch) {
         this.ch = ch;
+    }
+
+    public ArrayList<AuftragGUI> getaGuis() {
+        return aGuis;
     }
 }

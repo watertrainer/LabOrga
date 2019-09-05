@@ -1,12 +1,7 @@
-import com.sun.javafx.css.converters.FontConverter;
-import com.sun.javafx.font.FontFactory;
-
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 
 public class AuftragGUI {
     public JLabel Stunden;
@@ -62,6 +57,7 @@ public class AuftragGUI {
             public void actionPerformed(ActionEvent e) {
                 ms.removeAuftrag(a);
                 Main.inst.getaAss().remove(a);
+                Main.inst.getaGuis().remove(this);
                 Main.inst.gui.getAuftragPanel().remove(content);
                 Main.inst.gui.getAuftragPanel().revalidate();
             }
@@ -95,6 +91,10 @@ public class AuftragGUI {
                 lessonsDone.setText(a.getLessonsDone() + "");
             }
         };
+    }
+
+    public Auftrag getA() {
+        return a;
     }
 
     /**

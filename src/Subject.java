@@ -1,11 +1,7 @@
 import com.google.gson.annotations.Expose;
-import com.jgoodies.forms.layout.CellConstraints;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
 
 //todo convert to JPanel
 public class Subject {
@@ -93,6 +89,11 @@ public class Subject {
 
     public void setTeacher(String teacher) {
         this.teacher = teacher;
+        if (hasAssign)
+            label.setText(getMainSub().getName() + ", " + teacher + " | LAB Auftrag Vorhanden");
+        else {
+            label.setText(getMainSub().getName() + ", " + teacher + " | kein LAB Auftrag Vorhanden");
+        }
     }
 
     public String getName() {
@@ -114,14 +115,13 @@ public class Subject {
         this.hasAssign = hasAssign;
         System.out.println("Hello");
         if (hasAssign)
-            label.setText(getMainSub().getName() + ", " + teacher + " |LAB Auftrag Vorhanden");
+            label.setText(getMainSub().getName() + ", " + teacher + " | LAB Auftrag Vorhanden");
         else {
-            label.setText(getMainSub().getName() + ", " + teacher + " |kein LAB Auftrag Vorhanden");
+            label.setText(getMainSub().getName() + ", " + teacher + " | kein LAB Auftrag Vorhanden");
         }
     }
 
     public MainSubject getMainSub() {
-
         return MainSub;
     }
 

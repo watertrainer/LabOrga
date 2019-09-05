@@ -1,8 +1,5 @@
 import com.google.gson.annotations.Expose;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.BufferedWriter;
 import java.util.Date;
 
 public class Auftrag {
@@ -46,6 +43,7 @@ public class Auftrag {
         subject = Main.inst.getMainSubject(subjects);
         subject.addAuftrag(this);
         augui = new AuftragGUI(this,subject);
+        Main.inst.getaGuis().add(augui);
 
         Main.inst.gui.getAuftragPanel().add(augui.content);
         Main.inst.gui.getAuftragPanel().revalidate();
@@ -73,8 +71,17 @@ public class Auftrag {
     public String getDescription() {
         return description;
     }
-    public boolean needAttention(){
-        return  getRemaining() <5;
+    public int needAttention(){
+          if(getRemaining() <3){
+            return 1;
+        }
+          else if(getRemaining() < 7) {
+              return 2;
+          }
+          else
+          {
+              return 3;
+          }
     }
     public AuftragGUI getAugui() {
         return augui;
