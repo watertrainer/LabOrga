@@ -5,30 +5,56 @@ import java.awt.*;
 
 //todo convert to JPanel
 public class Subject {
+    /**
+     * The content Pane for the Subject in the Content Pane of the Day
+     */
     public JPanel content;
+    /**
+     * Name of the Teacher which has Lab
+     */
     @Expose
     private String teacher;
+    /**
+     * Name of the Subject. Saved externally for saving purpose.
+     */
     @Expose
     private String subjectSt;
+    /**
+     * The Main Subject this is associated to
+     */
     private MainSubject MainSub;
+    /**
+     * The Label of this Subject in the Content Pane
+     */
     private JLabel label;
+    /**
+     * Is the Subject enabled. Future Feature
+     */
     private boolean enabled;
-
+    /**
+     * Has the SUbject an Assignment
+     */
     private boolean hasAssign;
 
-    public Subject(String Teacher, MainSubject MainSub) {
+    /**
+     * Constructor
+     *
+     * @param Teacher The Teacher which has Lab
+     * @param MainSub The Main Subject
+     */
+    Subject(String Teacher, MainSubject MainSub) {
         this.teacher = Teacher;
         this.MainSub = MainSub;
         $$$setupUI$$$();
         subjectSt = MainSub.getName();
         hasAssign = true;
-
-
         MainSub.addSubject(this);
         MainSub.updateHasAssign();
-
     }
 
+    /**
+     * Consturctor for Gson
+     */
     public Subject() {
         super();
         this.teacher = "";
@@ -36,6 +62,9 @@ public class Subject {
         hasAssign = true;
     }
 
+    /**
+     * init Method, called from The Day
+     */
     public void init() {
         if (Main.inst.first) {
             subjectSt = MainSub.getName();
@@ -43,27 +72,51 @@ public class Subject {
         MainSub = Main.inst.getMainSubject(subjectSt);
     }
 
+    /**
+     * says the Subject, that an Assignment is added. Currently unused
+     */
     public void addAuftrag() {
         setHasAssign(true);
     }
 
+    /**
+     * adds itself to the jPanle
+     *
+     * @param p THe Panel to which the SUbject should add itself to
+     */
     public void addToGUI(JPanel p) {
         this.updateColor();
         // p.add(this, cc.xy(1,row));
         p.add(this.content);
-
     }
 
+    /**
+     * to String
+     *
+     * @return returns the Text on the JLabel
+     */
     @Override
     public String toString() {
         return label.getText();
     }
 
+    /**
+     * Clone the Subject
+     * Currently unused
+     *
+     * @param t The teacher the new Subject should have
+     * @return The new Subject
+     */
     public Subject clone(String t) {
         return new Subject(t, getMainSub());
     }
 
-
+    /**
+     * Equals Method
+     *
+     * @param s The Object to Compare itself to
+     * @return boolean, if the Object is equal to The SUbject. Only comppares the Teacher name and Main Subject
+     */
     @Override
     public boolean equals(Object s) {
         if (s instanceof Subject) {
@@ -72,7 +125,6 @@ public class Subject {
         } else {
             return false;
         }
-
     }
 
     public String getSubjectSt() {
@@ -104,7 +156,9 @@ public class Subject {
         return MainSub.getColor();
     }
 
-
+    /**
+     * updates the color of the JLabel to the Color of the Main Sub
+     */
     public void updateColor() {
         if (((MainSub.getColor().getBlue() + MainSub.getColor().getRed() + MainSub.getColor().getGreen()) / 3) < 128)
             label.setForeground(Color.white);
@@ -113,7 +167,6 @@ public class Subject {
 
     public void setHasAssign(boolean hasAssign) {
         this.hasAssign = hasAssign;
-        System.out.println("Hello");
         if (hasAssign)
             label.setText(getMainSub().getName() + ", " + teacher + " | LAB Auftrag Vorhanden");
         else {
@@ -167,5 +220,9 @@ public class Subject {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public MainSubject getMainSubject() {
+        return MainSub;
     }
 }

@@ -4,65 +4,87 @@ import javax.swing.*;
 import java.io.BufferedReader;
 import java.util.*;
 
-public class Main
-{
+public class Main {
+    /**
+     * Instance of this CLass
+     */
     public transient static Main inst;
+    /**
+     * All Main Subjects
+     */
     @Expose
-    private HashMap<String,MainSubject> aSubjects;
+    private HashMap<String, MainSubject> aSubjects;
+    /**
+     * All Days with the according String eg. "Monday"
+     */
     @Expose
-    private HashMap<String,Day> aDays;
+    private HashMap<String, Day> aDays;
+    /**
+     * All Assignments
+     */
     @Expose
     private ArrayList<Auftrag> aAss;
+    /**
+     * All GUIs from the Assignments. Makes it easier to Sort the Assignments in the ASsignments Tab
+     */
     private ArrayList<AuftragGUI> aGuis;
+    /**
+     * Is this the first start of the program
+     */
     @Expose
-    public boolean first;
+    boolean first;
+    /**
+     * HOw many of all Lab lessons are done already
+     */
     @Expose
     private int lessonsDone;
+    /**
+     * How many Lab lessons have to be done per Subject
+     */
     @Expose
     private int maxPerSubject;
+    /**
+     * How many Lab lesson have to be done collectively
+     */
     @Expose
     private int maxIngs;
-
-    public void setaSubjects(HashMap<String,MainSubject> aSubjects) {
-        this.aSubjects = aSubjects;
-    }
-
-    public void setaDays(HashMap<String,Day> aDays) {
-        this.aDays = aDays;
-    }
-
-    public void setaAss(ArrayList<Auftrag> aAss) {
-        this.aAss = aAss;
-    }
-
+    /**
+     * Gui of this Main
+     */
     public transient GUI gui;
+    /**
+     * The File Chooser. Points to the FIle in which everything is saved
+     */
     private transient JFileChooser f;
+    /**
+     * Int representation of the Day of the week
+     */
     private int d;
+    /**
+     * Should d be updated, aka the day of week changed
+     */
     private boolean ch;
 
-
+    /**
+     * Constructor
+     */
     public Main() {
-
         inst = this;
-        aSubjects = new HashMap<String, MainSubject>();
-        aDays = new HashMap<String, Day>();
-        aAss = new ArrayList<Auftrag>();
-        aGuis = new ArrayList<AuftragGUI>();
-        f=new JFileChooser();
-        BufferedReader br = null;
+        aSubjects = new HashMap<>();
+        aDays = new HashMap<>();
+        aAss = new ArrayList<>();
+        aGuis = new ArrayList<>();
+        f = new JFileChooser();
         first = true;
-
         Thread t = new Thread(() -> {
-            while(true){
-                if(Main.inst.gui !=null)
-                if(Main.inst.gui.panel1!=null)
-                Main.inst.gui.panel1.repaint();
-                if(Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK)!=d){
+            while (true) {
+                if (Main.inst.gui != null)
+                    if (Main.inst.gui.panel1 != null)
+                        Main.inst.gui.panel1.repaint();
+                if (Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK) != d) {
                     setCh(false);
                     d = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK);
-
-                }
-                else
+                } else
                     setCh(true);
                 try {
                     Thread.sleep(400);
@@ -74,29 +96,30 @@ public class Main
         t.start();
     }
 
-    public void init()
-    {
+    /**
+     * Initialisation of Main. Calls all inits of the Assignments, Days and Subjects
+     */
+    public void init() {
         for (Day d : getaDays()) {
             d.init();
         }
-        for(Auftrag a:aAss){
+        for (Auftrag a : aAss) {
             a.init();
         }
         for (MainSubject s : aSubjects.values()) {
-
             s.init();
         }
     }
-    public int indexOfDay(String s){
-            for(int i = 0;i< aDays.size();i++){
-                if(aDays.get(i).getDay().equals(s))
-                    return i;
-            }
-            return -1;
-    }
-    public void addAuftrag(Auftrag a){
+
+    /**
+     * adds an Assignment to the aAss list
+     *
+     * @param a The assignment to be added
+     */
+    public void addAuftrag(Auftrag a) {
         aAss.add(a);
     }
+
     public Collection<MainSubject> getaSubjects() {
         return aSubjects.values();
     }
@@ -108,35 +131,51 @@ public class Main
     public ArrayList<Auftrag> getaAss() {
         return aAss;
     }
-    public MainSubject getMainSubject(String s){
+
+    public MainSubject getMainSubject(String s) {
         return aSubjects.get(s);
     }
-    public Day getDay(String s){
+
+    public Day getDay(String s) {
         return aDays.get(s);
     }
-    public void addMainSubject(MainSubject s){
-        aSubjects.put(s.getName(),s);
+
+    public void addMainSubject(MainSubject s) {
+        aSubjects.put(s.getName(), s);
     }
-    public void addDay(Day s){
-        aDays.put(s.getDay(),s);
+
+    public void addDay(Day s) {
+        aDays.put(s.getDay(), s);
     }
-    public void addSubject(Subject s){
-        for(MainSubject m:aSubjects.values()){
-            if(m.equals(s.getMainSub()))
+
+    /**
+     * Adds an Subject. Also adds the Subject to the corresponding MainSub
+     *
+     * @param s THe Subjectt o be added
+     */
+    public void addSubject(Subject s) {
+        for (MainSubject m : aSubjects.values()) {
+            if (m.equals(s.getMainSub()))
                 m.addSubject(s);
         }
     }
 
-    public boolean removeMainSub(String s){
+    /**
+     * Removes an Main Sub.
+     *
+     * @param s The MainSub to be removed
+     * @return if the removal was successful
+     */
+    public boolean removeMainSub(String s) {
         MainSubject m = getMainSubject(s);
-        if(m.removeMe()){
+        if (m.removeMe()) {
             aSubjects.remove(s);
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
+
     public JFileChooser getFileChooser() {
         return f;
     }
@@ -183,5 +222,17 @@ public class Main
 
     public ArrayList<AuftragGUI> getaGuis() {
         return aGuis;
+    }
+
+    public void setaSubjects(HashMap<String, MainSubject> aSubjects) {
+        this.aSubjects = aSubjects;
+    }
+
+    public void setaDays(HashMap<String, Day> aDays) {
+        this.aDays = aDays;
+    }
+
+    public void setaAss(ArrayList<Auftrag> aAss) {
+        this.aAss = aAss;
     }
 }

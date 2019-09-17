@@ -8,8 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class GUI extends JFrame {
@@ -40,10 +38,8 @@ public class GUI extends JFrame {
 
     public GUI() {
         Main c = null;
-
         try {
             File f1 = new File(System.getenv("TEMP") + "\\File.tmp");
-
             if (f1.exists()) {
                 BufferedReader br = new BufferedReader(new FileReader(f1));
                 File f = new File(br.readLine());
@@ -54,23 +50,17 @@ public class GUI extends JFrame {
                     c = g.fromJson(new FileReader(f), Main.class);
                     c.getFileChooser().setSelectedFile(f);
                     br1.close();
-
-
                 } else {
                     c = new Main();
-
                 }
             } else {
                 c = new Main();
-
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
         c.gui = this;
         $$$setupUI$$$();
-
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 Gson g = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
@@ -94,8 +84,6 @@ public class GUI extends JFrame {
                 }
             }
         });
-
-
         setiCreaSub.addActionListener(e -> {
             JFrame f = new JFrame();
             f.setContentPane(new CreateSubjectDialog(f).content);
@@ -104,7 +92,6 @@ public class GUI extends JFrame {
             f.setVisible(true);
         });
         wähleZielDateiButton.addActionListener(e -> Main.inst.getFileChooser().showOpenDialog(Main.inst.gui));
-
         AuftragPanel.setLayout(new BoxLayout(AuftragPanel, BoxLayout.Y_AXIS));
         JButton btn = new JButton();
         btn.setText("Sortieren: Tage");
@@ -112,7 +99,6 @@ public class GUI extends JFrame {
         for (AuftragGUI a : Main.inst.getaGuis()) {
             AuftragPanel.remove(a.content);
             AuftragPanel.add(a.content);
-
         }
         btn.addActionListener(e -> {
             sort = !sort;
@@ -122,23 +108,19 @@ public class GUI extends JFrame {
                 for (AuftragGUI a : Main.inst.getaGuis()) {
                     AuftragPanel.remove(a.content);
                     AuftragPanel.add(a.content);
-
                 }
-
             } else {
                 btn.setText("Sortieren: Fach");
-                Main.inst.getaGuis().sort((a, b) -> Long.compare(a.getA().getRemaining(), b.getA().getRemaining()));
+                Main.inst.getaGuis().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
                 Main.inst.getaGuis().sort(Comparator.comparing(a -> a.getA().getSubject().getName()));
                 for (AuftragGUI a : Main.inst.getaGuis()) {
                     AuftragPanel.remove(a.content);
                     AuftragPanel.add(a.content);
-
                 }
             }
         });
         AuftragPanel.add(btn);
         StundenPanel.setLayout(new BoxLayout(StundenPanel, BoxLayout.Y_AXIS));
-
         neuerLabAuftragButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -157,8 +139,6 @@ public class GUI extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(Main.inst.gui, "Dieses Fach ist noch in deinem Stundenplan zu finden");
                 }
-
-
             }
         });
         löscheFachAusPlanButton.addActionListener(new ActionListener() {
@@ -171,18 +151,51 @@ public class GUI extends JFrame {
         });
     }
 
-
     public static void main(String[] args) {
         GUI frame = new GUI();
         frame.setContentPane(frame.panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         frame.pack();
         frame.setVisible(true);
     }
 
     public JPanel getAuftragPanel() {
         return AuftragPanel;
+    }
+
+
+    int insgStd() {
+        int std, p;
+        try {
+            std = Integer.parseInt(JOptionPane.showInputDialog(null, "Wie viele Lab-Stunden musst du insgesamt machen?"
+                    , "Insgesamte Lab-Stundenanzahl", JOptionPane.QUESTION_MESSAGE));
+            if (std < 1) throw new IllegalArgumentException();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Dies ist keine sinnvolle Lab-Stunden Anzahl.", "Fehler"
+                    , JOptionPane.ERROR_MESSAGE);
+            p = JOptionPane.showConfirmDialog(null, "M\u00f6chtset du das Programm beenden?", "Programm beenden?"
+                    , JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (p == JOptionPane.YES_OPTION || p == JOptionPane.CLOSED_OPTION) System.exit(0);
+            std = insgStd();
+        }
+        return std;
+    }
+
+    int stdProFach(int insgStd) {
+        int std, p;
+        try {
+            std = Integer.parseInt(JOptionPane.showInputDialog(null, "Wie viele Lab-Stunden musst du pro Fach machen?"
+                    , "Stundenanzahl pro Fach", JOptionPane.QUESTION_MESSAGE));
+            if (insgStd % std != 0) throw new IllegalArgumentException();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Dies ist keine sinnvolle Lab-Stunden Anzahl.", "Fehler"
+                    , JOptionPane.ERROR_MESSAGE);
+            p = JOptionPane.showConfirmDialog(null, "M\u00f6chtset du das Programm beenden?", "Programm beenden?"
+                    , JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (p == JOptionPane.YES_OPTION || p == JOptionPane.CLOSED_OPTION) System.exit(0);
+            std = stdProFach(insgStd);
+        }
+        return std;
     }
 
     private void createUIComponents() {
@@ -202,10 +215,9 @@ public class GUI extends JFrame {
         AuftragPanel = new JPanel();
         this.progressBar1 = new JProgressBar();
         if (Main.inst.first) {
-            int g = Integer.parseInt(JOptionPane.showInputDialog("Wieviele Lab Stunden musst du INSGESAMT machen?"));
-            int f = Integer.parseInt(JOptionPane.showInputDialog("Wieviele Lab Stunden musst du pro Fach machen?"));
-            Main.inst.setMaxIngs(g);
-            Main.inst.setMaxPerSubject(f);
+            int insgStd = insgStd();
+            Main.inst.setMaxIngs(insgStd);
+            Main.inst.setMaxPerSubject(stdProFach(insgStd));
         }
         progressBar1.setMaximum(Main.inst.getMaxIngs());
         progressBar1.setMinimum(0);
@@ -248,7 +260,6 @@ public class GUI extends JFrame {
                     case 7:
                         FreiLab.setOpaque(false);
                         break;
-
                 }
             }
         };

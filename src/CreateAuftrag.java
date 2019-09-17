@@ -18,19 +18,16 @@ public class CreateAuftrag extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
-
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
         });
-
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -38,50 +35,41 @@ public class CreateAuftrag extends JDialog {
                 onCancel();
             }
         });
-
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-
         for (MainSubject m : Main.inst.getaSubjects()) {
             comboBox1.addItem(m);
         }
     }
 
     private void onOK() {
-        // add your code here
         try {
             Date dead = new SimpleDateFormat("dd.MM.yyyy").parse(abgabedatumTextField.getText());
-        //    if (!dead.after(new Date(System.currentTimeMillis())))
-         //       throw new Exception();
+            if (!dead.after(new Date(System.currentTimeMillis())))
+                throw new Exception();
             int lessons = Integer.parseInt(anzhalStundenTextField.getText());
             String des = kurzeBeschreibungTextArea.getText();
             Auftrag a = new Auftrag(dead, lessons, des, Main.inst.getMainSubject(((MainSubject) comboBox1.getSelectedItem()).getName()));
             Main.inst.addAuftrag(a);
-
-
             dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this.contentPane, "Etwas ist Shciefgelaufen.\n Hast du überall etwas dem Format entsprechendes eingegeben?");
+            JOptionPane.showMessageDialog(this.contentPane, "Etwas ist Schiefgelaufen.\n" +
+                    " Hast du \u00fcberall etwas dem Format entsprechendes eingegeben?");
             e.printStackTrace();
         }
-
     }
 
     private void onCancel() {
-        // add your code here if necessary
         dispose();
     }
 
     private void createUIComponents() {
         comboBox1 = new JComboBox();
-
         System.out.println(comboBox1.getItemCount());
-
-
     }
 
     /**

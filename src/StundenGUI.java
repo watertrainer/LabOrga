@@ -9,8 +9,7 @@ public class StundenGUI {
     public JLabel Fach;
     private MainSubject ms;
 
-
-    public StundenGUI(MainSubject s) {
+    StundenGUI(MainSubject s) {
         this.ms = s;
         $$$setupUI$$$();
         content.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -31,7 +30,6 @@ public class StundenGUI {
                 super.paintComponent(g);
                 progressBar1.setValue(ms.getLessonsDone());
                 lessons.setText(ms.getLessonsDone() + "");
-
             }
         };
         progressBar1 = new JProgressBar();
