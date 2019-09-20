@@ -65,6 +65,7 @@
             </constraints>
             <properties>
               <text value=""/>
+              <toolTipText value="Abgabedatum. Es wird von dem Tag um 23:59:59 ausgegangen"/>
             </properties>
           </component>
           <component id="57ddf" class="javax.swing.JComboBox" binding="comboBox1" custom-create="true" default-binding="true">

@@ -80,10 +80,11 @@ public class Main {
             while (true) {
                 if (Main.inst.gui != null)
                     if (Main.inst.gui.contentPane != null)
-                        Main.inst.gui.contentPane.repaint();
+                        Main.inst.gui.contentPane.paintImmediately(0,0,gui.getWidth(),gui.getHeight());
                 if (Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK) != d) {
                     setCh(false);
                     d = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK);
+
                 } else
                     setCh(true);
                 try {

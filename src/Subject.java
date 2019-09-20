@@ -2,6 +2,8 @@ import com.google.gson.annotations.Expose;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 //todo convert to JPanel
 public class Subject {
@@ -35,6 +37,7 @@ public class Subject {
      * Has the SUbject an Assignment
      */
     private boolean hasAssign;
+
     /**
      * Constructor
      *
@@ -182,8 +185,9 @@ public class Subject {
         content = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
-                g.setColor(MainSub.getDrawAttColor());
-                g.fillOval(content.getWidth() - 30, 0, content.getHeight(), content.getHeight());
+                    g.setColor(MainSub.getDrawAttColor());
+                    g.fillOval(content.getWidth() - 30, 0, content.getHeight(), content.getHeight());
+
             }
         };
         label.setOpaque(true);

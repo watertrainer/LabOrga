@@ -4,40 +4,40 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * An class to represent an Subject. It knows all Subject Times, which are saved seperatly in the Lab Plan and knows of all Assignments of this Subject
+ * An class representation of a subject. It knows all subject times, which are saved separately in the Lab Plan and assignments of this subject
  */
 public class MainSubject {
     /**
-     * The name of the Main Sub
+     * The name of the Main Subject
      */
     @Expose
     private String name;
     /**
-     * Color of the Subject
+     * Color of the subject
      */
     private Color color;
     @Expose
     private boolean hasAssign = false;
     /**
-     * the rgb Value of the Color. Needed for saving purpose
+     * The rgb Value of the color needed for saving purpose
      */
     @Expose
     private int rgbValue;
     /**
-     * Lessons Done of this Subject
+     * Lessons done of this subject
      */
     @Expose
     private int lessonsDone;
     /**
-     * Assignments in this Subject
+     * Assignments in this subject
      */
     private ArrayList<Auftrag> Auftrage;
     /**
-     * Subjects for the LAb Plan of this Type
+     * Subjects time entries in the Lab Plan of this subject
      */
     private ArrayList<Subject> Subjects;
     /**
-     * Gui to show how many lessons are done in this Subject already
+     * Gui to show how many lessons are done in this subject already
      */
     private StundenGUI stdgui;
 
@@ -59,15 +59,12 @@ public class MainSubject {
         this.name = "";
         this.color = null;
         this.rgbValue = 0;
-        this.hasAssign = false;
         Subjects = new ArrayList<>();
-        stdgui = new StundenGUI(this);
         Auftrage = new ArrayList<>();
     }
 
     /**
-     * Removes itself from the Guis
-     *
+     * Removes itself from the GUIs
      * @return false if there are still Subjects in the Lab Plan
      */
     public boolean removeMe() {
