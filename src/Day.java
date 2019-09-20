@@ -33,8 +33,8 @@ public class Day implements ActionListener {
     /**
      * Constructor
      *
-     * @param Day
-     * @param content
+     * @param Day The name of the Day. Is also the Key in the HashMap aDays
+     * @param content The JPanel where the Day is rendered to
      */
     public Day(String Day, JPanel content) {
         this.Day = Day;
@@ -64,7 +64,7 @@ public class Day implements ActionListener {
         btn = new JButton("+");
         btn.setMaximumSize(new Dimension(Short.MAX_VALUE, 25));
         content.add(btn);
-        btn.addActionListener(this::actionPerformed);
+        btn.addActionListener(this);
         for (Subject s : Subjects) {
             s.init();
             s.addToGUI(content);

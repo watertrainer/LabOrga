@@ -4,13 +4,37 @@ import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The Dialog to create an Assignment
+ */
 public class CreateAuftrag extends JDialog {
+    /**
+     * Content Pane of the Dailog
+     */
     private JPanel contentPane;
+    /**
+     * Button to confirm the Input
+     */
     private JButton buttonOK;
+    /**
+     * Button to cancel the creation
+     */
     private JButton buttonCancel;
+    /**
+     * Text Field to enter the Deadline of the Assignment
+     */
     public JTextField abgabedatumTextField;
+    /**
+     * Combo Box to choose an Subject
+     */
     public JComboBox comboBox1;
+    /**
+     * TextArea to enter the Short Description of the Assignment
+     */
     public JTextArea kurzeBeschreibungTextArea;
+    /**
+     * TextField to enter the amount of lessons avaiable for this assignment
+     */
     public JTextField anzhalStundenTextField;
 
     public CreateAuftrag() {
@@ -18,11 +42,17 @@ public class CreateAuftrag extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        /**
+         * Confirm the Input
+         */
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
+        /**
+         * Cancel Creation
+         */
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
@@ -46,6 +76,9 @@ public class CreateAuftrag extends JDialog {
         }
     }
 
+    /**
+     * Called when the user confirms the input It sanitizes the user Input and creates the Assignment
+     */
     private void onOK() {
         try {
             Date dead = new SimpleDateFormat("dd.MM.yyyy").parse(abgabedatumTextField.getText());
@@ -63,6 +96,9 @@ public class CreateAuftrag extends JDialog {
         }
     }
 
+    /**
+     * Called when the user cancels the creation
+     */
     private void onCancel() {
         dispose();
     }

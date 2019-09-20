@@ -30,11 +30,13 @@ public class Auftrag {
     @Expose
     private String subjects;
     /**
-     * The Main Subject
+     * The Main Subject.
+     * @see MainSubject
      */
     private MainSubject subject;
     /**
      * The GUI for this Assignment
+     * @see AuftragGUI
      */
     private AuftragGUI augui;
 
@@ -145,9 +147,6 @@ public class Auftrag {
         return Objects.hash(deadline, lessons, lessonsDone, description, subjects, subject, augui);
     }
 
-    public void finished() {
-        Main.inst.getaGuis().remove(augui);
-    }
 
     public int getLessons() {
         return lessons;

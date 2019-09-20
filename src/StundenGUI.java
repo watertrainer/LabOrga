@@ -1,12 +1,35 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * GUI to render each MainSubject and how many lessons where done there already
+ */
 public class StundenGUI {
+    /**
+     * The content Pane
+     */
     public JPanel content;
+    /**
+     * JLabel to represent how many lessons are already done in this MainSubject
+     */
     public JLabel lessonDone;
+    /**
+     * JLabel to show how many lessons have to be done in this MainSUbject
+     */
     public JLabel lessons;
-    public JProgressBar progressBar1;
+    /**
+     * Progressbar to show the Progress of the lessons done to lessons
+     * Max: Lessons
+     * Value: lessonsDone
+     */
+    public JProgressBar progressLessons;
+    /**
+     * JLabel to show the Subject
+     */
     public JLabel Fach;
+    /**
+     * The MainSubject this UI renders
+     */
     private MainSubject ms;
 
     StundenGUI(MainSubject s) {
@@ -23,20 +46,23 @@ public class StundenGUI {
             Fach.setForeground(Color.white);
     }
 
+    /**
+     * Initiates all UI Components
+     */
     private void createUIComponents() {
         content = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                progressBar1.setValue(ms.getLessonsDone());
+                progressLessons.setValue(ms.getLessonsDone());
                 lessons.setText(ms.getLessonsDone() + "");
             }
         };
-        progressBar1 = new JProgressBar();
-        progressBar1.setMinimum(0);
-        progressBar1.setMaximum(Main.inst.getMaxPerSubject());
-        progressBar1.setBorderPainted(true);
-        progressBar1.setBorder(BorderFactory.createLineBorder(ms.getColor(), 2));
+        progressLessons = new JProgressBar();
+        progressLessons.setMinimum(0);
+        progressLessons.setMaximum(Main.inst.getMaxPerSubject());
+        progressLessons.setBorderPainted(true);
+        progressLessons.setBorder(BorderFactory.createLineBorder(ms.getColor(), 2));
     }
 
     /**
@@ -55,7 +81,7 @@ public class StundenGUI {
         lessons = new JLabel();
         lessons.setText("Label");
         content.add(lessons, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        content.add(progressBar1, new com.intellij.uiDesigner.core.GridConstraints(2, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        content.add(progressLessons, new com.intellij.uiDesigner.core.GridConstraints(2, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
         content.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();

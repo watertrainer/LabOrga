@@ -3,6 +3,9 @@ import com.google.gson.annotations.Expose;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * An class to represent an Subject. It knows all Subject Times, which are saved seperatly in the Lab Plan and knows of all Assignments of this Subject
+ */
 public class MainSubject {
     /**
      * The name of the Main Sub
@@ -16,7 +19,7 @@ public class MainSubject {
     @Expose
     private boolean hasAssign = false;
     /**
-     * the rgb Value of the Color. NEeded for saving purpose
+     * the rgb Value of the Color. Needed for saving purpose
      */
     @Expose
     private int rgbValue;
@@ -71,9 +74,9 @@ public class MainSubject {
         if (Subjects.size() > 0) {
             return false;
         } else {
-            Main.inst.gui.StundenPanel.remove(stdgui.content);
-            Main.inst.gui.StundenPanel.revalidate();
-            Main.inst.gui.StundenPanel.repaint();
+            Main.inst.gui.lessonPanel.remove(stdgui.content);
+            Main.inst.gui.lessonPanel.revalidate();
+            Main.inst.gui.lessonPanel.repaint();
             return true;
         }
     }
@@ -83,9 +86,9 @@ public class MainSubject {
      */
     public void init() {
         stdgui = new StundenGUI(this);
-        Main.inst.gui.StundenPanel.add(stdgui.content);
-        Main.inst.gui.StundenPanel.revalidate();
-        Main.inst.gui.StundenPanel.repaint();
+        Main.inst.gui.lessonPanel.add(stdgui.content);
+        Main.inst.gui.lessonPanel.revalidate();
+        Main.inst.gui.lessonPanel.repaint();
         updateHasAssign();
     }
 
@@ -209,5 +212,9 @@ public class MainSubject {
 
     public ArrayList<Auftrag> getAuftrage() {
         return Auftrage;
+    }
+
+    public ArrayList<Subject> getSubjects() {
+        return Subjects;
     }
 }

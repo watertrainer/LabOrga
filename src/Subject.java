@@ -35,7 +35,6 @@ public class Subject {
      * Has the SUbject an Assignment
      */
     private boolean hasAssign;
-
     /**
      * Constructor
      *
@@ -115,7 +114,7 @@ public class Subject {
      * Equals Method
      *
      * @param s The Object to Compare itself to
-     * @return boolean, if the Object is equal to The SUbject. Only comppares the Teacher name and Main Subject
+     * @return boolean, if the Object is equal to The Subject. Only comppares the Teacher name and Main Subject
      */
     @Override
     public boolean equals(Object s) {
