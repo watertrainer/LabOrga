@@ -198,6 +198,8 @@ public class GUI extends JFrame {
                     Main.inst.first = false;
                     bw.write(g.toJson(Main.inst));
                     bw.close();
+                    new File(System.getenv("TEMP")+"\\File.temp").createNewFile();
+
                     BufferedWriter bws = new BufferedWriter(new FileWriter(System.getenv("TEMP") + "\\File.tmp"));
                     bws.write(Main.inst.getFileChooser().getSelectedFile().toPath().toString());
                     bws.close();
