@@ -24,8 +24,8 @@ public class GUI extends JFrame {
     public JButton neuerLabAuftragButton;
     public JPanel StundenPanel;
     public JProgressBar progressBar1;
-    public JButton löscheFachButton;
-    public JButton löscheFachAusPlanButton;
+    public JButton loescheFachButton;
+    public JButton loescheFachAusPlanButton;
     public JLabel MonLab;
     public JLabel DienLab;
     public JLabel MitLab;
