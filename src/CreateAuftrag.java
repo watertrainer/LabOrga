@@ -4,13 +4,37 @@ import java.awt.event.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The Dialog to create an Assignment
+ */
 public class CreateAuftrag extends JDialog {
+    /**
+     * Content Pane of the Dailog
+     */
     private JPanel contentPane;
+    /**
+     * Button to confirm the Input
+     */
     private JButton buttonOK;
+    /**
+     * Button to cancel the creation
+     */
     private JButton buttonCancel;
+    /**
+     * Text Field to enter the Deadline of the Assignment
+     */
     public JTextField abgabedatumTextField;
+    /**
+     * Combo Box to choose an Subject
+     */
     public JComboBox comboBox1;
+    /**
+     * TextArea to enter the Short Description of the Assignment
+     */
     public JTextArea kurzeBeschreibungTextArea;
+    /**
+     * TextField to enter the amount of lessons avaiable for this assignment
+     */
     public JTextField anzhalStundenTextField;
 
     public CreateAuftrag() {
@@ -18,11 +42,17 @@ public class CreateAuftrag extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        /**
+         * Confirm the Input
+         */
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
             }
         });
+        /**
+         * Cancel Creation
+         */
         buttonCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onCancel();
@@ -46,9 +76,13 @@ public class CreateAuftrag extends JDialog {
         }
     }
 
+    /**
+     * Called when the user confirms the input It sanitizes the user Input and creates the Assignment
+     */
     private void onOK() {
         try {
             Date dead = new SimpleDateFormat("dd.MM.yyyy").parse(abgabedatumTextField.getText());
+            dead.setTime(dead.getTime() + ((23 * 60 + 59) * 60 + 59) * 1000);
             if (!dead.after(new Date(System.currentTimeMillis())))
                 throw new Exception();
             int lessons = Integer.parseInt(anzhalStundenTextField.getText());
@@ -63,6 +97,9 @@ public class CreateAuftrag extends JDialog {
         }
     }
 
+    /**
+     * Called when the user cancels the creation
+     */
     private void onCancel() {
         dispose();
     }
@@ -102,6 +139,7 @@ public class CreateAuftrag extends JDialog {
         contentPane.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         abgabedatumTextField = new JTextField();
         abgabedatumTextField.setText("");
+        abgabedatumTextField.setToolTipText("Abgabedatum. Es wird von dem Tag um 23:59:59 ausgegangen");
         panel3.add(abgabedatumTextField, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         comboBox1.setEditable(false);
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
@@ -140,4 +178,5 @@ public class CreateAuftrag extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

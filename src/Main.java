@@ -79,11 +79,12 @@ public class Main {
         Thread t = new Thread(() -> {
             while (true) {
                 if (Main.inst.gui != null)
-                    if (Main.inst.gui.panel1 != null)
-                        Main.inst.gui.panel1.repaint();
+                    if (Main.inst.gui.contentPane != null)
+                        Main.inst.gui.contentPane.paintImmediately(0,0,gui.getWidth(),gui.getHeight());
                 if (Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK) != d) {
                     setCh(false);
                     d = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK);
+
                 } else
                     setCh(true);
                 try {
@@ -97,7 +98,7 @@ public class Main {
     }
 
     /**
-     * Initialisation of Main. Calls all inits of the Assignments, Days and Subjects
+     * Initialisation of Main. Calls all init() Methods of the Assignments, Days and Subjects
      */
     public void init() {
         for (Day d : getaDays()) {
@@ -174,6 +175,28 @@ public class Main {
         } else {
             return false;
         }
+    }
+
+    public void removeMainSubAndAllContents(String s){
+        MainSubject m = getMainSubject(s);
+        for(Auftrag a:m.getAuftrage()){
+            removeAuftrag(a);
+        }
+        for(int i = 0;i<m.getSubjects().size();i++)
+            for(Day d: getaDays()){
+                if(d.getSubjects().contains(m.getSubjects().get(i))){
+                   d.removeSubject(m.getSubjects().remove(i));
+                   i--;
+                   break;
+                }
+            }
+        m.removeMe();
+    }
+
+    public void removeAuftrag(Auftrag a){
+        a.getSubject().removeAuftrag(a);
+        Main.inst.getaAss().remove(a);
+        Main.inst.getaGuis().remove(a.getAugui());
     }
 
     public JFileChooser getFileChooser() {

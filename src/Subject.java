@@ -2,6 +2,8 @@ import com.google.gson.annotations.Expose;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 //todo convert to JPanel
 public class Subject {
@@ -115,7 +117,7 @@ public class Subject {
      * Equals Method
      *
      * @param s The Object to Compare itself to
-     * @return boolean, if the Object is equal to The SUbject. Only comppares the Teacher name and Main Subject
+     * @return boolean, if the Object is equal to The Subject. Only comppares the Teacher name and Main Subject
      */
     @Override
     public boolean equals(Object s) {
@@ -183,8 +185,9 @@ public class Subject {
         content = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
-                g.setColor(MainSub.getDrawAttColor());
-                g.fillOval(content.getWidth() - 30, 0, content.getHeight(), content.getHeight());
+                    g.setColor(MainSub.getDrawAttColor());
+                    g.fillOval(content.getWidth() - 30, 0, content.getHeight(), content.getHeight());
+
             }
         };
         label.setOpaque(true);

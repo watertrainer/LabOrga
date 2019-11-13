@@ -1,16 +1,15 @@
 import com.google.gson.annotations.Expose;
 
 import java.util.Date;
-import java.util.Objects;
 
-public class Auftrag {
+class Auftrag {
     /**
-     * The Date until which the Assignment has to be done
+     * The date until which the assignment has to be done
      */
     @Expose
     private Date deadline;
     /**
-     * Lessons which are avaiable for this assignment
+     * Lessons which are available for this assignment
      */
     @Expose
     private int lessons;
@@ -20,111 +19,95 @@ public class Auftrag {
     @Expose
     private int lessonsDone;
     /**
-     * Description of this Assignment
+     * Description of this assignment
      */
     @Expose
     private String description;
     /**
-     * The String representation of the Main Subject. Saving purposes.
+     * The string representation of the Main Subject for saving purposes
      */
     @Expose
     private String subjects;
     /**
-     * The Main Subject
+     * The Main Subject of this assignment
+     *
+     * @see MainSubject
      */
     private MainSubject subject;
     /**
-     * The GUI for this Assignment
+     * The GUI for this assignment
+     *
+     * @see AuftragGUI
      */
     private AuftragGUI augui;
 
     /**
-     * @param dead    Deadline for this Assignment
-     * @param lessons Number of lessons avaiable
-     * @param des     short Description of this assignment
-     * @param sub     Subject of this Assignment
+     * @param dead    Short for deadline for this assignment
+     * @param lessons Number of lessons available
+     * @param des     Short for the description of this assignment
+     * @param sub     Short for the subject of this assignment
      */
     Auftrag(Date dead, int lessons, String des, MainSubject sub) {
-        deadline = dead;
+        this.deadline = dead;
         this.lessons = lessons;
-        lessonsDone = 0;
-        description = des;
-        subject = sub;
-        subjects = sub.getName();
+        setLessonsDone(0);
+        this.description = des;
+        this.subject = sub;
+        this.subjects = sub.getName();
         init();
-
     }
 
     /**
-     * lesson of this Assignment is done
+     * Initialization of this assignment
      */
-    public void lessonDone() {
-        lessonsDone++;
-    }
-
-    /**
-     * A number of lessons for this Assignment is done
-     *
-     * @param i the number of lessons
-     */
-    public void lessonsDone(int i) {
-        lessonsDone += i;
-    }
-
-    /**
-     * Initsialation of this Assignment
-     */
-    public void init() {
-        subject = Main.inst.getMainSubject(subjects);
-        subject.addAuftrag(this);
-        augui = new AuftragGUI(this, subject);
+    void init() {
+        this.subject = Main.inst.getMainSubject(this.subjects);
+        getSubject().addAuftrag(this);
+        augui = new AuftragGUI(this, getSubject());
         Main.inst.getaGuis().add(augui);
-
         Main.inst.gui.getAuftragPanel().add(augui.content);
         Main.inst.gui.getAuftragPanel().revalidate();
         Main.inst.gui.getAuftragPanel().repaint();
     }
 
-    public int getLessonsDone() {
-        return lessonsDone;
+    int getLessonsDone() {
+        return this.lessonsDone;
     }
 
-    public void setLessonsDone(int lessons) {
+    void setLessonsDone(int lessons) {
         this.lessonsDone = lessons;
     }
 
     /**
-     * Calculates the number of das which are remaining till the deadline of this Assignment.
+     * Calculates the number of days remaining for this assignment.
      *
-     * @return A long representation of the number of Days remaining
+     * @return A long representation of the number of days remaining
      */
-    public long getRemaining() {
-        Date d = new Date(System.currentTimeMillis());
-        long diff = deadline.getTime() - d.getTime();
-        return diff / (24 * 60 * 60 * 1000);
+    long getRemaining() {
+        return (this.deadline.getTime() - new Date(System.currentTimeMillis()).getTime()) / (24 * 60 * 60 * 1000);
     }
 
-    public MainSubject getSubject() {
-        return subject;
+    MainSubject getSubject() {
+        return this.subject;
     }
 
-    public String getDescription() {
-        return description;
+    String getDescription() {
+        return this.description;
     }
 
     /**
-     * Calculates the Attention level
+     * Calculates the attention level
      *
-     * @return short representation of the Attention level
+     * @return Short representation of the attention level
      */
-    public short needAttention() {
+    short needAttention() {
         if (getRemaining() < 3) return 1;
         else if (getRemaining() < 7) return 2;
         else return 3;
     }
 
-    public AuftragGUI getAugui() {
-        return augui;
+    AuftragGUI getAugui() {
+        return this.augui;
     }
 
     @Override
@@ -134,22 +117,13 @@ public class Auftrag {
         Auftrag auftrag = (Auftrag) o;
         if (getLessons() != auftrag.getLessons()) return false;
         if (getLessonsDone() != auftrag.getLessonsDone()) return false;
-        if (!deadline.equals(auftrag.deadline)) return false;
+        if (!this.deadline.equals(auftrag.deadline)) return false;
         if (!getDescription().equals(auftrag.getDescription())) return false;
-        if (!subjects.equals(auftrag.subjects)) return false;
+        if (!this.subjects.equals(auftrag.subjects)) return false;
         return getSubject().equals(auftrag.getSubject());
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(deadline, lessons, lessonsDone, description, subjects, subject, augui);
-    }
-
-    public void finished() {
-        Main.inst.getaGuis().remove(augui);
-    }
-
-    public int getLessons() {
-        return lessons;
+    int getLessons() {
+        return this.lessons;
     }
 }

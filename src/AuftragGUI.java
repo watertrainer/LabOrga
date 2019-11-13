@@ -33,13 +33,27 @@ public class AuftragGUI {
      */
     public JButton AuftragDone;
     /**
-     *
+     * Shows the Short Description of the Assignment
      */
     public JLabel Des;
+    /**
+     * The content Pane of the Assignment. All other COmponents are in here
+     */
     public JPanel content;
+    /**
+     * The Assignment which is rendered in this CLass
+     */
     private Auftrag a;
+    /**
+     * The Main Subject of the Assingment
+     */
     private MainSubject ms;
 
+    /**
+     * Construcctor
+     *
+     *
+     */
     AuftragGUI(Auftrag a, MainSubject m) {
         super();
         this.a = a;
@@ -52,6 +66,9 @@ public class AuftragGUI {
             Fach.setForeground(Color.white);
         lessons.setText(a.getLessons() + "");
         Des.setText(a.getDescription());
+        /**
+         * Called when an Lesson is done.
+         */
         plus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,6 +79,9 @@ public class AuftragGUI {
                 }
             }
         });
+        /**
+         * Called when an Lessons should be removed
+         */
         minus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -74,12 +94,13 @@ public class AuftragGUI {
         content.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         content.setOpaque(true);
         content.setBorder(BorderFactory.createLineBorder(ms.getColor(), 3));
+        /**
+         * Called when the Assignment is done
+         */
         AuftragDone.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ms.removeAuftrag(a);
-                Main.inst.getaAss().remove(a);
-                a.finished();
+                Main.inst.removeAuftrag(a);
                 Main.inst.gui.getAuftragPanel().remove(content);
                 Main.inst.gui.getAuftragPanel().revalidate();
             }
