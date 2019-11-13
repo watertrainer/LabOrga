@@ -48,7 +48,7 @@ class Auftrag {
      * @param sub     Short for the subject of this assignment
      */
     Auftrag(Date dead, int lessons, String des, MainSubject sub) {
-        this.deadline = dead;
+        deadline = dead;
         this.lessons = lessons;
         setLessonsDone(0);
         this.description = des;
