@@ -49,6 +49,8 @@ class Auftrag {
     private AuftragGUI augui;
 
     /**
+     * Constructor
+     *
      * @param dead    Deadline for this assignment
      * @param lessons Number of lessons available for this assignment
      * @param des     Description of this assignment

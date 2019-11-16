@@ -6,25 +6,30 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class Day implements ActionListener {
+class Day implements ActionListener {
+
     /**
-     * An List of Subjects which are in this Day
+     * An List of Subjects which are in this day
      */
     @Expose
     private ArrayList<Subject> Subjects;
+
     /**
-     * THe JButton which should add an Subject to this day
+     * The JButton which should add an Subject to this day
      */
     private JButton btn;
+
     /**
-     * Should the day draw itself in Color
+     * Whether the day should draw itself in color
      */
     private boolean enabled;
+
     /**
-     * String representation of this day. THis String is also the Key of this Da in the Days HashMap in Main.
+     * String representation of this day. This String is also the key of this day in the aDays HashMap in Main.
      */
     @Expose
     private String Day;
+
     /**
      * The JPanel of this Day in the LabPlan Tab
      */
@@ -33,34 +38,34 @@ public class Day implements ActionListener {
     /**
      * Constructor
      *
-     * @param Day The name of the Day. Is also the Key in the HashMap aDays
-     * @param content The JPanel where the Day is rendered to
+     * @param day     The name of the day. It is also the key in the HashMap aDays in Main.
+     * @param content The JPanel where the day is rendered to
      */
-    public Day(String Day, JPanel content) {
-        this.Day = Day;
+    Day(String day, JPanel content) {
+        Day = day;
         this.content = content;
         Subjects = new ArrayList<>();
         if (Main.inst.first)
             Main.inst.addDay(this);
-        for (int i = 0; i < Subjects.size(); i++) {
-            Subjects.get(i).addToGUI(content);
+        for (Subject subject : Subjects) {
+            subject.addToGUI(content);
         }
     }
 
     /**
-     * Constructor
+     * Empty constructor for saving purpose
      */
-    public Day() {
-        this.content = new JPanel();
+    Day() {
+        content = new JPanel();
         Subjects = new ArrayList<>();
-        this.Day = "";
+        Day = "";
     }
 
     /**
-     * Initialisation of this class
+     * Initialisation of this day
      */
-    public void init() {
-        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
+    void init() {
+        content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
         btn = new JButton("+");
         btn.setMaximumSize(new Dimension(Short.MAX_VALUE, 25));
         content.add(btn);
@@ -73,9 +78,9 @@ public class Day implements ActionListener {
     }
 
     /**
-     * actionPerformed for the button which adds an Subject to this Day
+     * ActionPerformed for the button which adds an Subject to this day
      *
-     * @param e The Represantion of the button press Event
+     * @param e The representation of the button press event
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -85,40 +90,36 @@ public class Day implements ActionListener {
             Subject s = mS.getAsSubject();
             s.setTeacher(JOptionPane.showInputDialog(null, "Bitte gebe die unterrichtende Lehrkraft ein:", "Lehrer"
                     , JOptionPane.QUESTION_MESSAGE));
-            if (!getSubjects().contains(s) && s.getTeacher() != null) {
+            if (!Subjects.contains(s) && s.getTeacher() != null) {
                 addSubject(s);
-                s.addToGUI(getContent());
+                s.addToGUI(content);
             }
         }
     }
 
-    public void setContent(JPanel content) {
-        this.content = content;
-    }
-
-    public String getDay() {
+    String getDay() {
         return Day;
     }
 
-    public void addSubject(Subject s) {
+    void addSubject(Subject s) {
         Subjects.add(s);
     }
 
-    public ArrayList<Subject> getSubjects() {
+    ArrayList<Subject> getSubjects() {
         return Subjects;
     }
 
     /**
-     * Remove an Subject from this Day
+     * Removes a Subject from this day
      *
      * @param subject The Subject to be removed
      */
-    public void removeSubject(Subject subject) {
+    void removeSubject(Subject subject) {
         try {
-            if (!getSubjects().remove(subject)) throw new AssertionError();
-            getContent().remove(subject.content);
+            if (!Subjects.remove(subject)) throw new AssertionError();
+            content.remove(subject.content);
             subject.getMainSubject().removeSubject(subject);
-            getContent().revalidate();
+            content.revalidate();
         } catch (Throwable t) {
             JOptionPane.showMessageDialog(null, "Das Fach konnte nicht entfernt werden.", "Fehler"
                     , JOptionPane.ERROR_MESSAGE);
@@ -128,18 +129,22 @@ public class Day implements ActionListener {
 
     @Override
     public String toString() {
-        return getDay();
+        return Day;
     }
 
     public JPanel getContent() {
         return content;
     }
 
+    public void setContent(JPanel content) {
+        this.content = content;
+    }
+
     public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 }
