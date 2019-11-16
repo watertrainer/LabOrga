@@ -9,10 +9,10 @@ import java.util.ArrayList;
 class Day implements ActionListener {
 
     /**
-     * An List of Subjects which are in this day
+     * An ArrayList of Subjects which are in this day
      */
     @Expose
-    private ArrayList<Subject> Subjects;
+    private ArrayList<Subject> subjects;
 
     /**
      * The JButton which should add an Subject to this day
@@ -28,10 +28,10 @@ class Day implements ActionListener {
      * String representation of this day. This String is also the key of this day in the aDays HashMap in Main.
      */
     @Expose
-    private String Day;
+    private String day;
 
     /**
-     * The JPanel of this Day in the LabPlan Tab
+     * The JPanel of this day in the LabPlan Tab
      */
     private transient JPanel content;
 
@@ -42,12 +42,12 @@ class Day implements ActionListener {
      * @param content The JPanel where the day is rendered to
      */
     Day(String day, JPanel content) {
-        Day = day;
+        this.day = day;
         this.content = content;
-        Subjects = new ArrayList<>();
-        if (Main.inst.first)
+        subjects = new ArrayList<>();
+        if (Main.inst.isFirst())
             Main.inst.addDay(this);
-        for (Subject subject : Subjects) {
+        for (Subject subject : subjects) {
             subject.addToGUI(content);
         }
     }
@@ -57,8 +57,8 @@ class Day implements ActionListener {
      */
     Day() {
         content = new JPanel();
-        Subjects = new ArrayList<>();
-        Day = "";
+        subjects = new ArrayList<>();
+        day = "";
     }
 
     /**
@@ -70,7 +70,7 @@ class Day implements ActionListener {
         btn.setMaximumSize(new Dimension(Short.MAX_VALUE, 25));
         content.add(btn);
         btn.addActionListener(this);
-        for (Subject s : Subjects) {
+        for (Subject s : subjects) {
             s.init();
             s.addToGUI(content);
             s.getMainSub().addSubject(s);
@@ -90,7 +90,7 @@ class Day implements ActionListener {
             Subject s = mS.getAsSubject();
             s.setTeacher(JOptionPane.showInputDialog(null, "Bitte gebe die unterrichtende Lehrkraft ein:", "Lehrer"
                     , JOptionPane.QUESTION_MESSAGE));
-            if (!Subjects.contains(s) && s.getTeacher() != null) {
+            if (!subjects.contains(s) && s.getTeacher() != null) {
                 addSubject(s);
                 s.addToGUI(content);
             }
@@ -98,15 +98,15 @@ class Day implements ActionListener {
     }
 
     String getDay() {
-        return Day;
+        return day;
     }
 
-    void addSubject(Subject s) {
-        Subjects.add(s);
+    void addSubject(Subject subject) {
+        subjects.add(subject);
     }
 
     ArrayList<Subject> getSubjects() {
-        return Subjects;
+        return subjects;
     }
 
     /**
@@ -116,7 +116,7 @@ class Day implements ActionListener {
      */
     void removeSubject(Subject subject) {
         try {
-            if (!Subjects.remove(subject)) throw new AssertionError();
+            if (!subjects.remove(subject)) throw new AssertionError();
             content.remove(subject.content);
             subject.getMainSubject().removeSubject(subject);
             content.revalidate();
@@ -129,7 +129,7 @@ class Day implements ActionListener {
 
     @Override
     public String toString() {
-        return Day;
+        return day;
     }
 
     public JPanel getContent() {

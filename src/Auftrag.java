@@ -29,40 +29,36 @@ class Auftrag {
     private String description;
 
     /**
-     * The string representation of the Main Subject for saving purposes
+     * The string representation of the MainSubject for saving purposes
      */
     @Expose
-    private String subjects;
+    private String subjectS;
 
     /**
-     * The Main Subject of this assignment
-     *
-     * @see MainSubject
+     * The MainSubject of this assignment
      */
     private MainSubject subject;
 
     /**
-     * The GUI for this assignment
-     *
-     * @see AuftragGUI
+     * The AuftragGUI for this assignment
      */
-    private AuftragGUI augui;
+    private AuftragGUI assGUI;
 
     /**
      * Constructor
      *
-     * @param dead    Deadline for this assignment
-     * @param lessons Number of lessons available for this assignment
-     * @param des     Description of this assignment
-     * @param sub     Main Subject of this assignment
+     * @param deadline    The deadline for this assignment
+     * @param lessons     The number of lessons available for this assignment
+     * @param description The description of this assignment
+     * @param mainSubject The MainSubject of this assignment
      */
-    Auftrag(Date dead, int lessons, String des, MainSubject sub) {
-        deadline = dead;
+    Auftrag(Date deadline, int lessons, String description, MainSubject mainSubject) {
+        this.deadline = deadline;
         this.lessons = lessons;
         lessonsDone = 0;
-        description = des;
-        subject = sub;
-        subjects = sub.getName();
+        this.description = description;
+        subject = mainSubject;
+        subjectS = mainSubject.getName();
         init();
     }
 
@@ -70,11 +66,11 @@ class Auftrag {
      * Initialization of this assignment
      */
     void init() {
-        subject = Main.inst.getMainSubject(subjects);
+        subject = Main.inst.getMainSubject(subjectS);
         subject.addAuftrag(this);
-        augui = new AuftragGUI(this, subject);
-        Main.inst.getaGuis().add(augui);
-        Main.inst.gui.getAuftragPanel().add(augui.content);
+        assGUI = new AuftragGUI(this, subject);
+        Main.inst.getaGuis().add(assGUI);
+        Main.inst.gui.getAuftragPanel().add(assGUI.content);
         Main.inst.gui.getAuftragPanel().revalidate();
         Main.inst.gui.getAuftragPanel().repaint();
     }
@@ -90,7 +86,7 @@ class Auftrag {
     /**
      * Calculates the number of days remaining for this assignment
      *
-     * @return A long time representation of the number of days remaining
+     * @return A long representing the number of days remaining
      */
     long getRemaining() {
         return (deadline.getTime() - new Date(System.currentTimeMillis()).getTime()) / (24 * 60 * 60 * 1000);
@@ -107,7 +103,7 @@ class Auftrag {
     /**
      * Calculates the attention level
      *
-     * @return Short representation of the attention level
+     * @return A short representing the attention level
      */
     short needAttention() {
         if (getRemaining() < 3) return 1;
@@ -115,8 +111,8 @@ class Auftrag {
         else return 3;
     }
 
-    AuftragGUI getAugui() {
-        return augui;
+    AuftragGUI getAssGUI() {
+        return assGUI;
     }
 
     @Override
@@ -128,7 +124,7 @@ class Auftrag {
         if (lessonsDone != auftrag.lessonsDone) return false;
         if (!deadline.equals(auftrag.deadline)) return false;
         if (!description.equals(auftrag.description)) return false;
-        if (!subjects.equals(auftrag.subjects)) return false;
+        if (!subjectS.equals(auftrag.subjectS)) return false;
         return subject.equals(auftrag.subject);
     }
 

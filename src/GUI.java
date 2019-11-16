@@ -195,7 +195,7 @@ public class GUI extends JFrame {
                 try {
                     f.createNewFile();
                     BufferedWriter bw = new BufferedWriter(new FileWriter(f));
-                    Main.inst.first = false;
+                    Main.inst.setFirst(false);
                     bw.write(g.toJson(Main.inst));
                     bw.close();
                     new File(System.getenv("TEMP")+"\\File.temp").createNewFile();
@@ -243,7 +243,7 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainSubject w = (((MainSubject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection", JOptionPane.DEFAULT_OPTION, null, Main.inst.getaSubjects().toArray(), "0")));
-                if (Main.inst.removeMainSub(w.getName())) {
+                if (Main.inst.removeMainSubject(w.getName())) {
                     JOptionPane.showMessageDialog(Main.inst.gui, "Erfolgreich gelöscht");
                 } else {
                     int chose = JOptionPane.showConfirmDialog(Main.inst.gui, "Dieses Fach ist noch in deinem Stundenplan zu finden");
@@ -373,7 +373,7 @@ public class GUI extends JFrame {
      * Initiates all UI components
      */
     private void createUIComponents() {
-        if (Main.inst.first) {
+        if (Main.inst.isFirst()) {
             cnMn = new Day("Montag", new JPanel()).getContent();
             cnDn = new Day("Dienstag", new JPanel()).getContent();
             cnMt = new Day("Mittwoch", new JPanel()).getContent();
@@ -388,12 +388,12 @@ public class GUI extends JFrame {
         }
         assignemntPanel = new JPanel();
         this.lessonsDoneProgressBar = new JProgressBar();
-        if (Main.inst.first) {
+        if (Main.inst.isFirst()) {
             int insgStd = insgStd();
-            Main.inst.setMaxIngs(insgStd);
+            Main.inst.setMaxTotal(insgStd);
             Main.inst.setMaxPerSubject(stdProFach(insgStd));
         }
-        lessonsDoneProgressBar.setMaximum(Main.inst.getMaxIngs());
+        lessonsDoneProgressBar.setMaximum(Main.inst.getMaxTotal());
         lessonsDoneProgressBar.setMinimum(0);
         lessonsDoneProgressBar.setBorder(BorderFactory.createLineBorder(Color.black, 3));
         lessonsDoneProgressBar.setBorderPainted(true);

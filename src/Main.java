@@ -1,67 +1,69 @@
 import com.google.gson.annotations.Expose;
 
 import javax.swing.*;
-import java.io.BufferedReader;
 import java.util.*;
 
 public class Main {
+
     /**
-     * Instance of this CLass
+     * Instance of this class
      */
-    public transient static Main inst;
+    public static transient Main inst;
     /**
-     * All Main Subjects
+     * GUI of this main
+     */
+    public transient GUI gui;
+    /**
+     * HashMap of all MainSubjects. The key is their name string.
      */
     @Expose
     private HashMap<String, MainSubject> aSubjects;
     /**
-     * All Days with the according String eg. "Monday"
+     * HashMap with all Days mapped from their according string eg. "Monday"
      */
     @Expose
     private HashMap<String, Day> aDays;
     /**
-     * All Assignments
+     * ArrayList of all Assignments
      */
     @Expose
     private ArrayList<Auftrag> aAss;
     /**
-     * All GUIs from the Assignments. Makes it easier to Sort the Assignments in the ASsignments Tab
+     * ArrayList of all AuftragGUIs from the Assignments. Makes it easier to sort the Assignments in the Assignments Tab.
      */
     private ArrayList<AuftragGUI> aGuis;
     /**
-     * Is this the first start of the program
+     * Whether this is the first start of the program
      */
     @Expose
-    boolean first;
+    private boolean first;
     /**
-     * HOw many of all Lab lessons are done already
+     * Number of all Lab lessons done already
      */
     @Expose
     private int lessonsDone;
     /**
-     * How many Lab lessons have to be done per Subject
+     * Number of Lab lessons to be done per Subject
      */
     @Expose
     private int maxPerSubject;
     /**
-     * How many Lab lesson have to be done collectively
+     * Number of Lab lesson to be done in total of all Subjects
      */
     @Expose
-    private int maxIngs;
+    private int maxTotal;
     /**
-     * Gui of this Main
-     */
-    public transient GUI gui;
-    /**
-     * The File Chooser. Points to the FIle in which everything is saved
+     * The file chooser that points to the file in which everything is saved
      */
     private transient JFileChooser f;
+
     /**
      * Int representation of the Day of the week
      */
     private int d;
+
     /**
-     * Should d be updated, aka the day of week changed
+     * Whether d should be updated because day of week changed
      */
     private boolean ch;
 
@@ -78,15 +80,12 @@ public class Main {
         first = true;
         Thread t = new Thread(() -> {
             while (true) {
-                if (Main.inst.gui != null)
-                    if (Main.inst.gui.contentPane != null)
-                        Main.inst.gui.contentPane.paintImmediately(0,0,gui.getWidth(),gui.getHeight());
+                if (inst.gui != null && inst.gui.contentPane != null)
+                    inst.gui.contentPane.paintImmediately(0, 0, gui.getWidth(), gui.getHeight());
                 if (Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK) != d) {
-                    setCh(false);
+                    ch = false;
                     d = Calendar.getInstance(TimeZone.getDefault()).get(Calendar.DAY_OF_WEEK);
-
-                } else
-                    setCh(true);
+                } else ch = true;
                 try {
                     Thread.sleep(400);
                 } catch (InterruptedException e) {
@@ -98,76 +97,79 @@ public class Main {
     }
 
     /**
-     * Initialisation of Main. Calls all init() Methods of the Assignments, Days and Subjects
+     * Initialisation of Main by calling all init() Methods of the Assignments, Days and MainSubjects
      */
-    public void init() {
-        for (Day d : getaDays()) {
-            d.init();
-        }
-        for (Auftrag a : aAss) {
-            a.init();
-        }
-        for (MainSubject s : aSubjects.values()) {
-            s.init();
-        }
+    void init() {
+        for (Day day : getaDays()) day.init();
+        for (Auftrag a : aAss) a.init();
+        for (MainSubject s : aSubjects.values()) s.init();
     }
 
     /**
-     * adds an Assignment to the aAss list
+     * Adds an Assignment to the ArrayList aAss
      *
-     * @param a The assignment to be added
+     * @param auftrag The Assignment to be added
      */
-    public void addAuftrag(Auftrag a) {
-        aAss.add(a);
+    void addAuftrag(Auftrag auftrag) {
+        aAss.add(auftrag);
     }
 
-    public Collection<MainSubject> getaSubjects() {
+    Collection<MainSubject> getaSubjects() {
         return aSubjects.values();
     }
 
-    public Collection<Day> getaDays() {
+    public void setaSubjects(HashMap<String, MainSubject> aSubjects) {
+        this.aSubjects = aSubjects;
+    }
+
+    Collection<Day> getaDays() {
         return aDays.values();
     }
 
-    public ArrayList<Auftrag> getaAss() {
+    public void setaDays(HashMap<String, Day> aDays) {
+        this.aDays = aDays;
+    }
+
+    ArrayList<Auftrag> getaAss() {
         return aAss;
     }
 
-    public MainSubject getMainSubject(String s) {
+    public void setaAss(ArrayList<Auftrag> aAss) {
+        this.aAss = aAss;
+    }
+
+    MainSubject getMainSubject(String s) {
         return aSubjects.get(s);
     }
 
-    public Day getDay(String s) {
+    Day getDay(String s) {
         return aDays.get(s);
     }
 
-    public void addMainSubject(MainSubject s) {
-        aSubjects.put(s.getName(), s);
+    void addMainSubject(MainSubject mainSubject) {
+        aSubjects.put(mainSubject.getName(), mainSubject);
     }
 
-    public void addDay(Day s) {
-        aDays.put(s.getDay(), s);
+    void addDay(Day day) {
+        aDays.put(day.getDay(), day);
     }
 
     /**
-     * Adds an Subject. Also adds the Subject to the corresponding MainSub
+     * Adds a Subject. Also adds the Subject to the corresponding MainSubject.
      *
-     * @param s THe Subjectt o be added
+     * @param subject The Subject o be added
      */
-    public void addSubject(Subject s) {
-        for (MainSubject m : aSubjects.values()) {
-            if (m.equals(s.getMainSub()))
-                m.addSubject(s);
-        }
+    public void addSubject(Subject subject) {
+        for (MainSubject ms : aSubjects.values()) if (ms.equals(subject.getMainSub())) ms.addSubject(subject);
     }
 
     /**
-     * Removes an Main Sub.
+     * Removes a MainSubject
      *
      * @param s The MainSub to be removed
      * @return if the removal was successful
      */
-    public boolean removeMainSub(String s) {
+    boolean removeMainSubject(String s) {
         MainSubject m = getMainSubject(s);
         if (m.removeMe()) {
             aSubjects.remove(s);
@@ -177,57 +179,57 @@ public class Main {
         }
     }
 
-    public void removeMainSubAndAllContents(String s){
-        MainSubject m = getMainSubject(s);
-        for(Auftrag a:m.getAuftrage()){
+    void removeMainSubAndAllContents(String s) {
+        MainSubject ms = getMainSubject(s);
+        for (Auftrag a : ms.getAuftrage()) {
             removeAuftrag(a);
         }
-        for(int i = 0;i<m.getSubjects().size();i++)
-            for(Day d: getaDays()){
-                if(d.getSubjects().contains(m.getSubjects().get(i))){
-                   d.removeSubject(m.getSubjects().remove(i));
-                   i--;
-                   break;
+        for (int i = 0; i < ms.getSubjects().size(); i++)
+            for (Day day : getaDays()) {
+                if (day.getSubjects().contains(ms.getSubjects().get(i))) {
+                    day.removeSubject(ms.getSubjects().remove(i));
+                    i--;
+                    break;
                 }
             }
-        m.removeMe();
+        ms.removeMe();
     }
 
-    public void removeAuftrag(Auftrag a){
+    void removeAuftrag(Auftrag a) {
         a.getSubject().removeAuftrag(a);
-        Main.inst.getaAss().remove(a);
-        Main.inst.getaGuis().remove(a.getAugui());
+        inst.aAss.remove(a);
+        inst.aGuis.remove(a.getAssGUI());
     }
 
-    public JFileChooser getFileChooser() {
+    JFileChooser getFileChooser() {
         return f;
     }
 
-    public int getLessonsDone() {
+    int getLessonsDone() {
         return lessonsDone;
     }
 
-    public void setLessonsDone(int lessonsDone) {
+    void setLessonsDone(int lessonsDone) {
         this.lessonsDone = lessonsDone;
     }
 
-    public int getMaxPerSubject() {
+    int getMaxPerSubject() {
         return maxPerSubject;
     }
 
-    public void setMaxPerSubject(int maxPerSubject) {
+    void setMaxPerSubject(int maxPerSubject) {
         this.maxPerSubject = maxPerSubject;
     }
 
-    public int getMaxIngs() {
-        return maxIngs;
+    int getMaxTotal() {
+        return maxTotal;
     }
 
-    public void setMaxIngs(int maxIngs) {
-        this.maxIngs = maxIngs;
+    void setMaxTotal(int maxTotal) {
+        this.maxTotal = maxTotal;
     }
 
-    public int getD() {
+    int getD() {
         return d;
     }
 
@@ -235,7 +237,7 @@ public class Main {
         this.d = d;
     }
 
-    public boolean isCh() {
+    boolean isCh() {
         return ch;
     }
 
@@ -243,19 +245,15 @@ public class Main {
         this.ch = ch;
     }
 
-    public ArrayList<AuftragGUI> getaGuis() {
+    ArrayList<AuftragGUI> getaGuis() {
         return aGuis;
     }
 
-    public void setaSubjects(HashMap<String, MainSubject> aSubjects) {
-        this.aSubjects = aSubjects;
+    boolean isFirst() {
+        return first;
     }
 
-    public void setaDays(HashMap<String, Day> aDays) {
-        this.aDays = aDays;
-    }
-
-    public void setaAss(ArrayList<Auftrag> aAss) {
-        this.aAss = aAss;
+    void setFirst(boolean first) {
+        this.first = first;
     }
 }

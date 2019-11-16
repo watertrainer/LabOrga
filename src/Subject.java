@@ -2,8 +2,6 @@ import com.google.gson.annotations.Expose;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 //todo convert to JPanel
 public class Subject {
@@ -68,7 +66,7 @@ public class Subject {
      * init Method, called from The Day
      */
     public void init() {
-        if (Main.inst.first) {
+        if (Main.inst.isFirst()) {
             subjectSt = MainSub.getName();
         }
         MainSub = Main.inst.getMainSubject(subjectSt);
