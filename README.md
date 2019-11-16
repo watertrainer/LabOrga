@@ -1,3 +1,3 @@
-Lab Orga Programm
+Dies ist ein Lernlabor (Lab) Organisations Programm.
 
-Tolles Programm für den Hansenberg
+Es ist für die Internatsschule Schloss Hansenberg sehr geeignet.
