@@ -4,50 +4,58 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * An class representation of a subject. It knows all subject times, which are saved separately in the Lab Plan and assignments of this subject
+ * A class representation of a subject in which all subject times, which are saved separately in the Lab Plan and
+ * {@linkplain Auftrag Assignments} of this subject are saved.
  */
 public class MainSubject {
+
     /**
-     * The name of the Main Subject
+     * The name of this MainSubject
      */
     @Expose
     private String name;
+
     /**
-     * Color of the subject
+     * {@link Color} of this subject
      */
     private Color color;
+
     @Expose
-    private boolean hasAssign = false;
+    private boolean hasAssign;
+
     /**
-     * The rgb Value of the color needed for saving purpose
+     * The rgbValue of the {@link Color} of this MainSubject needed for saving purpose
      */
     @Expose
     private int rgbValue;
+
     /**
      * Lessons done of this subject
      */
     @Expose
     private int lessonsDone;
-    /**
-     * Assignments in this subject
-     */
-    private ArrayList<Auftrag> Auftrage;
-    /**
-     * Subjects time entries in the Lab Plan of this subject
-     */
-    private ArrayList<Subject> Subjects;
-    /**
-     * Gui to show how many lessons are done in this subject already
-     */
-    private StundenGUI stdgui;
 
-    public MainSubject(String Name, Color color) {
-        super();
-        this.name = Name;
+    /**
+     * {@link ArrayList} of {@linkplain Auftrag Assignments} in this subject
+     */
+    private ArrayList<Auftrag> assignments;
+
+    /**
+     * {@link ArrayList} of {@link Subject} time entries in the Lab Plan of this subject
+     */
+    private ArrayList<Subject> subjects;
+
+    /**
+     * GUI that shows how many lessons are done in this subject already
+     */
+    private StundenGUI stdGUI;
+
+    public MainSubject(String name, Color color) {
+        this.name = name;
         this.color = color;
-        this.rgbValue = color.getRGB();
-        Subjects = new ArrayList<>();
-        Auftrage = new ArrayList<>();
+        rgbValue = color.getRGB();
+        subjects = new ArrayList<>();
+        assignments = new ArrayList<>();
         init();
     }
 
@@ -55,23 +63,22 @@ public class MainSubject {
      * Constructor for saving purpose
      */
     public MainSubject() {
-        super();
-        this.name = "";
-        this.color = null;
-        this.rgbValue = 0;
-        Subjects = new ArrayList<>();
-        Auftrage = new ArrayList<>();
+        name = "";
+        color = null;
+        rgbValue = 0;
+        subjects = new ArrayList<>();
+        assignments = new ArrayList<>();
     }
 
     /**
-     * Removes itself from the GUIs
-     * @return false if there are still Subjects in the Lab Plan
+     * Removes itself from the GUIs if it has no entries in the Lab Plan ({@link MainSubject#subjects})
+     *
+     * @return Whether there are still entries of this subject in the Lab Plan and the subject could be removed
      */
-    public boolean removeMe() {
-        if (Subjects.size() > 0) {
-            return false;
-        } else {
-            Main.inst.gui.lessonPanel.remove(stdgui.content);
+    boolean removeMe() {
+        if (!subjects.isEmpty()) return false;
+        else {
+            Main.inst.gui.lessonPanel.remove(stdGUI.content);
             Main.inst.gui.lessonPanel.revalidate();
             Main.inst.gui.lessonPanel.repaint();
             return true;
@@ -79,36 +86,52 @@ public class MainSubject {
     }
 
     /**
-     * Initialasation. Adds itself to the GUIs
+     * Initialization of the MainSubject. Adds itself to the GUIs and updates {@link MainSubject#hasAssign}
      */
-    public void init() {
-        stdgui = new StundenGUI(this);
-        Main.inst.gui.lessonPanel.add(stdgui.content);
+    void init() {
+        stdGUI = new StundenGUI(this);
+        Main.inst.gui.lessonPanel.add(stdGUI.content);
         Main.inst.gui.lessonPanel.revalidate();
         Main.inst.gui.lessonPanel.repaint();
         updateHasAssign();
     }
 
     /**
-     * updates, if the Subject has an Assignment
+     * Updates, whether the subject has an {@linkplain Auftrag Assignment}
      */
-    public void updateHasAssign() {
-        setHasAssign(Auftrage.size() > 0);
+    void updateHasAssign() {
+        setHasAssign(!assignments.isEmpty());
     }
 
-    public void addSubject(Subject s) {
-        Subjects.add(s);
+    /**
+     * Adds the {@link Subject} to {@link MainSubject#subjects} in the MainSubject
+     *
+     * @param subject The Subject to be added
+     */
+    void addSubject(Subject subject) {
+        subjects.add(subject);
     }
 
-    public void removeSubject(Subject s) {
-        Subjects.remove(s);
+    /**
+     * Removes the {@link Subject} from {@link MainSubject#subjects} in the MainSubject
+     *
+     * @param s The Subject to be removed
+     */
+    void removeSubject(Subject s) {
+        subjects.remove(s);
     }
 
     @Override
     public String toString() {
-        return "" + this.name;
+        return name;
     }
 
+    /**
+     * Creates a new MainSubject with same {@link MainSubject#name} and {@link MainSubject#color}
+     *
+     * @param t TODO add use of this parameter or delete it
+     * @return The MainSubject with same name and color
+     */
     public MainSubject clone(String t) {
         return new MainSubject(name, new Color(rgbValue));
     }
@@ -117,37 +140,35 @@ public class MainSubject {
     public boolean equals(Object s) {
         if (s instanceof MainSubject) {
             MainSubject f = ((MainSubject) s);
-            return f.getName().equals(name) && f.getColor().equals(color);
-        } else {
-            return false;
-        }
+            return f.name.equals(name) && f.getColor().equals(color);
+        } else return false;
     }
 
     /**
-     * Calculation for the Attention level Color
+     * Calculation of the attention level color of the MainSubject
      *
-     * @return Colro which represents the Attentin level
+     * @return Color which represents the attention level
      */
-    public Color getDrawAttColor() {
+    Color getDrawAttColor() {
         Color ret = Color.green;
-        if (Auftrage.size() == 0)
-            ret = Color.gray;
-        for (Auftrag a : getAuftrage()) {
-            if (a.needAttention() == 1) {
-                ret = Color.red;
-            } else if (a.needAttention() == 2) {
-                if (!ret.equals(Color.red))
-                    ret = Color.orange;
-            }
+        if (assignments.isEmpty()) ret = Color.gray;
+        for (Auftrag a : assignments) {
+            if (a.needAttention() == 1) ret = Color.red;
+            else if (a.needAttention() == 2) if (!ret.equals(Color.red)) ret = Color.orange;
         }
         return ret;
     }
 
-    public Subject getAsSubject() {
+    /**
+     * Converts the MainSubject into a {@link Subject}
+     *
+     * @return The Subject of this MainSubject and empty teacher
+     */
+    Subject getAsSubject() {
         return new Subject("", this);
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
@@ -155,31 +176,45 @@ public class MainSubject {
         this.name = name;
     }
 
-    public Color getColor() {
+    /**
+     * Sets the color according to the {@link MainSubject#rgbValue} of the MainSubject and returns it
+     *
+     * @return The Color corresponding to the rgbValue of the MainSubject
+     */
+    Color getColor() {
         color = new Color(rgbValue);
         return color;
     }
 
     /**
-     * sets The rgbValue and updates the Color. Saving purpose
+     * Sets the color and {@link MainSubject#rgbValue} according to the specified color
      *
-     * @param rgbValue The Rdb Value on which this Subject should be set to
+     * @param color The color to be set to
      */
-    public void setRgbValue(int rgbValue) {
-        this.rgbValue = rgbValue;
-        this.setColor(new Color(rgbValue));
-        for (Subject s : Subjects) {
-            s.updateColor();
-        }
+    void setColor(Color color) {
+        this.color = color;
+        rgbValue = color.getRGB();
     }
 
-    public void addAuftrag(Auftrag a) {
-        Auftrage.add(a);
+    /**
+     * Adds the {@linkplain Auftrag Assignment} to {@link MainSubject#assignments} and updates
+     * {@link MainSubject#hasAssign}
+     *
+     * @param auftrag The Assignment to be added
+     */
+    void addAuftrag(Auftrag auftrag) {
+        assignments.add(auftrag);
         updateHasAssign();
     }
 
-    public void removeAuftrag(Auftrag a) {
-        Auftrage.remove(a);
+    /**
+     * Removes the {@linkplain Auftrag Assignment} from {@link MainSubject#assignments} and updates
+     * {@link MainSubject#hasAssign}
+     *
+     * @param auftrag The Assigment to be removed
+     */
+    void removeAuftrag(Auftrag auftrag) {
+        assignments.remove(auftrag);
         updateHasAssign();
     }
 
@@ -187,31 +222,41 @@ public class MainSubject {
         return rgbValue;
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-        this.rgbValue = color.getRGB();
+    /**
+     * Sets the rgbValue and updates the {@link MainSubject#color} of the MainSubject for each subject for saving
+     * purpose
+     *
+     * @param rgbValue The rgb Value which the Subject should be set to
+     */
+    public void setRgbValue(int rgbValue) {
+        this.rgbValue = rgbValue;
+        setColor(new Color(rgbValue));
+        for (Subject s : subjects) s.updateColor();
     }
 
-    public void setHasAssign(boolean hasAssign) {
+    /**
+     * Sets {@link MainSubject#hasAssign} also for all {@linkplain Subject Subjects} from {@link MainSubject#subjects}
+     *
+     * @param hasAssign
+     */
+    void setHasAssign(boolean hasAssign) {
         this.hasAssign = hasAssign;
-        for (Subject s : Subjects) {
-            s.setHasAssign(hasAssign);
-        }
+        for (Subject s : subjects) s.setHasAssign(hasAssign);
     }
 
-    public int getLessonsDone() {
+    int getLessonsDone() {
         return lessonsDone;
     }
 
-    public void setLessonsDone(int lessonsDone) {
+    void setLessonsDone(int lessonsDone) {
         this.lessonsDone = lessonsDone;
     }
 
-    public ArrayList<Auftrag> getAuftrage() {
-        return Auftrage;
+    ArrayList<Auftrag> getAssignments() {
+        return assignments;
     }
 
-    public ArrayList<Subject> getSubjects() {
-        return Subjects;
+    ArrayList<Subject> getSubjects() {
+        return subjects;
     }
 }

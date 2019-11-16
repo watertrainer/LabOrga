@@ -9,60 +9,58 @@ import java.util.ArrayList;
 class Day implements ActionListener {
 
     /**
-     * An ArrayList of Subjects which are in this day
+     * An {@link ArrayList} of {@linkplain Subject Subjects} which are in this day
      */
     @Expose
     private ArrayList<Subject> subjects;
 
     /**
-     * The JButton which should add an Subject to this day
+     * The {@link JButton} to add a {@link Subject} to this day
      */
     private JButton btn;
 
     /**
-     * Whether the day should draw itself in color
+     * Whether this day should draw itself in color
      */
     private boolean enabled;
 
     /**
-     * String representation of this day. This String is also the key of this day in the aDays HashMap in Main.
+     * {@link String} representation of this day. This {@link String} is also the key of this day in the
+     * {@link java.util.HashMap} aDays in {@link Main}.
      */
     @Expose
     private String day;
 
     /**
-     * The JPanel of this day in the LabPlan Tab
+     * The {@link JPanel} of this day in the LabPlan Tab
      */
     private transient JPanel content;
 
     /**
      * Constructor
      *
-     * @param day     The name of the day. It is also the key in the HashMap aDays in Main.
+     * @param day     The name of the day
      * @param content The JPanel where the day is rendered to
      */
     Day(String day, JPanel content) {
         this.day = day;
         this.content = content;
         subjects = new ArrayList<>();
-        if (Main.inst.isFirst())
-            Main.inst.addDay(this);
-        for (Subject subject : subjects) {
-            subject.addToGUI(content);
-        }
+        if (Main.inst.isFirst()) Main.inst.addDay(this);
+        for (Subject subject : subjects) subject.addToGUI(content);
     }
 
     /**
-     * Empty constructor for saving purpose
+     * Constructor for saving purpose
      */
-    Day() {
+    public Day() {
         content = new JPanel();
         subjects = new ArrayList<>();
         day = "";
     }
 
     /**
-     * Initialisation of this day
+     * Initialization of the day
      */
     void init() {
         content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
@@ -78,7 +76,8 @@ class Day implements ActionListener {
     }
 
     /**
-     * ActionPerformed for the button which adds an Subject to this day
+     * ActionPerformed for the {@linkplain Day#btn JButton btn} which adds a {@link Subject} to {@link Day#subjects} of
+     * that day
      *
      * @param e The representation of the button press event
      */
@@ -101,6 +100,11 @@ class Day implements ActionListener {
         return day;
     }
 
+    /**
+     * Adds the {@link Subject} to {@link Day#subjects} of the day
+     *
+     * @param subject The Subject to be added
+     */
     void addSubject(Subject subject) {
         subjects.add(subject);
     }
@@ -110,7 +114,7 @@ class Day implements ActionListener {
     }
 
     /**
-     * Removes a Subject from this day
+     * Removes the {@link Subject} from {@link Day#subjects} of the day
      *
      * @param subject The Subject to be removed
      */

@@ -5,7 +5,7 @@ import java.util.Date;
 class Auftrag {
 
     /**
-     * The date until which the assignment has to be done
+     * The {@link Date} until which the assignment has to be done
      */
     @Expose
     private Date deadline;
@@ -29,18 +29,18 @@ class Auftrag {
     private String description;
 
     /**
-     * The string representation of the MainSubject for saving purposes
+     * The {@link String} representing the {@link MainSubject} of this assignment for saving purposes
      */
     @Expose
     private String subjectS;
 
     /**
-     * The MainSubject of this assignment
+     * The {@link MainSubject} of this assignment
      */
     private MainSubject subject;
 
     /**
-     * The AuftragGUI for this assignment
+     * The {@link AuftragGUI} for this assignment
      */
     private AuftragGUI assGUI;
 
@@ -69,7 +69,7 @@ class Auftrag {
         subject = Main.inst.getMainSubject(subjectS);
         subject.addAuftrag(this);
         assGUI = new AuftragGUI(this, subject);
-        Main.inst.getaGuis().add(assGUI);
+        Main.inst.getaGUIs().add(assGUI);
         Main.inst.gui.getAuftragPanel().add(assGUI.content);
         Main.inst.gui.getAuftragPanel().revalidate();
         Main.inst.gui.getAuftragPanel().repaint();
@@ -84,7 +84,7 @@ class Auftrag {
     }
 
     /**
-     * Calculates the number of days remaining for this assignment
+     * Calculates the number of days remaining for the assignment
      *
      * @return A long representing the number of days remaining
      */
@@ -101,7 +101,7 @@ class Auftrag {
     }
 
     /**
-     * Calculates the attention level
+     * Calculates the attention level for the assignment
      *
      * @return A short representing the attention level
      */

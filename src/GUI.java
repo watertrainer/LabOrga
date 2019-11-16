@@ -248,7 +248,7 @@ public class GUI extends JFrame {
                 } else {
                     int chose = JOptionPane.showConfirmDialog(Main.inst.gui, "Dieses Fach ist noch in deinem Stundenplan zu finden");
                     if (chose == JOptionPane.YES_OPTION) {
-                        Main.inst.removeMainSubAndAllContents(w.getName());
+                        Main.inst.removeMainSubjectAndAllContents(w.getName());
                     }
                 }
             }
@@ -272,8 +272,8 @@ public class GUI extends JFrame {
         assignemntPanel.setLayout(new BoxLayout(assignemntPanel, BoxLayout.Y_AXIS));
         JButton btn = new JButton();
         btn.setText("Sortieren: Tage");
-        Main.inst.getaGuis().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
-        for (AuftragGUI a : Main.inst.getaGuis()) {
+        Main.inst.getaGUIs().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
+        for (AuftragGUI a : Main.inst.getaGUIs()) {
             assignemntPanel.remove(a.content);
             assignemntPanel.add(a.content);
         }
@@ -284,16 +284,16 @@ public class GUI extends JFrame {
             sort = !sort;
             if (sort) {
                 btn.setText("Sortieren: Tage");
-                Main.inst.getaGuis().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
-                for (AuftragGUI a : Main.inst.getaGuis()) {
+                Main.inst.getaGUIs().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
+                for (AuftragGUI a : Main.inst.getaGUIs()) {
                     assignemntPanel.remove(a.content);
                     assignemntPanel.add(a.content);
                 }
             } else {
                 btn.setText("Sortieren: Fach");
-                Main.inst.getaGuis().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
-                Main.inst.getaGuis().sort(Comparator.comparing(a -> a.getA().getSubject().getName()));
-                for (AuftragGUI a : Main.inst.getaGuis()) {
+                Main.inst.getaGUIs().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
+                Main.inst.getaGUIs().sort(Comparator.comparing(a -> a.getA().getSubject().getName()));
+                for (AuftragGUI a : Main.inst.getaGUIs()) {
                     assignemntPanel.remove(a.content);
                     assignemntPanel.add(a.content);
                 }

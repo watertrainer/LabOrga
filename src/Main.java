@@ -6,64 +6,75 @@ import java.util.*;
 public class Main {
 
     /**
-     * Instance of this class
+     * Instance of this main
      */
     public static transient Main inst;
+
     /**
-     * GUI of this main
+     * {@link GUI} of this main
      */
     public transient GUI gui;
+
     /**
-     * HashMap of all MainSubjects. The key is their name string.
+     * {@link HashMap} of all {@linkplain MainSubject MainSubjects}. The key is their {@link String} name.
      */
     @Expose
     private HashMap<String, MainSubject> aSubjects;
+
     /**
-     * HashMap with all Days mapped from their according string eg. "Monday"
+     * {@link HashMap} with all {@linkplain Day Days} mapped from their according {@link String} eg. "Monday"
      */
     @Expose
     private HashMap<String, Day> aDays;
+
     /**
-     * ArrayList of all Assignments
+     * {@link ArrayList} of all {@linkplain Auftrag Assignments}
      */
     @Expose
     private ArrayList<Auftrag> aAss;
+
     /**
-     * ArrayList of all AuftragGUIs from the Assignments. Makes it easier to sort the Assignments in the Assignments Tab.
+     * {@link ArrayList} of all {@linkplain AuftragGUI AuftragGUIs} of all {@linkplain Auftrag Assignments} to make
+     * sorting them in the Assignments Tab easier
      */
-    private ArrayList<AuftragGUI> aGuis;
+    private ArrayList<AuftragGUI> aGUIs;
+
     /**
      * Whether this is the first start of the program
      */
     @Expose
     private boolean first;
+
     /**
      * Number of all Lab lessons done already
      */
     @Expose
     private int lessonsDone;
+
     /**
-     * Number of Lab lessons to be done per Subject
+     * Number of Lab lessons to be done per subject
      */
     @Expose
     private int maxPerSubject;
+
     /**
-     * Number of Lab lesson to be done in total of all Subjects
+     * Number of Lab lesson to be done in total of all subjects
      */
     @Expose
     private int maxTotal;
+
     /**
-     * The file chooser that points to the file in which everything is saved
+     * The {@link JFileChooser} that points to the file in which everything is saved
      */
     private transient JFileChooser f;
 
     /**
-     * Int representation of the Day of the week
+     * Int representation of the {@link Day} of the week
      */
     private int d;
 
     /**
-     * Whether d should be updated because day of week changed
+     * Whether {@link Main#d} should be updated because {@link Day} of week changed
      */
     private boolean ch;
 
@@ -75,7 +86,7 @@ public class Main {
         aSubjects = new HashMap<>();
         aDays = new HashMap<>();
         aAss = new ArrayList<>();
-        aGuis = new ArrayList<>();
+        aGUIs = new ArrayList<>();
         f = new JFileChooser();
         first = true;
         Thread t = new Thread(() -> {
@@ -97,7 +108,8 @@ public class Main {
     }
 
     /**
-     * Initialisation of Main by calling all init() Methods of the Assignments, Days and MainSubjects
+     * Initialization of the main by calling all init() methods of the {@linkplain Auftrag#init Assignments},
+     * {@linkplain Day#init Days} and {@linkplain MainSubject#init MainSubjects}
      */
     void init() {
         for (Day day : getaDays()) day.init();
@@ -106,7 +118,7 @@ public class Main {
     }
 
     /**
-     * Adds an Assignment to the ArrayList aAss
+     * Adds the {@linkplain Auftrag Assignment} to {@link Main#aAss} of the main
      *
      * @param auftrag The Assignment to be added
      */
@@ -114,6 +126,11 @@ public class Main {
         aAss.add(auftrag);
     }
 
+    /**
+     * Converts the {@link HashMap} to a {@link Collection} of its values
+     *
+     * @return The Collection of MainSubjects
+     */
     Collection<MainSubject> getaSubjects() {
         return aSubjects.values();
     }
@@ -122,6 +139,11 @@ public class Main {
         this.aSubjects = aSubjects;
     }
 
+    /**
+     * Converts the {@link HashMap} to a {@link Collection} of its values
+     *
+     * @return The Collection of Days
+     */
     Collection<Day> getaDays() {
         return aDays.values();
     }
@@ -130,7 +152,7 @@ public class Main {
         this.aDays = aDays;
     }
 
-    ArrayList<Auftrag> getaAss() {
+    public ArrayList<Auftrag> getaAss() {
         return aAss;
     }
 
@@ -138,67 +160,96 @@ public class Main {
         this.aAss = aAss;
     }
 
-    MainSubject getMainSubject(String s) {
-        return aSubjects.get(s);
+    /**
+     * Returns the value associated with the specified {@link String}
+     *
+     * @param name The name String of the MainSubject
+     * @return The MainSubject with the specified name
+     */
+    MainSubject getMainSubject(String name) {
+        return aSubjects.get(name);
     }
 
+    /**
+     * Returns the value associated with the specified {@link String}
+     *
+     * @param s The String representing the Day
+     * @return The Day represented by that String
+     */
     Day getDay(String s) {
         return aDays.get(s);
     }
 
+    /**
+     * Adds the {@link MainSubject} to {@link Main#aSubjects} of the main
+     *
+     * @param mainSubject The MainSubject to be added
+     */
     void addMainSubject(MainSubject mainSubject) {
         aSubjects.put(mainSubject.getName(), mainSubject);
     }
 
+    /**
+     * Adds the {@link Day} to {@link Main#aDays} of the main
+     *
+     * @param day The Day to be added
+     */
     void addDay(Day day) {
         aDays.put(day.getDay(), day);
     }
 
     /**
-     * Adds a Subject. Also adds the Subject to the corresponding MainSubject.
+     * Adds the {@link Subject} to the corresponding {@link MainSubject} in {@link Main#aSubjects} of the main.
      *
-     * @param subject The Subject o be added
+     * @param subject The Subject to be added
      */
     public void addSubject(Subject subject) {
-        for (MainSubject ms : aSubjects.values()) if (ms.equals(subject.getMainSub())) ms.addSubject(subject);
+        for (MainSubject mS : aSubjects.values()) if (mS.equals(subject.getMainSub())) mS.addSubject(subject);
     }
 
     /**
-     * Removes a MainSubject
+     * Removes the {@link MainSubject} from {@link Main#aSubjects} of the main when the call to
+     * {@link MainSubject#removeMe} was successful
      *
-     * @param s The MainSub to be removed
-     * @return if the removal was successful
+     * @param s The name string of the MainSubject to be removed
+     * @return Whether the removal was successful
      */
     boolean removeMainSubject(String s) {
-        MainSubject m = getMainSubject(s);
-        if (m.removeMe()) {
+        if (getMainSubject(s).removeMe()) {
             aSubjects.remove(s);
             return true;
-        } else {
-            return false;
-        }
+        } else return false;
     }
 
-    void removeMainSubAndAllContents(String s) {
-        MainSubject ms = getMainSubject(s);
-        for (Auftrag a : ms.getAuftrage()) {
-            removeAuftrag(a);
-        }
-        for (int i = 0; i < ms.getSubjects().size(); i++)
+    /**
+     * Removes the {@link MainSubject} and all its contents
+     *
+     * @param s The name string of the MainSubject to be removed
+     */
+    void removeMainSubjectAndAllContents(String s) {
+        MainSubject mS = getMainSubject(s);
+        for (Auftrag a : mS.getAssignments()) removeAuftrag(a);
+        for (int i = 0; i < mS.getSubjects().size(); i++)
             for (Day day : getaDays()) {
-                if (day.getSubjects().contains(ms.getSubjects().get(i))) {
-                    day.removeSubject(ms.getSubjects().remove(i));
+                if (day.getSubjects().contains(mS.getSubjects().get(i))) {
+                    day.removeSubject(mS.getSubjects().remove(i));
                     i--;
                     break;
                 }
             }
-        ms.removeMe();
+        mS.removeMe();
     }
 
-    void removeAuftrag(Auftrag a) {
-        a.getSubject().removeAuftrag(a);
-        inst.aAss.remove(a);
-        inst.aGuis.remove(a.getAssGUI());
+    /**
+     * Removes the {@linkplain Auftrag Assignment} from its {@link MainSubject}, {@link Main#aAss} and
+     * {@link Main#aGUIs} of the main
+     *
+     * @param auftrag The Assignment to be removed
+     */
+    void removeAuftrag(Auftrag auftrag) {
+        auftrag.getSubject().removeAuftrag(auftrag);
+        inst.aAss.remove(auftrag);
+        inst.aGUIs.remove(auftrag.getAssGUI());
     }
 
     JFileChooser getFileChooser() {
@@ -245,8 +296,8 @@ public class Main {
         this.ch = ch;
     }
 
-    ArrayList<AuftragGUI> getaGuis() {
-        return aGuis;
+    ArrayList<AuftragGUI> getaGUIs() {
+        return aGUIs;
     }
 
     boolean isFirst() {
