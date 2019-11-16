@@ -3,37 +3,44 @@ import com.google.gson.annotations.Expose;
 import java.util.Date;
 
 class Auftrag {
+
     /**
      * The date until which the assignment has to be done
      */
     @Expose
     private Date deadline;
+
     /**
      * Lessons which are available for this assignment
      */
     @Expose
     private int lessons;
+
     /**
      * Lessons which are already done
      */
     @Expose
     private int lessonsDone;
+
     /**
      * Description of this assignment
      */
     @Expose
     private String description;
+
     /**
      * The string representation of the Main Subject for saving purposes
      */
     @Expose
     private String subjects;
+
     /**
      * The Main Subject of this assignment
      *
      * @see MainSubject
      */
     private MainSubject subject;
+
     /**
      * The GUI for this assignment
      *
@@ -42,18 +49,18 @@ class Auftrag {
     private AuftragGUI augui;
 
     /**
-     * @param dead    Short for deadline for this assignment
-     * @param lessons Number of lessons available
-     * @param des     Short for the description of this assignment
-     * @param sub     Short for the subject of this assignment
+     * @param dead    Deadline for this assignment
+     * @param lessons Number of lessons available for this assignment
+     * @param des     Description of this assignment
+     * @param sub     Main Subject of this assignment
      */
     Auftrag(Date dead, int lessons, String des, MainSubject sub) {
         deadline = dead;
         this.lessons = lessons;
-        setLessonsDone(0);
-        this.description = des;
-        this.subject = sub;
-        this.subjects = sub.getName();
+        lessonsDone = 0;
+        description = des;
+        subject = sub;
+        subjects = sub.getName();
         init();
     }
 
@@ -61,9 +68,9 @@ class Auftrag {
      * Initialization of this assignment
      */
     void init() {
-        this.subject = Main.inst.getMainSubject(this.subjects);
-        getSubject().addAuftrag(this);
-        augui = new AuftragGUI(this, getSubject());
+        subject = Main.inst.getMainSubject(subjects);
+        subject.addAuftrag(this);
+        augui = new AuftragGUI(this, subject);
         Main.inst.getaGuis().add(augui);
         Main.inst.gui.getAuftragPanel().add(augui.content);
         Main.inst.gui.getAuftragPanel().revalidate();
@@ -71,28 +78,28 @@ class Auftrag {
     }
 
     int getLessonsDone() {
-        return this.lessonsDone;
+        return lessonsDone;
     }
 
-    void setLessonsDone(int lessons) {
-        this.lessonsDone = lessons;
+    void setLessonsDone(int lessonsDone) {
+        this.lessonsDone = lessonsDone;
     }
 
     /**
-     * Calculates the number of days remaining for this assignment.
+     * Calculates the number of days remaining for this assignment
      *
-     * @return A long representation of the number of days remaining
+     * @return A long time representation of the number of days remaining
      */
     long getRemaining() {
-        return (this.deadline.getTime() - new Date(System.currentTimeMillis()).getTime()) / (24 * 60 * 60 * 1000);
+        return (deadline.getTime() - new Date(System.currentTimeMillis()).getTime()) / (24 * 60 * 60 * 1000);
     }
 
     MainSubject getSubject() {
-        return this.subject;
+        return subject;
     }
 
     String getDescription() {
-        return this.description;
+        return description;
     }
 
     /**
@@ -107,23 +114,23 @@ class Auftrag {
     }
 
     AuftragGUI getAugui() {
-        return this.augui;
+        return augui;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Auftrag auftrag = (Auftrag) o;
-        if (getLessons() != auftrag.getLessons()) return false;
-        if (getLessonsDone() != auftrag.getLessonsDone()) return false;
-        if (!this.deadline.equals(auftrag.deadline)) return false;
-        if (!getDescription().equals(auftrag.getDescription())) return false;
-        if (!this.subjects.equals(auftrag.subjects)) return false;
-        return getSubject().equals(auftrag.getSubject());
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Auftrag auftrag = (Auftrag) obj;
+        if (lessons != auftrag.lessons) return false;
+        if (lessonsDone != auftrag.lessonsDone) return false;
+        if (!deadline.equals(auftrag.deadline)) return false;
+        if (!description.equals(auftrag.description)) return false;
+        if (!subjects.equals(auftrag.subjects)) return false;
+        return subject.equals(auftrag.subject);
     }
 
     int getLessons() {
-        return this.lessons;
+        return lessons;
     }
 }
