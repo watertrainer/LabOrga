@@ -29,7 +29,7 @@ class Day implements ActionListener {
      * {@link java.util.HashMap} aDays in {@link Main}.
      */
     @Expose
-    private String dayS;
+    private String daySt;
 
     /**
      * The {@link JPanel} of this day in the LabPlan Tab
@@ -39,11 +39,11 @@ class Day implements ActionListener {
     /**
      * Constructor
      *
-     * @param dayS     The name of the day
+     * @param daySt    The name of the day
      * @param content The JPanel where the day is rendered to
      */
-    Day(String dayS, JPanel content) {
-        this.dayS = dayS;
+    Day(String daySt, JPanel content) {
+        this.daySt = daySt;
         this.content = content;
         subjects = new ArrayList<>();
         if (Main.inst.isFirst()) Main.inst.addDay(this);
@@ -53,10 +53,10 @@ class Day implements ActionListener {
     /**
      * Constructor for saving purpose
      */
-    public Day() {
+    Day() {
         content = new JPanel();
         subjects = new ArrayList<>();
-        dayS = "";
+        daySt = "";
     }
 
     /**
@@ -71,7 +71,7 @@ class Day implements ActionListener {
         for (Subject s : subjects) {
             s.init();
             s.addToGUI(content);
-            s.getMainSub().addSubject(s);
+            s.getMainSubject().addSubject(s);
         }
     }
 
@@ -96,8 +96,8 @@ class Day implements ActionListener {
         }
     }
 
-    String getDayS() {
-        return dayS;
+    String getDaySt() {
+        return daySt;
     }
 
     /**
@@ -133,7 +133,7 @@ class Day implements ActionListener {
 
     @Override
     public String toString() {
-        return dayS;
+        return daySt;
     }
 
     public JPanel getContent() {

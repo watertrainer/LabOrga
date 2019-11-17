@@ -50,7 +50,7 @@ class MainSubject {
      */
     private StundenGUI stdGUI;
 
-    public MainSubject(String name, Color color) {
+    MainSubject(String name, Color color) {
         this.name = name;
         this.color = color;
         rgbValue = color.getRGB();
@@ -62,7 +62,7 @@ class MainSubject {
     /**
      * Constructor for saving purpose
      */
-    public MainSubject() {
+    MainSubject() {
         name = "";
         color = null;
         rgbValue = 0;
@@ -78,9 +78,9 @@ class MainSubject {
     boolean removeMe() {
         if (!subjects.isEmpty()) return false;
         else {
-            Main.inst.gui.lessonPanel.remove(stdGUI.content);
-            Main.inst.gui.lessonPanel.revalidate();
-            Main.inst.gui.lessonPanel.repaint();
+            Main.inst.getGui().lessonPanel.remove(stdGUI.content);
+            Main.inst.getGui().lessonPanel.revalidate();
+            Main.inst.getGui().lessonPanel.repaint();
             return true;
         }
     }
@@ -90,9 +90,9 @@ class MainSubject {
      */
     void init() {
         stdGUI = new StundenGUI(this);
-        Main.inst.gui.lessonPanel.add(stdGUI.content);
-        Main.inst.gui.lessonPanel.revalidate();
-        Main.inst.gui.lessonPanel.repaint();
+        Main.inst.getGui().lessonPanel.add(stdGUI.content);
+        Main.inst.getGui().lessonPanel.revalidate();
+        Main.inst.getGui().lessonPanel.repaint();
         updateHasAssign();
     }
 
@@ -127,11 +127,16 @@ class MainSubject {
     }
 
     @Override
-    public boolean equals(Object s) {
-        if (s instanceof MainSubject) {
-            MainSubject f = ((MainSubject) s);
-            return f.name.equals(name) && f.getColor().equals(color);
-        } else return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof MainSubject)) return false;
+        MainSubject mainSubject = (MainSubject) obj;
+        if (hasAssign != mainSubject.hasAssign) return false;
+        if (lessonsDone != mainSubject.lessonsDone) return false;
+        if (!name.equals(mainSubject.name)) return false;
+        if (!color.equals(mainSubject.color)) return false;
+        if (!assignments.equals(mainSubject.assignments)) return false;
+        return subjects.equals(mainSubject.subjects);
     }
 
     /**

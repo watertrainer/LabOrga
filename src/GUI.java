@@ -3,149 +3,167 @@ import com.google.gson.GsonBuilder;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 
 public class GUI extends JFrame {
+
     /**
      * The Tabbed Pane so you can switch between Tabs
      */
     public JTabbedPane tabbedPane1;
+
     /**
      * THe contentPane
      */
     public JPanel contentPane;
 
-
     /**
      * Panel for all Settings related content
      */
     public JPanel settingsPanel;
+
     /**
      * Settings, opens a CreateSubject DIalog
      *
      * @see CreateSubject
      */
     public JButton setiCreaSub;
+
     /**
      * Button to sort the LabButton
      */
     //TODO
     public JButton sortPlanButton;
+
     /**
      * Toggles whether the color of Days which are not today is rendered
      */
     //TODO
     public JButton toggleEnabledInSubjects;
+
     /**
      * Button to open the JFIleChooser to choose a save FIle
      */
     public JButton chooeSaveFile;
+
     /**
      * Panel in which the Assignments are rendered.
      *
      * @see AssignmentGUI
      */
     public JPanel assignemntPanel;
+
     /**
      * Settings, Button to open an create Assignment Dialog
      *
      * @see CreateAuftrag
      */
     public JButton newLabAssignmentButton;
+
     /**
      * Panel to render the lessons of each SUbject. Renders all MainSubjects
      *
      * @see MainSubject
      */
-
-
     public JPanel lessonPanel;
+
     /**
      * Progressbar for the lessons which need to be done insgesa,t
      */
     public JProgressBar lessonsDoneProgressBar;
+
     /**
      * Settings, Deletes a Main Subject
      *
      * @see MainSubject
      */
     public JButton deleteSubjectButton;
+
     /**
      * Settings, Deletes a Subject from the Lab Plan
      *
      * @see Subject
      */
     public JButton deleteSubjectFromPlanButton;
+
     /**
      * The JPanel of the LabPlan
      */
     public JPanel PlanPanel;
+
     /**
      * The content Pane of the Day Monday
      *
      * @see Day
      */
     public JPanel cnMn;
+
     /**
      * JLabel which shows Monday and is colored if it is Monday
      */
-
     public JLabel MonLab;
+
     /**
      * same as cnMn
      *
      * @see Day
      */
     public JPanel cnDn;
+
     /**
      * JLabel which shows Dienstag and is colored if it is Tuesday
      */
     public JLabel DienLab;
+
     /**
      * same as cnMn
      *
      * @see Day
      */
     public JPanel cnMt;
+
     /**
      * Same as MonLab
      */
     public JLabel MitLab;
+
     /**
      * same as cnMn
      *
      * @see Day
      */
     public JPanel cnDon;
+
     /**
      * same as cnMn
      *
      * @see Day
      */
     public JPanel cnFr;
+
     /**
      * Same as MonLab
      */
     public JLabel DonLab;
+
     /**
      * Same as MonLab
      */
     public JLabel FreiLab;
+
     /**
      * Should the Subjects be sorted
      */
-    private boolean sort = false;
-
+    private boolean sort;
 
     /**
      * Constructor
      */
-    public GUI() {
+    private GUI() {
         Main c = null;
         /*
         reload the save File or create a new Instance
@@ -153,13 +171,13 @@ public class GUI extends JFrame {
         try {
             File f1 = new File(System.getenv("TEMP") + "\\File.tmp");
             if (f1.exists()) {
-                BufferedReader br = new BufferedReader(new FileReader(f1));
+                BufferedReader br = new BufferedReader(new FileReader(f1, StandardCharsets.UTF_8));
                 File f = new File(br.readLine());
                 br.close();
                 if (f.exists()) {
                     Gson g = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-                    BufferedReader br1 = new BufferedReader(new FileReader(f));
-                    c = g.fromJson(new FileReader(f), Main.class);
+                    BufferedReader br1 = new BufferedReader(new FileReader(f, StandardCharsets.UTF_8));
+                    c = g.fromJson(new FileReader(f, StandardCharsets.UTF_8), Main.class);
                     c.getFileChooser().setSelectedFile(f);
                     br1.close();
                 } else {
@@ -171,29 +189,31 @@ public class GUI extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        c.gui = this;
+        c.setGui(this);
         $$$setupUI$$$();
-        /**
-         * Called on close of the Window. Saves everything and exits
+        /*
+          Called on close of the Window. Saves everything and exits
          */
-        this.addWindowListener(new WindowAdapter() {
+        addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 Gson g = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 File f = Main.inst.getFileChooser().getSelectedFile();
                 if (f == null) {
-                    JOptionPane.showMessageDialog(Main.inst.gui, "Bitte wähle eine Datei zum Speichern deiner Daten aus");
-                    Main.inst.getFileChooser().showOpenDialog(Main.inst.gui);
+                    JOptionPane.showMessageDialog(Main.inst.getGui()
+                            , "Bitte wähle eine Datei zum Speichern deiner Daten aus");
+                    Main.inst.getFileChooser().showOpenDialog(Main.inst.getGui());
                     return;
                 }
                 try {
                     f.createNewFile();
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+                    BufferedWriter bw = new BufferedWriter(new FileWriter(f, StandardCharsets.UTF_8));
                     Main.inst.setFirst(false);
                     bw.write(g.toJson(Main.inst));
                     bw.close();
                     new File(System.getenv("TEMP") + "\\File.temp").createNewFile();
 
-                    BufferedWriter bws = new BufferedWriter(new FileWriter(System.getenv("TEMP") + "\\File.tmp"));
+                    BufferedWriter bws = new BufferedWriter(new FileWriter(System.getenv("TEMP") + "\\File.tmp"
+                            , StandardCharsets.UTF_8));
                     bws.write(Main.inst.getFileChooser().getSelectedFile().toPath().toString());
                     bws.close();
                 } catch (IOException ex) {
@@ -201,13 +221,9 @@ public class GUI extends JFrame {
                 }
             }
         });
-
-        /**
-         * Settings Buttons
-         */
         /*
-         * creates a Subject.
-         *
+          Settings Buttons
+          creates a Subject
          */
         setiCreaSub.addActionListener(e -> {
             CreateSubject f = new CreateSubject();
@@ -217,52 +233,43 @@ public class GUI extends JFrame {
         /*
          * Choose a save File
          */
-        chooeSaveFile.addActionListener(e -> Main.inst.getFileChooser().showOpenDialog(Main.inst.gui));
+        chooeSaveFile.addActionListener(e -> Main.inst.getFileChooser().showOpenDialog(Main.inst.getGui()));
         /*
         Create a new Lab Assignment
          */
-        newLabAssignmentButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CreateAuftrag f = new CreateAuftrag();
-                f.pack();
-                f.setVisible(true);
-            }
+        newLabAssignmentButton.addActionListener(e -> {
+            CreateAuftrag f = new CreateAuftrag();
+            f.pack();
+            f.setVisible(true);
         });
         /*
         Delete a Main Subject
          */
-        deleteSubjectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                MainSubject w = (((MainSubject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection", JOptionPane.DEFAULT_OPTION, null, Main.inst.getaMSubjects().toArray(), "0")));
-                if (Main.inst.removeMainSubject(w.getName())) {
-                    JOptionPane.showMessageDialog(Main.inst.gui, "Erfolgreich gelöscht");
-                } else {
-                    int chose = JOptionPane.showConfirmDialog(Main.inst.gui, "Dieses Fach ist noch in deinem Stundenplan zu finden");
-                    if (chose == JOptionPane.YES_OPTION) {
-                        Main.inst.removeMainSubjectAndAllContents(w.getName());
-                    }
-                }
+        deleteSubjectButton.addActionListener(e -> {
+            MainSubject w = (((MainSubject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection"
+                    , JOptionPane.PLAIN_MESSAGE, null, Main.inst.getaMSubjects().toArray(), "0")));
+            if (Main.inst.removeMainSubject(w.getName()))
+                JOptionPane.showMessageDialog(Main.inst.getGui(), "Erfolgreich gelöscht");
+            else {
+                int chose = JOptionPane.showConfirmDialog(Main.inst.getGui()
+                        , "Dieses Fach ist noch in deinem Stundenplan zu finden");
+                if (chose == JOptionPane.YES_OPTION) Main.inst.removeMainSubjectAndAllContents(w.getName());
             }
         });
         /*
         Delete a Subject from the Plan
          */
-        deleteSubjectFromPlanButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Day w = (((Day) JOptionPane.showInputDialog(null, "Wähle einen Tag aus", "Selection", JOptionPane.DEFAULT_OPTION, null, Main.inst.getaDays().toArray(), "0")));
-                Subject s = (((Subject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection", JOptionPane.DEFAULT_OPTION, null, w.getSubjects().toArray(), "0")));
-                w.removeSubject(s);
-            }
+        deleteSubjectFromPlanButton.addActionListener(e -> {
+            Day w = (((Day) JOptionPane.showInputDialog(null, "Wähle einen Tag aus", "Selection"
+                    , JOptionPane.PLAIN_MESSAGE, null, Main.inst.getaDays().toArray(), "0")));
+            Subject s = (((Subject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection"
+                    , JOptionPane.PLAIN_MESSAGE, null, w.getSubjects().toArray(), "0")));
+            w.removeSubject(s);
         });
-
-
-        /**
-         * Assignment Panel
+        /*
+          Assignment Panel
          */
-        assignemntPanel.setLayout(new BoxLayout(assignemntPanel, BoxLayout.Y_AXIS));
+        assignemntPanel.setLayout(new BoxLayout(assignemntPanel, BoxLayout.PAGE_AXIS));
         JButton btn = new JButton();
         btn.setText("Sortieren: Tage");
         Main.inst.getAassGUIs().sort(Comparator.comparingLong(a -> a.getAss().getRemaining()));
@@ -293,13 +300,12 @@ public class GUI extends JFrame {
             }
         });
         assignemntPanel.add(btn);
-        /**
-         * Lesson Panel
+        /*
+          Lesson Panel
          */
         lessonPanel.setLayout(new BoxLayout(lessonPanel, BoxLayout.PAGE_AXIS));
-
-        /**
-         * Inits the Main
+        /*
+          Initializes the Main
          */
         Main.inst.init();
     }
@@ -312,7 +318,7 @@ public class GUI extends JFrame {
         frame.setVisible(true);
     }
 
-    public JPanel getAuftragPanel() {
+    JPanel getAuftragPanel() {
         return assignemntPanel;
     }
 
@@ -380,7 +386,7 @@ public class GUI extends JFrame {
             cnFr = Main.inst.getDay("Freitag").getContent();
         }
         assignemntPanel = new JPanel();
-        this.lessonsDoneProgressBar = new JProgressBar();
+        lessonsDoneProgressBar = new JProgressBar();
         if (Main.inst.isFirst()) {
             int insgStd = insgStd();
             Main.inst.setMaxTotal(insgStd);

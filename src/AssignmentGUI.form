@@ -34,7 +34,7 @@
           <text value="Label"/>
         </properties>
       </component>
-      <component id="919de" class="javax.swing.JLabel" binding="Fach">
+      <component id="919de" class="javax.swing.JLabel" binding="mSubject">
         <constraints>
           <grid row="0" column="3" row-span="3" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -42,7 +42,7 @@
           <text value="Label"/>
         </properties>
       </component>
-      <component id="2c03a" class="javax.swing.JLabel" binding="Des">
+      <component id="2c03a" class="javax.swing.JLabel" binding="des">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -58,7 +58,7 @@
           <text value="Label"/>
         </properties>
       </component>
-      <component id="2b08" class="javax.swing.JButton" binding="AuftragDone">
+      <component id="2b08" class="javax.swing.JButton" binding="assignmentDone">
         <constraints>
           <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>

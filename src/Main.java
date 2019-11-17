@@ -8,12 +8,12 @@ class Main {
     /**
      * Instance of this main
      */
-    public static transient Main inst;
+    static transient Main inst;
 
     /**
      * {@link GUI} of this main
      */
-    public transient GUI gui;
+    private transient GUI gui;
 
     /**
      * {@link HashMap} of all {@linkplain MainSubject MainSubjects}. The key is their {@link String} name.
@@ -81,7 +81,7 @@ class Main {
     /**
      * Constructor
      */
-    public Main() {
+    Main() {
         inst = this;
         aMSubjects = new HashMap<>();
         aDays = new HashMap<>();
@@ -195,7 +195,7 @@ class Main {
      * @param day The Day to be added
      */
     void addDay(Day day) {
-        aDays.put(day.getDayS(), day);
+        aDays.put(day.getDaySt(), day);
     }
 
     /**
@@ -204,7 +204,7 @@ class Main {
      * @param subject The Subject to be added
      */
     public void addSubject(Subject subject) {
-        for (MainSubject mS : aMSubjects.values()) if (mS.equals(subject.getMainSub())) mS.addSubject(subject);
+        for (MainSubject mS : aMSubjects.values()) if (mS.equals(subject.getMainSubject())) mS.addSubject(subject);
     }
 
     /**
@@ -306,5 +306,13 @@ class Main {
 
     void setFirst(boolean first) {
         this.first = first;
+    }
+
+    GUI getGui() {
+        return gui;
+    }
+
+    void setGui(GUI gui) {
+        this.gui = gui;
     }
 }

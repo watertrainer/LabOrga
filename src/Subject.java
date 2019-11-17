@@ -5,32 +5,39 @@ import java.awt.*;
 
 //TODO convert to JPanel
 class Subject {
+
     /**
      * The content Pane for the Subject in the Content Pane of the Day
      */
     public JPanel content;
+
     /**
      * Name of the Teacher which has Lab
      */
     @Expose
     private String teacher;
+
     /**
      * Name of the Subject. Saved externally for saving purpose.
      */
     @Expose
     private String subjectSt;
+
     /**
      * The Main Subject this is associated to
      */
-    private MainSubject MainSub;
+    private MainSubject mainSubject;
+
     /**
-     * The Label of this Subject in the Content Pane
+     * The Label of this Subject in the content pane
      */
     private JLabel label;
+
     /**
      * Is the Subject enabled. Future Feature
      */
     private boolean enabled;
+
     /**
      * Has the SUbject an Assignment
      */
@@ -39,25 +46,24 @@ class Subject {
     /**
      * Constructor
      *
-     * @param Teacher The Teacher which has Lab
-     * @param MainSub The Main Subject
+     * @param teacher     The Teacher which has Lab
+     * @param mainSubject The MainSubject
      */
-    Subject(String Teacher, MainSubject MainSub) {
-        this.teacher = Teacher;
-        this.MainSub = MainSub;
+    Subject(String teacher, MainSubject mainSubject) {
+        this.teacher = teacher;
+        this.mainSubject = mainSubject;
         $$$setupUI$$$();
-        subjectSt = MainSub.getName();
+        subjectSt = mainSubject.getName();
         hasAssign = true;
-        MainSub.addSubject(this);
-        MainSub.updateHasAssign();
+        mainSubject.addSubject(this);
+        mainSubject.updateHasAssign();
     }
 
     /**
      * Consturctor for Gson
      */
-    public Subject() {
-        super();
-        this.teacher = "";
+    Subject() {
+        teacher = "";
         $$$setupUI$$$();
         hasAssign = true;
     }
@@ -65,11 +71,9 @@ class Subject {
     /**
      * init Method, called from The Day
      */
-    public void init() {
-        if (Main.inst.isFirst()) {
-            subjectSt = MainSub.getName();
-        }
-        MainSub = Main.inst.getMainSubject(subjectSt);
+    void init() {
+        if (Main.inst.isFirst()) subjectSt = mainSubject.getName();
+        mainSubject = Main.inst.getMainSubject(subjectSt);
     }
 
     /**
@@ -80,21 +84,16 @@ class Subject {
     }
 
     /**
-     * adds itself to the jPanle
+     * Adds itself to the {@link JPanel}
      *
-     * @param p THe Panel to which the SUbject should add itself to
+     * @param p The Panel to which the Subject should add itself to
      */
-    public void addToGUI(JPanel p) {
-        this.updateColor();
+    void addToGUI(JPanel p) {
+        updateColor();
         // p.add(this, cc.xy(1,row));
-        p.add(this.content);
+        p.add(content);
     }
 
-    /**
-     * to String
-     *
-     * @return returns the Text on the JLabel
-     */
     @Override
     public String toString() {
         return label.getText();
@@ -108,23 +107,19 @@ class Subject {
      * @return The new Subject
      */
     public Subject clone(String t) {
-        return new Subject(t, getMainSub());
+        return new Subject(t, mainSubject);
     }
 
-    /**
-     * Equals Method
-     *
-     * @param s The Object to Compare itself to
-     * @return boolean, if the Object is equal to The Subject. Only comppares the Teacher name and Main Subject
-     */
     @Override
-    public boolean equals(Object s) {
-        if (s instanceof Subject) {
-            Subject f = ((Subject) s);
-            return f.teacher.equals(teacher) && f.getMainSub().equals(getMainSub());
-        } else {
-            return false;
-        }
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Subject)) return false;
+        Subject subject = (Subject) obj;
+        if (enabled != subject.enabled) return false;
+        if (hasAssign != subject.hasAssign) return false;
+        if (!teacher.equals(subject.teacher)) return false;
+        if (!subjectSt.equals(subject.subjectSt)) return false;
+        return mainSubject.equals(subject.mainSubject);
     }
 
     public String getSubjectSt() {
@@ -135,47 +130,41 @@ class Subject {
         this.subjectSt = subjectSt;
     }
 
-    public String getTeacher() {
+    String getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(String teacher) {
+    void setTeacher(String teacher) {
         this.teacher = teacher;
-        if (hasAssign)
-            label.setText(getMainSub().getName() + ", " + teacher + " | LAB Assignment Vorhanden");
-        else {
-            label.setText(getMainSub().getName() + ", " + teacher + " | kein LAB Assignment Vorhanden");
-        }
+        if (hasAssign) label.setText(mainSubject.getName() + ", " + teacher + " | Lab Auftrag vorhanden");
+        else label.setText(mainSubject.getName() + ", " + teacher + " | kein Lab Auftrag vorhanden");
     }
 
     public String getName() {
-        return getMainSub().getName();
+        return mainSubject.getName();
     }
 
     public Color getColor() {
-        return MainSub.getColor();
+        return mainSubject.getColor();
     }
 
     /**
-     * updates the color of the JLabel to the Color of the Main Sub
+     * Updates the {@link Color} of the {@link JLabel} to the {@link Color} of the {@link MainSubject}
      */
-    public void updateColor() {
-        if (((MainSub.getColor().getBlue() + MainSub.getColor().getRed() + MainSub.getColor().getGreen()) / 3) < 128)
+    void updateColor() {
+        if (((mainSubject.getColor().getBlue() + mainSubject.getColor().getRed() + mainSubject.getColor().getGreen()) / 3) < 128)
             label.setForeground(Color.white);
-        label.setBackground(MainSub.getColor());
+        label.setBackground(mainSubject.getColor());
     }
 
-    public void setHasAssign(boolean hasAssign) {
+    void setHasAssign(boolean hasAssign) {
         this.hasAssign = hasAssign;
-        if (hasAssign)
-            label.setText(getMainSub().getName() + ", " + teacher + " | LAB Assignment Vorhanden");
-        else {
-            label.setText(getMainSub().getName() + ", " + teacher + " | kein LAB Assignment Vorhanden");
-        }
+        if (hasAssign) label.setText(mainSubject.getName() + ", " + teacher + " | Lab Auftrag vorhanden");
+        else label.setText(mainSubject.getName() + ", " + teacher + " | kein Lab Auftrag vorhanden");
     }
 
-    public MainSubject getMainSub() {
-        return MainSub;
+    MainSubject getMainSubject() {
+        return mainSubject;
     }
 
     private void createUIComponents() {
@@ -183,14 +172,13 @@ class Subject {
         content = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
-                g.setColor(MainSub.getDrawAttColor());
+                g.setColor(mainSubject.getDrawAttColor());
                 g.fillOval(content.getWidth() - 30, 0, content.getHeight(), content.getHeight());
-
             }
         };
         label.setOpaque(true);
         content.setAlignmentY(1);
-        content.setAlignmentX(Box.LEFT_ALIGNMENT);
+        content.setAlignmentX(Component.LEFT_ALIGNMENT);
         content.setMaximumSize(new Dimension(Short.MAX_VALUE, 25));
     }
 
@@ -223,7 +211,4 @@ class Subject {
         this.enabled = enabled;
     }
 
-    public MainSubject getMainSubject() {
-        return MainSub;
-    }
 }

@@ -32,7 +32,7 @@ class Assignment {
      * The {@link String} representing the {@link MainSubject} of this assignment for saving purposes
      */
     @Expose
-    private String mSubjectS;
+    private String mSubjectSt;
 
     /**
      * The {@link MainSubject} of this assignment
@@ -58,7 +58,7 @@ class Assignment {
         lessonsDone = 0;
         this.description = description;
         mSubject = mainSubject;
-        mSubjectS = mainSubject.getName();
+        mSubjectSt = mainSubject.getName();
         init();
     }
 
@@ -66,13 +66,13 @@ class Assignment {
      * Initialization of this assignment
      */
     void init() {
-        mSubject = Main.inst.getMainSubject(mSubjectS);
+        mSubject = Main.inst.getMainSubject(mSubjectSt);
         mSubject.addAssignment(this);
         assGUI = new AssignmentGUI(this, mSubject);
         Main.inst.getAassGUIs().add(assGUI);
-        Main.inst.gui.getAuftragPanel().add(assGUI.content);
-        Main.inst.gui.getAuftragPanel().revalidate();
-        Main.inst.gui.getAuftragPanel().repaint();
+        Main.inst.getGui().getAuftragPanel().add(assGUI.content);
+        Main.inst.getGui().getAuftragPanel().revalidate();
+        Main.inst.getGui().getAuftragPanel().repaint();
     }
 
     int getLessonsDone() {
@@ -124,7 +124,7 @@ class Assignment {
         if (lessonsDone != assignment.lessonsDone) return false;
         if (!deadline.equals(assignment.deadline)) return false;
         if (!description.equals(assignment.description)) return false;
-        if (!mSubjectS.equals(assignment.mSubjectS)) return false;
+        if (!mSubjectSt.equals(assignment.mSubjectSt)) return false;
         return mSubject.equals(assignment.mSubject);
     }
 

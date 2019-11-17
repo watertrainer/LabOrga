@@ -2,48 +2,61 @@ import javax.swing.*;
 import java.awt.*;
 
 class AssignmentGUI {
+
     /**
-     * Button to add a Lessons
+     * {@link JButton} to increase the lessonsDone of the {@link Assignment}, {@link MainSubject} and lessonsDoneT in
+     * {@link MainSubject}
      */
     public JButton plus;
+
     /**
-     * Button to remove a lesson
+     * {@link JLabel} to decrease the lessonsDone of the {@link Assignment}, {@link MainSubject} and lessonsDoneT in
+     * {@link MainSubject}
      */
     public JButton minus;
+
     /**
-     * JLabel which shows how many lessons are available
+     * {@link JLabel} which shows how many lessons are available
      */
     public JLabel lessons;
+
     /**
-     * JLabel which shows how many lessons are already done
+     * {@link JLabel} which shows how many lessons are done already
      */
     public JLabel lessonsDone;
+
     /**
-     * JLabel which represents the corresponding MainSubject
+     * {@link JLabel} which represents the corresponding {@link MainSubject}
      */
-    public JLabel Fach;
+    public JLabel mSubject;
+
     /**
-     * JLabel which shows how much Time is remaining
+     * {@link JLabel} which shows how much time is remaining for the {@link Assignment}
      */
     public JLabel tillDeadline;
+
     /**
-     * JButton to mark the Assignment as done
+     * {@link JLabel} to mark the {@link Assignment} as done
      */
-    public JButton AuftragDone;
+    public JButton assignmentDone;
+
     /**
-     * Shows the Short Description of the Assignment
+     * {@link JLabel} that shows the description of the {@link Assignment}
      */
-    public JLabel Des;
+    public JLabel des;
+
     /**
      * The content pane of the {@link Assignment}. All other components are in here
      */
     public JPanel content;
+
     /**
      * The {@link Assignment} which is rendered in this class
      */
     private Assignment ass;
+
     /**
-     * The Main Subject of the Assingment
+     * The {@link MainSubject} of the {@link Assignment}
      */
     private MainSubject mS;
 
@@ -54,21 +67,21 @@ class AssignmentGUI {
     }
 
     /**
-     * Construcctor
+     * Constructor
      */
     AssignmentGUI(Assignment ass, MainSubject mS) {
         this.ass = ass;
         this.mS = mS;
         $$$setupUI$$$();
-        Fach.setText(mS.getName());
-        Fach.setBackground(mS.getColor());
-        Fach.setOpaque(true);
+        mSubject.setText(mS.getName());
+        mSubject.setBackground(mS.getColor());
+        mSubject.setOpaque(true);
         if ((ass.getmSubject().getColor().getBlue() + ass.getmSubject().getColor().getRed() + ass.getmSubject().getColor().getGreen()) / 3 < 128)
-            Fach.setForeground(Color.white);
+            mSubject.setForeground(Color.white);
         lessons.setText(String.valueOf(ass.getLessons()));
-        Des.setText(ass.getDescription());
-        /**
-         * Called when an Lesson is done.
+        des.setText(ass.getDescription());
+        /*
+          Called when an Lesson is done.
          */
         plus.addActionListener(e -> {
             if (!(ass.getLessonsDone() + 1 > ass.getLessons())) {
@@ -77,8 +90,8 @@ class AssignmentGUI {
                 Main.inst.setLessonsDoneT(Main.inst.getLessonsDoneT() + 1);
             }
         });
-        /**
-         * Called when an Lessons should be removed
+        /*
+          Called when an Lessons should be removed
          */
         minus.addActionListener(e -> {
             if (!(ass.getLessonsDone() - 1 < 0))
@@ -89,13 +102,13 @@ class AssignmentGUI {
         content.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         content.setOpaque(true);
         content.setBorder(BorderFactory.createLineBorder(this.mS.getColor(), 3));
-        /**
-         * Called when the Assignment is done
+        /*
+          Called when the Assignment is done
          */
-        AuftragDone.addActionListener(e -> {
+        assignmentDone.addActionListener(e -> {
             Main.inst.removeAssignment(ass);
-            Main.inst.gui.getAuftragPanel().remove(content);
-            Main.inst.gui.getAuftragPanel().revalidate();
+            Main.inst.getGui().getAuftragPanel().remove(content);
+            Main.inst.getGui().getAuftragPanel().revalidate();
         });
     }
 
@@ -144,18 +157,18 @@ class AssignmentGUI {
         lessonsDone = new JLabel();
         lessonsDone.setText("Label");
         content.add(lessonsDone, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 3, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        Fach = new JLabel();
-        Fach.setText("Label");
-        content.add(Fach, new com.intellij.uiDesigner.core.GridConstraints(0, 3, 3, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        Des = new JLabel();
-        Des.setText("Description");
-        content.add(Des, new com.intellij.uiDesigner.core.GridConstraints(3, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mSubject = new JLabel();
+        mSubject.setText("Label");
+        content.add(mSubject, new com.intellij.uiDesigner.core.GridConstraints(0, 3, 3, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        des = new JLabel();
+        des.setText("Description");
+        content.add(des, new com.intellij.uiDesigner.core.GridConstraints(3, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         tillDeadline = new JLabel();
         tillDeadline.setText("Label");
         content.add(tillDeadline, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        AuftragDone = new JButton();
-        AuftragDone.setText("Fertig");
-        content.add(AuftragDone, new com.intellij.uiDesigner.core.GridConstraints(3, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        assignmentDone = new JButton();
+        assignmentDone.setText("Fertig");
+        content.add(assignmentDone, new com.intellij.uiDesigner.core.GridConstraints(3, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         plus = new JButton();
         plus.setText("+");
         content.add(plus, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 2, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
@@ -170,18 +183,13 @@ class AssignmentGUI {
         return content;
     }
 
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AssignmentGUI that = (AssignmentGUI) o;
-        return getAss().equals(that.getAss());
-    }
-
-    @Override
-    public int hashCode() {
-        return getAss().hashCode();
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof AssignmentGUI)) return false;
+        AssignmentGUI assignmentGUI = (AssignmentGUI) obj;
+        if (!ass.equals(assignmentGUI.ass)) return false;
+        return mS.equals(assignmentGUI.mS);
     }
 
 }
