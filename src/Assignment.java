@@ -2,7 +2,7 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Date;
 
-class Auftrag {
+class Assignment {
 
     /**
      * The {@link Date} until which the assignment has to be done
@@ -32,17 +32,17 @@ class Auftrag {
      * The {@link String} representing the {@link MainSubject} of this assignment for saving purposes
      */
     @Expose
-    private String subjectS;
+    private String mSubjectS;
 
     /**
      * The {@link MainSubject} of this assignment
      */
-    private MainSubject subject;
+    private MainSubject mSubject;
 
     /**
-     * The {@link AuftragGUI} for this assignment
+     * The {@link AssignmentGUI} for this assignment
      */
-    private AuftragGUI assGUI;
+    private AssignmentGUI assGUI;
 
     /**
      * Constructor
@@ -52,13 +52,13 @@ class Auftrag {
      * @param description The description of this assignment
      * @param mainSubject The MainSubject of this assignment
      */
-    Auftrag(Date deadline, int lessons, String description, MainSubject mainSubject) {
+    Assignment(Date deadline, int lessons, String description, MainSubject mainSubject) {
         this.deadline = deadline;
         this.lessons = lessons;
         lessonsDone = 0;
         this.description = description;
-        subject = mainSubject;
-        subjectS = mainSubject.getName();
+        mSubject = mainSubject;
+        mSubjectS = mainSubject.getName();
         init();
     }
 
@@ -66,10 +66,10 @@ class Auftrag {
      * Initialization of this assignment
      */
     void init() {
-        subject = Main.inst.getMainSubject(subjectS);
-        subject.addAuftrag(this);
-        assGUI = new AuftragGUI(this, subject);
-        Main.inst.getaGUIs().add(assGUI);
+        mSubject = Main.inst.getMainSubject(mSubjectS);
+        mSubject.addAssignment(this);
+        assGUI = new AssignmentGUI(this, mSubject);
+        Main.inst.getAassGUIs().add(assGUI);
         Main.inst.gui.getAuftragPanel().add(assGUI.content);
         Main.inst.gui.getAuftragPanel().revalidate();
         Main.inst.gui.getAuftragPanel().repaint();
@@ -92,8 +92,8 @@ class Auftrag {
         return (deadline.getTime() - new Date(System.currentTimeMillis()).getTime()) / (24 * 60 * 60 * 1000);
     }
 
-    MainSubject getSubject() {
-        return subject;
+    MainSubject getmSubject() {
+        return mSubject;
     }
 
     String getDescription() {
@@ -111,21 +111,21 @@ class Auftrag {
         else return 3;
     }
 
-    AuftragGUI getAssGUI() {
+    AssignmentGUI getAssGUI() {
         return assGUI;
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Auftrag auftrag = (Auftrag) obj;
-        if (lessons != auftrag.lessons) return false;
-        if (lessonsDone != auftrag.lessonsDone) return false;
-        if (!deadline.equals(auftrag.deadline)) return false;
-        if (!description.equals(auftrag.description)) return false;
-        if (!subjectS.equals(auftrag.subjectS)) return false;
-        return subject.equals(auftrag.subject);
+        if (!(obj instanceof Assignment)) return false;
+        Assignment assignment = (Assignment) obj;
+        if (lessons != assignment.lessons) return false;
+        if (lessonsDone != assignment.lessonsDone) return false;
+        if (!deadline.equals(assignment.deadline)) return false;
+        if (!description.equals(assignment.description)) return false;
+        if (!mSubjectS.equals(assignment.mSubjectS)) return false;
+        return mSubject.equals(assignment.mSubject);
     }
 
     int getLessons() {

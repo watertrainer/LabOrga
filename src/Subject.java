@@ -3,8 +3,8 @@ import com.google.gson.annotations.Expose;
 import javax.swing.*;
 import java.awt.*;
 
-//todo convert to JPanel
-public class Subject {
+//TODO convert to JPanel
+class Subject {
     /**
      * The content Pane for the Subject in the Content Pane of the Day
      */
@@ -142,9 +142,9 @@ public class Subject {
     public void setTeacher(String teacher) {
         this.teacher = teacher;
         if (hasAssign)
-            label.setText(getMainSub().getName() + ", " + teacher + " | LAB Auftrag Vorhanden");
+            label.setText(getMainSub().getName() + ", " + teacher + " | LAB Assignment Vorhanden");
         else {
-            label.setText(getMainSub().getName() + ", " + teacher + " | kein LAB Auftrag Vorhanden");
+            label.setText(getMainSub().getName() + ", " + teacher + " | kein LAB Assignment Vorhanden");
         }
     }
 
@@ -168,9 +168,9 @@ public class Subject {
     public void setHasAssign(boolean hasAssign) {
         this.hasAssign = hasAssign;
         if (hasAssign)
-            label.setText(getMainSub().getName() + ", " + teacher + " | LAB Auftrag Vorhanden");
+            label.setText(getMainSub().getName() + ", " + teacher + " | LAB Assignment Vorhanden");
         else {
-            label.setText(getMainSub().getName() + ", " + teacher + " | kein LAB Auftrag Vorhanden");
+            label.setText(getMainSub().getName() + ", " + teacher + " | kein LAB Assignment Vorhanden");
         }
     }
 
@@ -183,8 +183,8 @@ public class Subject {
         content = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
-                    g.setColor(MainSub.getDrawAttColor());
-                    g.fillOval(content.getWidth() - 30, 0, content.getHeight(), content.getHeight());
+                g.setColor(MainSub.getDrawAttColor());
+                g.fillOval(content.getWidth() - 30, 0, content.getHeight(), content.getHeight());
 
             }
         };

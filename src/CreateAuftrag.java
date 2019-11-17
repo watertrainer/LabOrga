@@ -71,7 +71,7 @@ public class CreateAuftrag extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        for (MainSubject m : Main.inst.getaSubjects()) {
+        for (MainSubject m : Main.inst.getaMSubjects()) {
             comboBox1.addItem(m);
         }
     }
@@ -87,8 +87,8 @@ public class CreateAuftrag extends JDialog {
                 throw new Exception();
             int lessons = Integer.parseInt(anzhalStundenTextField.getText());
             String des = kurzeBeschreibungTextArea.getText();
-            Auftrag a = new Auftrag(dead, lessons, des, Main.inst.getMainSubject(((MainSubject) comboBox1.getSelectedItem()).getName()));
-            Main.inst.addAuftrag(a);
+            Assignment a = new Assignment(dead, lessons, des, Main.inst.getMainSubject(((MainSubject) comboBox1.getSelectedItem()).getName()));
+            Main.inst.addAssignment(a);
             dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this.contentPane, "Etwas ist Schiefgelaufen.\n" +

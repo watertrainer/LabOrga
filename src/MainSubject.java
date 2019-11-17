@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 /**
  * A class representation of a subject in which all subject times, which are saved separately in the Lab Plan and
- * {@linkplain Auftrag Assignments} of this subject are saved.
+ * {@linkplain Assignment Assignments} of this subject are saved.
  */
-public class MainSubject {
+class MainSubject {
 
     /**
      * The name of this MainSubject
@@ -36,9 +36,9 @@ public class MainSubject {
     private int lessonsDone;
 
     /**
-     * {@link ArrayList} of {@linkplain Auftrag Assignments} in this subject
+     * {@link ArrayList} of {@linkplain Assignment Assignments} in this subject
      */
-    private ArrayList<Auftrag> assignments;
+    private ArrayList<Assignment> assignments;
 
     /**
      * {@link ArrayList} of {@link Subject} time entries in the Lab Plan of this subject
@@ -97,7 +97,7 @@ public class MainSubject {
     }
 
     /**
-     * Updates, whether the subject has an {@linkplain Auftrag Assignment}
+     * Updates, whether the subject has an {@link Assignment}
      */
     void updateHasAssign() {
         setHasAssign(!assignments.isEmpty());
@@ -126,16 +126,6 @@ public class MainSubject {
         return name;
     }
 
-    /**
-     * Creates a new MainSubject with same {@link MainSubject#name} and {@link MainSubject#color}
-     *
-     * @param t TODO add use of this parameter or delete it
-     * @return The MainSubject with same name and color
-     */
-    public MainSubject clone(String t) {
-        return new MainSubject(name, new Color(rgbValue));
-    }
-
     @Override
     public boolean equals(Object s) {
         if (s instanceof MainSubject) {
@@ -152,7 +142,7 @@ public class MainSubject {
     Color getDrawAttColor() {
         Color ret = Color.green;
         if (assignments.isEmpty()) ret = Color.gray;
-        for (Auftrag a : assignments) {
+        for (Assignment a : assignments) {
             if (a.needAttention() == 1) ret = Color.red;
             else if (a.needAttention() == 2) if (!ret.equals(Color.red)) ret = Color.orange;
         }
@@ -197,24 +187,24 @@ public class MainSubject {
     }
 
     /**
-     * Adds the {@linkplain Auftrag Assignment} to {@link MainSubject#assignments} and updates
+     * Adds the {@link Assignment} to {@link MainSubject#assignments} and updates
      * {@link MainSubject#hasAssign}
      *
-     * @param auftrag The Assignment to be added
+     * @param assignment The Assignment to be added
      */
-    void addAuftrag(Auftrag auftrag) {
-        assignments.add(auftrag);
+    void addAssignment(Assignment assignment) {
+        assignments.add(assignment);
         updateHasAssign();
     }
 
     /**
-     * Removes the {@linkplain Auftrag Assignment} from {@link MainSubject#assignments} and updates
+     * Removes the {@link Assignment} from {@link MainSubject#assignments} and updates
      * {@link MainSubject#hasAssign}
      *
-     * @param auftrag The Assigment to be removed
+     * @param assignment The Assignment to be removed
      */
-    void removeAuftrag(Auftrag auftrag) {
-        assignments.remove(auftrag);
+    void removeAssignment(Assignment assignment) {
+        assignments.remove(assignment);
         updateHasAssign();
     }
 
@@ -237,7 +227,7 @@ public class MainSubject {
     /**
      * Sets {@link MainSubject#hasAssign} also for all {@linkplain Subject Subjects} from {@link MainSubject#subjects}
      *
-     * @param hasAssign
+     * @param hasAssign The boolean has hasAssign shall be set to
      */
     void setHasAssign(boolean hasAssign) {
         this.hasAssign = hasAssign;
@@ -252,7 +242,7 @@ public class MainSubject {
         this.lessonsDone = lessonsDone;
     }
 
-    ArrayList<Auftrag> getAssignments() {
+    ArrayList<Assignment> getAssignments() {
         return assignments;
     }
 

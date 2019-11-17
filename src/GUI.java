@@ -42,19 +42,13 @@ public class GUI extends JFrame {
     //TODO
     public JButton toggleEnabledInSubjects;
     /**
-     * Should the Subjects be sorted
-     */
-    private boolean sort = false;
-    /**
      * Button to open the JFIleChooser to choose a save FIle
      */
     public JButton chooeSaveFile;
-
-
     /**
      * Panel in which the Assignments are rendered.
      *
-     * @see AuftragGUI
+     * @see AssignmentGUI
      */
     public JPanel assignemntPanel;
     /**
@@ -75,8 +69,6 @@ public class GUI extends JFrame {
      * Progressbar for the lessons which need to be done insgesa,t
      */
     public JProgressBar lessonsDoneProgressBar;
-
-
     /**
      * Settings, Deletes a Main Subject
      *
@@ -89,13 +81,10 @@ public class GUI extends JFrame {
      * @see Subject
      */
     public JButton deleteSubjectFromPlanButton;
-
-
     /**
      * The JPanel of the LabPlan
      */
     public JPanel PlanPanel;
-
     /**
      * The content Pane of the Day Monday
      *
@@ -147,6 +136,10 @@ public class GUI extends JFrame {
      * Same as MonLab
      */
     public JLabel FreiLab;
+    /**
+     * Should the Subjects be sorted
+     */
+    private boolean sort = false;
 
 
     /**
@@ -198,7 +191,7 @@ public class GUI extends JFrame {
                     Main.inst.setFirst(false);
                     bw.write(g.toJson(Main.inst));
                     bw.close();
-                    new File(System.getenv("TEMP")+"\\File.temp").createNewFile();
+                    new File(System.getenv("TEMP") + "\\File.temp").createNewFile();
 
                     BufferedWriter bws = new BufferedWriter(new FileWriter(System.getenv("TEMP") + "\\File.tmp"));
                     bws.write(Main.inst.getFileChooser().getSelectedFile().toPath().toString());
@@ -242,7 +235,7 @@ public class GUI extends JFrame {
         deleteSubjectButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainSubject w = (((MainSubject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection", JOptionPane.DEFAULT_OPTION, null, Main.inst.getaSubjects().toArray(), "0")));
+                MainSubject w = (((MainSubject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection", JOptionPane.DEFAULT_OPTION, null, Main.inst.getaMSubjects().toArray(), "0")));
                 if (Main.inst.removeMainSubject(w.getName())) {
                     JOptionPane.showMessageDialog(Main.inst.gui, "Erfolgreich gelöscht");
                 } else {
@@ -272,8 +265,8 @@ public class GUI extends JFrame {
         assignemntPanel.setLayout(new BoxLayout(assignemntPanel, BoxLayout.Y_AXIS));
         JButton btn = new JButton();
         btn.setText("Sortieren: Tage");
-        Main.inst.getaGUIs().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
-        for (AuftragGUI a : Main.inst.getaGUIs()) {
+        Main.inst.getAassGUIs().sort(Comparator.comparingLong(a -> a.getAss().getRemaining()));
+        for (AssignmentGUI a : Main.inst.getAassGUIs()) {
             assignemntPanel.remove(a.content);
             assignemntPanel.add(a.content);
         }
@@ -284,16 +277,16 @@ public class GUI extends JFrame {
             sort = !sort;
             if (sort) {
                 btn.setText("Sortieren: Tage");
-                Main.inst.getaGUIs().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
-                for (AuftragGUI a : Main.inst.getaGUIs()) {
+                Main.inst.getAassGUIs().sort(Comparator.comparingLong(a -> a.getAss().getRemaining()));
+                for (AssignmentGUI a : Main.inst.getAassGUIs()) {
                     assignemntPanel.remove(a.content);
                     assignemntPanel.add(a.content);
                 }
             } else {
                 btn.setText("Sortieren: Fach");
-                Main.inst.getaGUIs().sort(Comparator.comparingLong(a -> a.getA().getRemaining()));
-                Main.inst.getaGUIs().sort(Comparator.comparing(a -> a.getA().getSubject().getName()));
-                for (AuftragGUI a : Main.inst.getaGUIs()) {
+                Main.inst.getAassGUIs().sort(Comparator.comparingLong(a -> a.getAss().getRemaining()));
+                Main.inst.getAassGUIs().sort(Comparator.comparing(a -> a.getAss().getmSubject().getName()));
+                for (AssignmentGUI a : Main.inst.getAassGUIs()) {
                     assignemntPanel.remove(a.content);
                     assignemntPanel.add(a.content);
                 }
@@ -303,7 +296,7 @@ public class GUI extends JFrame {
         /**
          * Lesson Panel
          */
-        lessonPanel.setLayout(new BoxLayout(lessonPanel, BoxLayout.Y_AXIS));
+        lessonPanel.setLayout(new BoxLayout(lessonPanel, BoxLayout.PAGE_AXIS));
 
         /**
          * Inits the Main
@@ -314,7 +307,7 @@ public class GUI extends JFrame {
     public static void main(String[] args) {
         GUI frame = new GUI();
         frame.setContentPane(frame.contentPane);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
@@ -440,7 +433,7 @@ public class GUI extends JFrame {
         lessonPanel = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
-                lessonsDoneProgressBar.setValue(Main.inst.getLessonsDone());
+                lessonsDoneProgressBar.setValue(Main.inst.getLessonsDoneT());
             }
         };
     }

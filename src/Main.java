@@ -3,7 +3,7 @@ import com.google.gson.annotations.Expose;
 import javax.swing.*;
 import java.util.*;
 
-public class Main {
+class Main {
 
     /**
      * Instance of this main
@@ -19,7 +19,7 @@ public class Main {
      * {@link HashMap} of all {@linkplain MainSubject MainSubjects}. The key is their {@link String} name.
      */
     @Expose
-    private HashMap<String, MainSubject> aSubjects;
+    private HashMap<String, MainSubject> aMSubjects;
 
     /**
      * {@link HashMap} with all {@linkplain Day Days} mapped from their according {@link String} eg. "Monday"
@@ -28,16 +28,16 @@ public class Main {
     private HashMap<String, Day> aDays;
 
     /**
-     * {@link ArrayList} of all {@linkplain Auftrag Assignments}
+     * {@link ArrayList} of all {@linkplain Assignment Assignments}
      */
     @Expose
-    private ArrayList<Auftrag> aAss;
+    private ArrayList<Assignment> aAss;
 
     /**
-     * {@link ArrayList} of all {@linkplain AuftragGUI AuftragGUIs} of all {@linkplain Auftrag Assignments} to make
-     * sorting them in the Assignments Tab easier
+     * {@link ArrayList} of all {@linkplain AssignmentGUI AssignmentGUIs} of all {@linkplain Assignment Assignments} to
+     * make sorting them in the Assignments Tab easier
      */
-    private ArrayList<AuftragGUI> aGUIs;
+    private ArrayList<AssignmentGUI> aassGUIs;
 
     /**
      * Whether this is the first start of the program
@@ -46,10 +46,10 @@ public class Main {
     private boolean first;
 
     /**
-     * Number of all Lab lessons done already
+     * Number of all Lab lessons done in total already
      */
     @Expose
-    private int lessonsDone;
+    private int lessonsDoneT;
 
     /**
      * Number of Lab lessons to be done per subject
@@ -83,10 +83,10 @@ public class Main {
      */
     public Main() {
         inst = this;
-        aSubjects = new HashMap<>();
+        aMSubjects = new HashMap<>();
         aDays = new HashMap<>();
         aAss = new ArrayList<>();
-        aGUIs = new ArrayList<>();
+        aassGUIs = new ArrayList<>();
         f = new JFileChooser();
         first = true;
         Thread t = new Thread(() -> {
@@ -108,22 +108,22 @@ public class Main {
     }
 
     /**
-     * Initialization of the main by calling all init() methods of the {@linkplain Auftrag#init Assignments},
+     * Initialization of the main by calling all init() methods of the {@linkplain Assignment#init Assignments},
      * {@linkplain Day#init Days} and {@linkplain MainSubject#init MainSubjects}
      */
     void init() {
         for (Day day : getaDays()) day.init();
-        for (Auftrag a : aAss) a.init();
-        for (MainSubject s : aSubjects.values()) s.init();
+        for (Assignment a : aAss) a.init();
+        for (MainSubject s : aMSubjects.values()) s.init();
     }
 
     /**
-     * Adds the {@linkplain Auftrag Assignment} to {@link Main#aAss} of the main
+     * Adds the {@linkplain Assignment Assignment} to {@link Main#aAss} of the main
      *
-     * @param auftrag The Assignment to be added
+     * @param assignment The Assignment to be added
      */
-    void addAuftrag(Auftrag auftrag) {
-        aAss.add(auftrag);
+    void addAssignment(Assignment assignment) {
+        aAss.add(assignment);
     }
 
     /**
@@ -131,12 +131,12 @@ public class Main {
      *
      * @return The Collection of MainSubjects
      */
-    Collection<MainSubject> getaSubjects() {
-        return aSubjects.values();
+    Collection<MainSubject> getaMSubjects() {
+        return aMSubjects.values();
     }
 
-    public void setaSubjects(HashMap<String, MainSubject> aSubjects) {
-        this.aSubjects = aSubjects;
+    public void setaMSubjects(HashMap<String, MainSubject> aMSubjects) {
+        this.aMSubjects = aMSubjects;
     }
 
     /**
@@ -152,11 +152,11 @@ public class Main {
         this.aDays = aDays;
     }
 
-    public ArrayList<Auftrag> getaAss() {
+    public ArrayList<Assignment> getaAss() {
         return aAss;
     }
 
-    public void setaAss(ArrayList<Auftrag> aAss) {
+    public void setaAss(ArrayList<Assignment> aAss) {
         this.aAss = aAss;
     }
 
@@ -167,7 +167,7 @@ public class Main {
      * @return The MainSubject with the specified name
      */
     MainSubject getMainSubject(String name) {
-        return aSubjects.get(name);
+        return aMSubjects.get(name);
     }
 
     /**
@@ -181,12 +181,12 @@ public class Main {
     }
 
     /**
-     * Adds the {@link MainSubject} to {@link Main#aSubjects} of the main
+     * Adds the {@link MainSubject} to {@link Main#aMSubjects} of the main
      *
      * @param mainSubject The MainSubject to be added
      */
     void addMainSubject(MainSubject mainSubject) {
-        aSubjects.put(mainSubject.getName(), mainSubject);
+        aMSubjects.put(mainSubject.getName(), mainSubject);
     }
 
     /**
@@ -195,20 +195,20 @@ public class Main {
      * @param day The Day to be added
      */
     void addDay(Day day) {
-        aDays.put(day.getDay(), day);
+        aDays.put(day.getDayS(), day);
     }
 
     /**
-     * Adds the {@link Subject} to the corresponding {@link MainSubject} in {@link Main#aSubjects} of the main.
+     * Adds the {@link Subject} to the corresponding {@link MainSubject} in {@link Main#aMSubjects} of the main.
      *
      * @param subject The Subject to be added
      */
     public void addSubject(Subject subject) {
-        for (MainSubject mS : aSubjects.values()) if (mS.equals(subject.getMainSub())) mS.addSubject(subject);
+        for (MainSubject mS : aMSubjects.values()) if (mS.equals(subject.getMainSub())) mS.addSubject(subject);
     }
 
     /**
-     * Removes the {@link MainSubject} from {@link Main#aSubjects} of the main when the call to
+     * Removes the {@link MainSubject} from {@link Main#aMSubjects} of the main when the call to
      * {@link MainSubject#removeMe} was successful
      *
      * @param s The name string of the MainSubject to be removed
@@ -216,7 +216,7 @@ public class Main {
      */
     boolean removeMainSubject(String s) {
         if (getMainSubject(s).removeMe()) {
-            aSubjects.remove(s);
+            aMSubjects.remove(s);
             return true;
         } else return false;
     }
@@ -228,7 +228,7 @@ public class Main {
      */
     void removeMainSubjectAndAllContents(String s) {
         MainSubject mS = getMainSubject(s);
-        for (Auftrag a : mS.getAssignments()) removeAuftrag(a);
+        for (Assignment a : mS.getAssignments()) removeAssignment(a);
         for (int i = 0; i < mS.getSubjects().size(); i++)
             for (Day day : getaDays()) {
                 if (day.getSubjects().contains(mS.getSubjects().get(i))) {
@@ -241,27 +241,27 @@ public class Main {
     }
 
     /**
-     * Removes the {@linkplain Auftrag Assignment} from its {@link MainSubject}, {@link Main#aAss} and
-     * {@link Main#aGUIs} of the main
+     * Removes the {@link Assignment} from its {@link MainSubject}, {@link Main#aAss} and
+     * {@link Main#aassGUIs} of the main
      *
-     * @param auftrag The Assignment to be removed
+     * @param assignment The Assignment to be removed
      */
-    void removeAuftrag(Auftrag auftrag) {
-        auftrag.getSubject().removeAuftrag(auftrag);
-        inst.aAss.remove(auftrag);
-        inst.aGUIs.remove(auftrag.getAssGUI());
+    void removeAssignment(Assignment assignment) {
+        assignment.getmSubject().removeAssignment(assignment);
+        inst.aAss.remove(assignment);
+        inst.aassGUIs.remove(assignment.getAssGUI());
     }
 
     JFileChooser getFileChooser() {
         return f;
     }
 
-    int getLessonsDone() {
-        return lessonsDone;
+    int getLessonsDoneT() {
+        return lessonsDoneT;
     }
 
-    void setLessonsDone(int lessonsDone) {
-        this.lessonsDone = lessonsDone;
+    void setLessonsDoneT(int lessonsDoneT) {
+        this.lessonsDoneT = lessonsDoneT;
     }
 
     int getMaxPerSubject() {
@@ -296,8 +296,8 @@ public class Main {
         this.ch = ch;
     }
 
-    ArrayList<AuftragGUI> getaGUIs() {
-        return aGUIs;
+    ArrayList<AssignmentGUI> getAassGUIs() {
+        return aassGUIs;
     }
 
     boolean isFirst() {

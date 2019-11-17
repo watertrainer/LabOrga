@@ -29,7 +29,7 @@ class Day implements ActionListener {
      * {@link java.util.HashMap} aDays in {@link Main}.
      */
     @Expose
-    private String day;
+    private String dayS;
 
     /**
      * The {@link JPanel} of this day in the LabPlan Tab
@@ -39,11 +39,11 @@ class Day implements ActionListener {
     /**
      * Constructor
      *
-     * @param day     The name of the day
+     * @param dayS     The name of the day
      * @param content The JPanel where the day is rendered to
      */
-    Day(String day, JPanel content) {
-        this.day = day;
+    Day(String dayS, JPanel content) {
+        this.dayS = dayS;
         this.content = content;
         subjects = new ArrayList<>();
         if (Main.inst.isFirst()) Main.inst.addDay(this);
@@ -56,7 +56,7 @@ class Day implements ActionListener {
     public Day() {
         content = new JPanel();
         subjects = new ArrayList<>();
-        day = "";
+        dayS = "";
     }
 
     /**
@@ -83,11 +83,11 @@ class Day implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        MainSubject mS = (MainSubject) JOptionPane.showInputDialog(null, "Bitte w\u00e4hle ein Fach aus:", "Fach"
-                , JOptionPane.QUESTION_MESSAGE, null, Main.inst.getaSubjects().toArray(), "0");
+        MainSubject mS = (MainSubject) JOptionPane.showInputDialog(null, "Bitte w\u00e4hle ein Fach aus:"
+                , "Fach hinzuf\u00fcgen", JOptionPane.QUESTION_MESSAGE, null, Main.inst.getaMSubjects().toArray(), "0");
         if (mS != null) {
             Subject s = mS.getAsSubject();
-            s.setTeacher(JOptionPane.showInputDialog(null, "Bitte gebe die unterrichtende Lehrkraft ein:", "Lehrer"
+            s.setTeacher(JOptionPane.showInputDialog(null, "Bitte gebe die unterrichtende Lehrkraft ein:", "Lehrkraft"
                     , JOptionPane.QUESTION_MESSAGE));
             if (!subjects.contains(s) && s.getTeacher() != null) {
                 addSubject(s);
@@ -96,8 +96,8 @@ class Day implements ActionListener {
         }
     }
 
-    String getDay() {
-        return day;
+    String getDayS() {
+        return dayS;
     }
 
     /**
@@ -133,7 +133,7 @@ class Day implements ActionListener {
 
     @Override
     public String toString() {
-        return day;
+        return dayS;
     }
 
     public JPanel getContent() {
