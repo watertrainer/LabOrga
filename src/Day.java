@@ -71,7 +71,6 @@ class Day implements ActionListener {
         for (Subject s : subjects) {
             s.init();
             s.addToGUI(content);
-            s.getMainSubject().addSubject(s);
         }
     }
 

@@ -202,7 +202,7 @@ public class GUI extends JFrame {
                     JOptionPane.showMessageDialog(Main.inst.getGui()
                             , "Bitte wähle eine Datei zum Speichern deiner Daten aus");
                     Main.inst.getFileChooser().showOpenDialog(Main.inst.getGui());
-                    return;
+                    f = Main.inst.getFileChooser().getSelectedFile();
                 }
                 try {
                     f.createNewFile();
@@ -210,7 +210,6 @@ public class GUI extends JFrame {
                     Main.inst.setFirst(false);
                     bw.write(g.toJson(Main.inst));
                     bw.close();
-                    new File(System.getenv("TEMP") + "\\File.temp").createNewFile();
 
                     BufferedWriter bws = new BufferedWriter(new FileWriter(System.getenv("TEMP") + "\\File.tmp"
                             , StandardCharsets.UTF_8));

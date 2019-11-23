@@ -74,6 +74,7 @@ class Subject {
     void init() {
         if (Main.inst.isFirst()) subjectSt = mainSubject.getName();
         mainSubject = Main.inst.getMainSubject(subjectSt);
+        mainSubject.addSubject(this);
     }
 
     /**
