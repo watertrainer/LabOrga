@@ -8,13 +8,13 @@ class Assignment {
      * The {@link Date} until which the assignment has to be done
      */
     @Expose
-    private Date deadline;
+    private final Date deadline;
 
     /**
      * Lessons which are available for this assignment
      */
     @Expose
-    private int lessons;
+    private final int lessons;
 
     /**
      * Lessons which are already done
@@ -26,13 +26,13 @@ class Assignment {
      * Description of this assignment
      */
     @Expose
-    private String description;
+    private final String description;
 
     /**
      * The {@link String} representing the {@link MainSubject} of this assignment for saving purposes
      */
     @Expose
-    private String mSubjectSt;
+    private final String mSubjectSt;
 
     /**
      * The {@link MainSubject} of this assignment

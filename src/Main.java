@@ -37,7 +37,7 @@ class Main {
      * {@link ArrayList} of all {@linkplain AssignmentGUI AssignmentGUIs} of all {@linkplain Assignment Assignments} to
      * make sorting them in the Assignments Tab easier
      */
-    private ArrayList<AssignmentGUI> aassGUIs;
+    private final ArrayList<AssignmentGUI> aassGUIs;
 
     /**
      * Whether this is the first start of the program
@@ -52,7 +52,7 @@ class Main {
     private int lessonsDoneT;
 
     /**
-     * Number of Lab lessons to be done per subject
+     * Number of Lab lessons to be done per {@linkplain MainSubject subject}
      */
     @Expose
     private int maxPerSubject;
@@ -66,7 +66,7 @@ class Main {
     /**
      * The {@link JFileChooser} that points to the file in which everything is saved
      */
-    private transient JFileChooser f;
+    private final transient JFileChooser f;
 
     /**
      * Int representation of the {@link Day} of the week

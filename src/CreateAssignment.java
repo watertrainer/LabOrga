@@ -5,39 +5,39 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * The Dialog to create an Assignment
+ * The {@link Dialog} to create an {@link Assignment}
  */
-public class CreateAuftrag extends JDialog {
+class CreateAssignment extends JDialog {
     /**
-     * Content Pane of the Dailog
+     * The content pane of the {@link Dialog}
      */
     private JPanel contentPane;
     /**
-     * Button to confirm the Input
+     * {@link JButton} to confirm the input
      */
     private JButton buttonOK;
     /**
-     * Button to cancel the creation
+     * {@link JButton} to cancel the creation
      */
     private JButton buttonCancel;
     /**
-     * Text Field to enter the Deadline of the Assignment
+     * {@link JTextField} to enter the Deadline of the Assignment
      */
     public JTextField abgabedatumTextField;
     /**
-     * Combo Box to choose an Subject
+     * {@link JComboBox} to choose a {@link MainSubject}
      */
     public JComboBox comboBox1;
     /**
-     * TextArea to enter the Short Description of the Assignment
+     * {@link JTextArea} to enter the description of the {@link Assignment}
      */
     public JTextArea kurzeBeschreibungTextArea;
     /**
-     * TextField to enter the amount of lessons avaiable for this assignment
+     * {@link JTextField} to enter the amount of lessons avaiable for this assignment
      */
     public JTextField anzhalStundenTextField;
 
-    public CreateAuftrag() {
+    public CreateAssignment() {
         $$$setupUI$$$();
         setContentPane(contentPane);
         setModal(true);

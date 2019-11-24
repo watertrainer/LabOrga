@@ -12,151 +12,177 @@ import java.util.Comparator;
 public class GUI extends JFrame {
 
     /**
-     * The Tabbed Pane so you can switch between Tabs
+     * {@link JTabbedPane} to switch between tabs
      */
     public JTabbedPane tabbedPane1;
 
     /**
-     * THe contentPane
+     * The content pane
      */
     public JPanel contentPane;
 
     /**
-     * Panel for all Settings related content
+     * {@link JPanel} for all settings related content
      */
     public JPanel settingsPanel;
 
     /**
-     * Settings, opens a CreateSubject DIalog
-     *
-     * @see CreateSubject
+     * Located in {@link GUI#settingsPanel}. Opens a {@link CreateSubject} {@link Dialog}.
      */
     public JButton setiCreaSub;
 
     /**
-     * Button to sort the LabButton
+     * {@link JButton} to sort the Lab Plan
      */
     //TODO
     public JButton sortPlanButton;
 
     /**
-     * Toggles whether the color of Days which are not today is rendered
+     * Toggles whether the {@link Color} of {@linkplain Day Days} which are not today is rendered
      */
     //TODO
     public JButton toggleEnabledInSubjects;
 
     /**
-     * Button to open the JFIleChooser to choose a save FIle
+     * {@link JButton} to open the {@link JFileChooser} to choose the {@link File}
      */
     public JButton chooeSaveFile;
 
     /**
-     * Panel in which the Assignments are rendered.
+     * {@link JPanel} in which the {@linkplain Assignment Assignments} are rendered
      *
      * @see AssignmentGUI
      */
     public JPanel assignemntPanel;
 
     /**
-     * Settings, Button to open an create Assignment Dialog
-     *
-     * @see CreateAuftrag
+     * Located in {@link GUI#settingsPanel}. {@link JButton} to open a {@link CreateAssignment} {@link Dialog}.
      */
     public JButton newLabAssignmentButton;
 
     /**
-     * Panel to render the lessons of each SUbject. Renders all MainSubjects
-     *
-     * @see MainSubject
+     * {@link JPanel} to render the lessons of every {@linkplain MainSubject subject}
      */
     public JPanel lessonPanel;
 
     /**
-     * Progressbar for the lessons which need to be done insgesa,t
+     * {@link JProgressBar} for the lessons which need to be done in total
      */
     public JProgressBar lessonsDoneProgressBar;
 
     /**
-     * Settings, Deletes a Main Subject
-     *
-     * @see MainSubject
+     * Located in {@link GUI#settingsPanel}. Deletes a {@link MainSubject}.
      */
     public JButton deleteSubjectButton;
 
     /**
-     * Settings, Deletes a Subject from the Lab Plan
-     *
-     * @see Subject
+     * Located in {@link GUI#settingsPanel}. Deletes a {@link Subject} from the Lab Plan.
      */
     public JButton deleteSubjectFromPlanButton;
 
     /**
-     * The JPanel of the LabPlan
-     */
-    public JPanel PlanPanel;
-
-    /**
-     * The content Pane of the Day Monday
+     * The {@link JPanel} of the Lab Plan
      *
-     * @see Day
+     * @see GUI#cpMon
+     * @see GUI#cpTue
+     * @see GUI#cpWed
+     * @see GUI#cpThu
+     * @see GUI#cpFri
      */
-    public JPanel cnMn;
+    public JPanel planPanel;
 
     /**
-     * JLabel which shows Monday and is colored if it is Monday
-     */
-    public JLabel MonLab;
-
-    /**
-     * same as cnMn
+     * The content pane of the {@link Day} Monday
      *
-     * @see Day
+     * @see GUI#monLab
+     * @see GUI#cpTue
+     * @see GUI#cpWed
+     * @see GUI#cpThu
+     * @see GUI#cpFri
      */
-    public JPanel cnDn;
+    public JPanel cpMon;
 
     /**
-     * JLabel which shows Dienstag and is colored if it is Tuesday
-     */
-    public JLabel DienLab;
-
-    /**
-     * same as cnMn
+     * {@link JLabel} which shows "Montag" and is colored if it is Monday
      *
-     * @see Day
+     * @see GUI#cpMon
      */
-    public JPanel cnMt;
+    public JLabel monLab;
 
     /**
-     * Same as MonLab
-     */
-    public JLabel MitLab;
-
-    /**
-     * same as cnMn
+     * The content pane of the {@link Day} Tuesday
      *
-     * @see Day
+     * @see GUI#cpTue
+     * @see GUI#cpMon
+     * @see GUI#cpWed
+     * @see GUI#cpThu
+     * @see GUI#cpFri
      */
-    public JPanel cnDon;
+    public JPanel cpTue;
 
     /**
-     * same as cnMn
+     * {@link JLabel} which shows "Dienstag" and is colored if it is Tuesday
      *
-     * @see Day
+     * @see GUI#cpTue
      */
-    public JPanel cnFr;
+    public JLabel tueLab;
 
     /**
-     * Same as MonLab
+     * The content pane of the {@link Day} Wednesday
+     *
+     * @see GUI#wedLab
+     * @see GUI#cpMon
+     * @see GUI#cpTue
+     * @see GUI#cpThu
+     * @see GUI#cpFri
      */
-    public JLabel DonLab;
+    public JPanel cpWed;
 
     /**
-     * Same as MonLab
+     * {@link JLabel} which shows "Mittwoch" and is colored if it is Wednesday
+     *
+     * @see GUI#cpWed
      */
-    public JLabel FreiLab;
+    public JLabel wedLab;
 
     /**
-     * Should the Subjects be sorted
+     * The content pane of the {@link Day} Thursday
+     *
+     * @see GUI#thuLab
+     * @see GUI#cpMon
+     * @see GUI#cpTue
+     * @see GUI#cpWed
+     * @see GUI#cpFri
+     */
+    public JPanel cpThu;
+
+    /**
+     * {@link JLabel} which shows "Donnerstag" and is colored if it is Thursday
+     *
+     * @see GUI#cpThu
+     */
+    public JLabel thuLab;
+
+    /**
+     * The content pane of the {@link Day} Friday
+     *
+     * @see GUI#friLab
+     * @see GUI#cpMon
+     * @see GUI#cpTue
+     * @see GUI#cpWed
+     * @see GUI#cpThu
+     */
+    public JPanel cpFri;
+
+    /**
+     * {@link JLabel} which shows "Freitag" and is colored if it is Friday
+     *
+     * @see GUI#cpFri
+     */
+    public JLabel friLab;
+
+    /**
+     * Whether the {@linkplain Assignment Assignments} should be sorted by {@link MainSubject}
      */
     private boolean sort;
 
@@ -169,7 +195,7 @@ public class GUI extends JFrame {
         reload the save File or create a new Instance
          */
         try {
-            File f1 = new File(System.getenv("TEMP") + "\\File.tmp");
+            File f1 = new File(System.getenv("TEMP") + "\\LabOrga.tmp");
             if (f1.exists()) {
                 BufferedReader br = new BufferedReader(new FileReader(f1, StandardCharsets.UTF_8));
                 File f = new File(br.readLine());
@@ -210,8 +236,7 @@ public class GUI extends JFrame {
                     Main.inst.setFirst(false);
                     bw.write(g.toJson(Main.inst));
                     bw.close();
-
-                    BufferedWriter bws = new BufferedWriter(new FileWriter(System.getenv("TEMP") + "\\File.tmp"
+                    BufferedWriter bws = new BufferedWriter(new FileWriter(System.getenv("TEMP") + "\\LabOrga.tmp"
                             , StandardCharsets.UTF_8));
                     bws.write(Main.inst.getFileChooser().getSelectedFile().toPath().toString());
                     bws.close();
@@ -237,12 +262,12 @@ public class GUI extends JFrame {
         Create a new Lab Assignment
          */
         newLabAssignmentButton.addActionListener(e -> {
-            CreateAuftrag f = new CreateAuftrag();
+            CreateAssignment f = new CreateAssignment();
             f.pack();
             f.setVisible(true);
         });
         /*
-        Delete a Main Subject
+        Delete a MainSubject
          */
         deleteSubjectButton.addActionListener(e -> {
             MainSubject w = (((MainSubject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection"
@@ -324,7 +349,7 @@ public class GUI extends JFrame {
     /**
      * Asks the User for an Amount of Lessons he needs to do
      *
-     * @return the Entered number of Lab lessons
+     * @return the entered number of Lab lessons
      */
     int insgStd() {
         int std, p;
@@ -348,7 +373,7 @@ public class GUI extends JFrame {
      * Calcs if they make sense
      *
      * @param insgStd number of lessons he needs to do. If the input%ingsStd is 0, the input is accepted
-     * @return THe number of lessons per Subject
+     * @return THe number of lessons per MainSubject
      */
     int stdProFach(int insgStd) {
         int std, p;
@@ -372,17 +397,17 @@ public class GUI extends JFrame {
      */
     private void createUIComponents() {
         if (Main.inst.isFirst()) {
-            cnMn = new Day("Montag", new JPanel()).getContent();
-            cnDn = new Day("Dienstag", new JPanel()).getContent();
-            cnMt = new Day("Mittwoch", new JPanel()).getContent();
-            cnDon = new Day("Donnerstag", new JPanel()).getContent();
-            cnFr = new Day("Freitag", new JPanel()).getContent();
+            cpMon = new Day("Montag", new JPanel()).getContent();
+            cpTue = new Day("Dienstag", new JPanel()).getContent();
+            cpWed = new Day("Mittwoch", new JPanel()).getContent();
+            cpThu = new Day("Donnerstag", new JPanel()).getContent();
+            cpFri = new Day("Freitag", new JPanel()).getContent();
         } else {
-            cnMn = Main.inst.getDay("Montag").getContent();
-            cnDn = Main.inst.getDay("Dienstag").getContent();
-            cnMt = Main.inst.getDay("Mittwoch").getContent();
-            cnDon = Main.inst.getDay("Donnerstag").getContent();
-            cnFr = Main.inst.getDay("Freitag").getContent();
+            cpMon = Main.inst.getDay("Montag").getContent();
+            cpTue = Main.inst.getDay("Dienstag").getContent();
+            cpWed = Main.inst.getDay("Mittwoch").getContent();
+            cpThu = Main.inst.getDay("Donnerstag").getContent();
+            cpFri = Main.inst.getDay("Freitag").getContent();
         }
         assignemntPanel = new JPanel();
         lessonsDoneProgressBar = new JProgressBar();
@@ -398,39 +423,39 @@ public class GUI extends JFrame {
         lessonsDoneProgressBar.setBackground(Color.white);
         lessonsDoneProgressBar.setForeground(Color.green);
         //       progressBar1.setStringPainted(true);
-        PlanPanel = new JPanel() {
+        planPanel = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
                 if (Main.inst.isCh())
                     return;
                 switch (Main.inst.getD()) {
                     case 2:
-                        MonLab.setOpaque(true);
-                        MonLab.setBackground(Color.GREEN);
+                        monLab.setOpaque(true);
+                        monLab.setBackground(Color.GREEN);
                         Main.inst.getDay("Montag").setEnabled(true);
                         break;
                     case 3:
-                        MonLab.setOpaque(false);
-                        DienLab.setOpaque(true);
-                        DienLab.setBackground(Color.green);
+                        monLab.setOpaque(false);
+                        tueLab.setOpaque(true);
+                        tueLab.setBackground(Color.green);
                         break;
                     case 4:
-                        DienLab.setOpaque(false);
-                        MitLab.setOpaque(true);
-                        MitLab.setBackground(Color.green);
+                        tueLab.setOpaque(false);
+                        wedLab.setOpaque(true);
+                        wedLab.setBackground(Color.green);
                         break;
                     case 5:
-                        MitLab.setOpaque(false);
-                        DonLab.setOpaque(true);
-                        DonLab.setBackground(Color.green);
+                        wedLab.setOpaque(false);
+                        thuLab.setOpaque(true);
+                        thuLab.setBackground(Color.green);
                         break;
                     case 6:
-                        DonLab.setOpaque(false);
-                        FreiLab.setOpaque(true);
-                        FreiLab.setBackground(Color.green);
+                        thuLab.setOpaque(false);
+                        friLab.setOpaque(true);
+                        friLab.setBackground(Color.green);
                         break;
                     case 7:
-                        FreiLab.setOpaque(false);
+                        friLab.setOpaque(false);
                         break;
                 }
             }
@@ -463,50 +488,50 @@ public class GUI extends JFrame {
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 5, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, BorderLayout.CENTER);
-        PlanPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel2.add(PlanPanel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        MonLab = new JLabel();
-        MonLab.setText("Montag");
-        PlanPanel.add(MonLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        planPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.add(planPanel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        monLab = new JLabel();
+        monLab.setText("Montag");
+        planPanel.add(monLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        PlanPanel.add(scrollPane1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        scrollPane1.setViewportView(cnMn);
+        planPanel.add(scrollPane1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        scrollPane1.setViewportView(cpMon);
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel2.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        DienLab = new JLabel();
-        DienLab.setText("Dienstag");
-        panel3.add(DienLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        tueLab = new JLabel();
+        tueLab.setText("Dienstag");
+        panel3.add(tueLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane2 = new JScrollPane();
         panel3.add(scrollPane2, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        scrollPane2.setViewportView(cnDn);
+        scrollPane2.setViewportView(cpTue);
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel2.add(panel4, new com.intellij.uiDesigner.core.GridConstraints(0, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        FreiLab = new JLabel();
-        FreiLab.setText("Freitag");
-        panel4.add(FreiLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        friLab = new JLabel();
+        friLab.setText("Freitag");
+        panel4.add(friLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane3 = new JScrollPane();
         panel4.add(scrollPane3, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        scrollPane3.setViewportView(cnFr);
+        scrollPane3.setViewportView(cpFri);
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel2.add(panel5, new com.intellij.uiDesigner.core.GridConstraints(0, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        MitLab = new JLabel();
-        MitLab.setText("Mittwoch");
-        panel5.add(MitLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        wedLab = new JLabel();
+        wedLab.setText("Mittwoch");
+        panel5.add(wedLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane4 = new JScrollPane();
         panel5.add(scrollPane4, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        scrollPane4.setViewportView(cnMt);
+        scrollPane4.setViewportView(cpWed);
         final JPanel panel6 = new JPanel();
         panel6.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel2.add(panel6, new com.intellij.uiDesigner.core.GridConstraints(0, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        DonLab = new JLabel();
-        DonLab.setText("Donnerstag");
-        panel6.add(DonLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        thuLab = new JLabel();
+        thuLab.setText("Donnerstag");
+        panel6.add(thuLab, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane5 = new JScrollPane();
         panel6.add(scrollPane5, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        scrollPane5.setViewportView(cnDon);
+        scrollPane5.setViewportView(cpThu);
         final JPanel panel7 = new JPanel();
         panel7.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         tabbedPane1.addTab("LabAufträge", panel7);

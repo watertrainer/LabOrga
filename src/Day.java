@@ -12,7 +12,7 @@ class Day implements ActionListener {
      * An {@link ArrayList} of {@linkplain Subject Subjects} which are in this day
      */
     @Expose
-    private ArrayList<Subject> subjects;
+    private final ArrayList<Subject> subjects;
 
     /**
      * The {@link JButton} to add a {@link Subject} to this day
@@ -29,10 +29,10 @@ class Day implements ActionListener {
      * {@link java.util.HashMap} aDays in {@link Main}.
      */
     @Expose
-    private String daySt;
+    private final String daySt;
 
     /**
-     * The {@link JPanel} of this day in the LabPlan Tab
+     * The {@link JPanel} of this day in the Lab Plan Tab
      */
     private transient JPanel content;
 

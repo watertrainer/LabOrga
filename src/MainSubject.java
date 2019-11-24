@@ -4,8 +4,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * A class representation of a subject in which all subject times, which are saved separately in the Lab Plan and
- * {@linkplain Assignment Assignments} of this subject are saved.
+ * A class representation of a subject in which all {@link Subject} times, which are saved separately in the Lab Plan
+ * and {@linkplain Assignment Assignments} of this subject are saved.
  */
 class MainSubject {
 
@@ -38,12 +38,12 @@ class MainSubject {
     /**
      * {@link ArrayList} of {@linkplain Assignment Assignments} in this subject
      */
-    private ArrayList<Assignment> assignments;
+    private final ArrayList<Assignment> assignments;
 
     /**
      * {@link ArrayList} of {@link Subject} time entries in the Lab Plan of this subject
      */
-    private ArrayList<Subject> subjects;
+    private final ArrayList<Subject> subjects;
 
     /**
      * GUI that shows how many lessons are done in this subject already
@@ -73,7 +73,8 @@ class MainSubject {
     /**
      * Removes itself from the GUIs if it has no entries in the Lab Plan ({@link MainSubject#subjects})
      *
-     * @return Whether there are still entries of this subject in the Lab Plan and the subject could be removed
+     * @return Whether there are still entries of this {@link Subject} in the Lab Plan and the MainSubject could be
+     * removed
      */
     boolean removeMe() {
         if (!subjects.isEmpty()) return false;

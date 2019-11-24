@@ -16,12 +16,12 @@ class AssignmentGUI {
     public JButton minus;
 
     /**
-     * {@link JLabel} which shows how many lessons are available
+     * {@link JLabel} which shows how many lessons are available for this {@link Assignment}
      */
     public JLabel lessons;
 
     /**
-     * {@link JLabel} which shows how many lessons are done already
+     * {@link JLabel} which shows how many lessons are done already for this {@link Assignment}
      */
     public JLabel lessonsDone;
 

@@ -32,7 +32,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <grid id="9cb68" binding="PlanPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                  <grid id="9cb68" binding="planPanel" custom-create="true" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -40,7 +40,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="f2fb7" class="javax.swing.JLabel" binding="MonLab">
+                      <component id="f2fb7" class="javax.swing.JLabel" binding="monLab">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -55,7 +55,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <grid id="34f1c" binding="cnMn" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="34f1c" binding="cpMon" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints/>
                             <properties/>
@@ -74,7 +74,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="b876e" class="javax.swing.JLabel" binding="DienLab">
+                      <component id="b876e" class="javax.swing.JLabel" binding="tueLab">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -89,7 +89,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <grid id="4ae0e" binding="cnDn" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="4ae0e" binding="cpTue" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints/>
                             <properties/>
@@ -108,7 +108,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="343fa" class="javax.swing.JLabel" binding="FreiLab">
+                      <component id="343fa" class="javax.swing.JLabel" binding="friLab">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -123,7 +123,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <grid id="33efc" binding="cnFr" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="33efc" binding="cpFri" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints/>
                             <properties/>
@@ -142,7 +142,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="63551" class="javax.swing.JLabel" binding="MitLab">
+                      <component id="63551" class="javax.swing.JLabel" binding="wedLab">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -157,7 +157,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <grid id="80e5" binding="cnMt" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="80e5" binding="cpWed" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints/>
                             <properties/>
@@ -176,7 +176,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="6c786" class="javax.swing.JLabel" binding="DonLab">
+                      <component id="6c786" class="javax.swing.JLabel" binding="thuLab">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
@@ -191,7 +191,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <grid id="7ce48" binding="cnDon" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                          <grid id="7ce48" binding="cpThu" custom-create="true" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                             <margin top="0" left="0" bottom="0" right="0"/>
                             <constraints/>
                             <properties/>
