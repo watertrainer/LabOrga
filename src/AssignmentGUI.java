@@ -88,16 +88,19 @@ class AssignmentGUI {
                 ass.setLessonsDone(ass.getLessonsDone() + 1);
                 this.mS.setLessonsDone(this.mS.getLessonsDone() + 1);
                 Main.inst.setLessonsDoneT(Main.inst.getLessonsDoneT() + 1);
+                Main.inst.getGui().repaint();
             }
         });
         /*
           Called when an Lessons should be removed
          */
         minus.addActionListener(e -> {
-            if (!(ass.getLessonsDone() - 1 < 0))
+            if (!(ass.getLessonsDone() - 1 < 0)) {
                 ass.setLessonsDone(ass.getLessonsDone() - 1);
-            this.mS.setLessonsDone(this.mS.getLessonsDone() - 1);
-            Main.inst.setLessonsDoneT(Main.inst.getLessonsDoneT() - 1);
+                this.mS.setLessonsDone(this.mS.getLessonsDone() - 1);
+                Main.inst.setLessonsDoneT(Main.inst.getLessonsDoneT() - 1);
+                Main.inst.getGui().repaint();
+            }
         });
         content.setAlignmentY(Component.BOTTOM_ALIGNMENT);
         content.setOpaque(true);
@@ -109,6 +112,7 @@ class AssignmentGUI {
             Main.inst.removeAssignment(ass);
             Main.inst.getGui().getAuftragPanel().remove(content);
             Main.inst.getGui().getAuftragPanel().revalidate();
+            Main.inst.getGui().repaint();
         });
     }
 

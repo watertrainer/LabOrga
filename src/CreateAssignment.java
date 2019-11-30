@@ -1,8 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.zip.DataFormatException;
 
 /**
  * The {@link Dialog} to create an {@link Assignment}
@@ -83,17 +86,43 @@ class CreateAssignment extends JDialog {
         try {
             Date dead = new SimpleDateFormat("dd.MM.yyyy").parse(abgabedatumTextField.getText());
             dead.setTime(dead.getTime() + ((23 * 60 + 59) * 60 + 59) * 1000);
-            if (!dead.after(new Date(System.currentTimeMillis())))
-                throw new Exception();
+            if (!dead.after(new Date(System.currentTimeMillis()))) {
+                int con = JOptionPane.showConfirmDialog(this.contentPane,
+                        "Die Deadline ist bereits abgelaufen. Bist du sicher?",
+                        "Falsches Datum",JOptionPane.YES_NO_OPTION);
+                if(con != JOptionPane.YES_OPTION){
+                    return;
+                }
+            }
+
+
             int lessons = Integer.parseInt(anzhalStundenTextField.getText());
+
             String des = kurzeBeschreibungTextArea.getText();
-            Assignment a = new Assignment(dead, lessons, des, Main.inst.getMainSubject(((MainSubject) comboBox1.getSelectedItem()).getName()));
+            if("kurze Beschreibung".equals(des) || des.isEmpty()){
+                JOptionPane.showMessageDialog(this.contentPane,
+                        "Das ist keine gültige Beschreibung eines Lab Auftrages",
+                        "Falsche Beschreibung",JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            if(comboBox1.getSelectedItem() == null){
+                JOptionPane.showMessageDialog(this.contentPane, "Du hast kein Fach ausgewählt",
+                        "Fach fehlt",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            Assignment a = new Assignment(dead, lessons, des,
+                    Main.inst.getMainSubject(((MainSubject) comboBox1.getSelectedItem()).getName()));
+
             Main.inst.addAssignment(a);
+
             dispose();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this.contentPane, "Etwas ist Schiefgelaufen.\n" +
-                    " Hast du \u00fcberall etwas dem Format entsprechendes eingegeben?");
-            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this.contentPane,
+                    "Die Anzahl der Stunden ist keine Zahl.","Falsche Stundenanzahl",JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e){
+            JOptionPane.showMessageDialog(this.contentPane,
+                    "Das Datum ist nicht gültig","Falsche Datum",JOptionPane.ERROR_MESSAGE);
         }
     }
 
