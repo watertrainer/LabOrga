@@ -126,7 +126,6 @@ class Day implements ActionListener {
         } catch (Throwable t) {
             JOptionPane.showMessageDialog(null, "Das Fach konnte nicht entfernt werden.", "Fehler"
                     , JOptionPane.ERROR_MESSAGE);
-            t.printStackTrace();
         }
     }
 

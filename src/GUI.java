@@ -221,7 +221,7 @@ public class GUI extends JFrame {
           Called on close of the Window. Saves everything and exits
          */
         addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
+            public void  windowClosing(WindowEvent e) {
                 Gson g = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
                 File f = Main.inst.getFileChooser().getSelectedFile();
                 if (f == null) {
@@ -270,8 +270,10 @@ public class GUI extends JFrame {
         Delete a MainSubject
          */
         deleteSubjectButton.addActionListener(e -> {
-            MainSubject w = (((MainSubject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection"
+            MainSubject w = (((MainSubject) JOptionPane.showInputDialog(Main.inst.getGui(),
+                    "Wähle ein Fach aus", "Selection"
                     , JOptionPane.PLAIN_MESSAGE, null, Main.inst.getaMSubjects().toArray(), "0")));
+            if(w==null) return;
             if (Main.inst.removeMainSubject(w.getName()))
                 JOptionPane.showMessageDialog(Main.inst.getGui(), "Erfolgreich gelöscht");
             else {
@@ -286,8 +288,10 @@ public class GUI extends JFrame {
         deleteSubjectFromPlanButton.addActionListener(e -> {
             Day w = (((Day) JOptionPane.showInputDialog(null, "Wähle einen Tag aus", "Selection"
                     , JOptionPane.PLAIN_MESSAGE, null, Main.inst.getaDays().toArray(), "0")));
+            if(w==null) return;
             Subject s = (((Subject) JOptionPane.showInputDialog(null, "Wähle ein Fach aus", "Selection"
                     , JOptionPane.PLAIN_MESSAGE, null, w.getSubjects().toArray(), "0")));
+            if(s==null) return;
             w.removeSubject(s);
         });
         /*
@@ -351,12 +355,12 @@ public class GUI extends JFrame {
      *
      * @return the entered number of Lab lessons
      */
-    int insgStd() {
+    private int insgStd() {
         int std, p;
         try {
             std = Integer.parseInt(JOptionPane.showInputDialog(null, "Wie viele Lab-Stunden musst du insgesamt machen?"
                     , "Insgesamte Lab-Stundenanzahl", JOptionPane.QUESTION_MESSAGE));
-            if (std < 1) throw new IllegalArgumentException();
+            if (std < 1) throw new IllegalArgumentException("Mehr als eine Stunde notwendig");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Dies ist keine sinnvolle Lab-Stunden Anzahl.", "Fehler"
                     , JOptionPane.ERROR_MESSAGE);
@@ -375,7 +379,7 @@ public class GUI extends JFrame {
      * @param insgStd number of lessons he needs to do. If the input%ingsStd is 0, the input is accepted
      * @return THe number of lessons per MainSubject
      */
-    int stdProFach(int insgStd) {
+    private int stdProFach(int insgStd) {
         int std, p;
         try {
             std = Integer.parseInt(JOptionPane.showInputDialog(null, "Wie viele Lab-Stunden musst du pro Fach machen?"
