@@ -1,66 +1,65 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.text.NumberFormat;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.zip.DataFormatException;
 
 /**
  * The {@link Dialog} to create an {@link Assignment}
  */
 class CreateAssignment extends JDialog {
-    /**
-     * The content pane of the {@link Dialog}
-     */
-    private JPanel contentPane;
-    /**
-     * {@link JButton} to confirm the input
-     */
-    private JButton buttonOK;
-    /**
-     * {@link JButton} to cancel the creation
-     */
-    private JButton buttonCancel;
+
     /**
      * {@link JTextField} to enter the Deadline of the Assignment
      */
-    public JTextField abgabedatumTextField;
+    public JTextField deadlineTextField;
+
     /**
      * {@link JComboBox} to choose a {@link MainSubject}
      */
     public JComboBox comboBox1;
+
     /**
      * {@link JTextArea} to enter the description of the {@link Assignment}
      */
     public JTextArea kurzeBeschreibungTextArea;
+
     /**
      * {@link JTextField} to enter the amount of lessons avaiable for this assignment
      */
     public JTextField anzhalStundenTextField;
 
-    public CreateAssignment() {
+    /**
+     * The content pane of the {@link Dialog}
+     */
+    private JPanel contentPane;
+
+    /**
+     * {@link JButton} to confirm the input
+     */
+    private JButton buttonOK;
+
+    /**
+     * {@link JButton} to cancel the creation
+     */
+    private JButton buttonCancel;
+
+    CreateAssignment() {
         $$$setupUI$$$();
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        /**
-         * Confirm the Input
+        /*
+          Confirm the Input
          */
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-        /**
-         * Cancel Creation
+        buttonOK.addActionListener(e -> onOK());
+        /*
+          Cancel Creation
          */
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
+        buttonCancel.addActionListener(e -> onCancel());
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -69,14 +68,9 @@ class CreateAssignment extends JDialog {
             }
         });
         // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        for (MainSubject m : Main.inst.getaMSubjects()) {
-            comboBox1.addItem(m);
-        }
+        contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0)
+                , JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        for (MainSubject m : Main.inst.getaMSubjects()) comboBox1.addItem(m);
     }
 
     /**
@@ -84,45 +78,36 @@ class CreateAssignment extends JDialog {
      */
     private void onOK() {
         try {
-            Date dead = new SimpleDateFormat("dd.MM.yyyy").parse(abgabedatumTextField.getText());
+            Date dead = new SimpleDateFormat("dd.MM.yyyy").parse(deadlineTextField.getText());
             dead.setTime(dead.getTime() + ((23 * 60 + 59) * 60 + 59) * 1000);
             if (!dead.after(new Date(System.currentTimeMillis()))) {
-                int con = JOptionPane.showConfirmDialog(this.contentPane,
-                        "Die Deadline ist bereits abgelaufen. Bist du sicher?",
-                        "Falsches Datum",JOptionPane.YES_NO_OPTION);
-                if(con != JOptionPane.YES_OPTION){
-                    return;
-                }
+                int con = JOptionPane.showConfirmDialog(contentPane
+                        , "Die Deadline ist bereits abgelaufen. Bist du sicher?", "Falsches Datum"
+                        , JOptionPane.YES_NO_OPTION);
+                if (con != JOptionPane.YES_OPTION) return;
             }
-
-
             int lessons = Integer.parseInt(anzhalStundenTextField.getText());
-
             String des = kurzeBeschreibungTextArea.getText();
-            if("kurze Beschreibung".equals(des) || des.isEmpty()){
-                JOptionPane.showMessageDialog(this.contentPane,
-                        "Das ist keine gültige Beschreibung eines Lab Auftrages",
-                        "Falsche Beschreibung",JOptionPane.INFORMATION_MESSAGE);
+            if ("kurze Beschreibung".equals(des) || des.isEmpty()) {
+                JOptionPane.showMessageDialog(contentPane, "Das ist keine gültige Beschreibung eines Lab Auftrages"
+                        , "Falsche Beschreibung", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-
-            if(comboBox1.getSelectedItem() == null){
-                JOptionPane.showMessageDialog(this.contentPane, "Du hast kein Fach ausgewählt",
-                        "Fach fehlt",JOptionPane.ERROR_MESSAGE);
+            if (comboBox1.getSelectedItem() == null) {
+                JOptionPane.showMessageDialog(contentPane, "Du hast kein Fach ausgewählt",
+                        "Fach fehlt", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             Assignment a = new Assignment(dead, lessons, des,
                     Main.inst.getMainSubject(((MainSubject) comboBox1.getSelectedItem()).getName()));
-
             Main.inst.addAssignment(a);
-
             dispose();
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this.contentPane,
-                    "Die Anzahl der Stunden ist keine Zahl.","Falsche Stundenanzahl",JOptionPane.ERROR_MESSAGE);
-        } catch (ParseException e){
-            JOptionPane.showMessageDialog(this.contentPane,
-                    "Das Datum ist nicht gültig","Falsche Datum",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(contentPane, "Die Anzahl der Stunden ist keine Zahl.", "Falsche Stundenanzahl"
+                    , JOptionPane.ERROR_MESSAGE);
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(contentPane, "Das Datum ist nicht gültig", "Falsche Datum"
+                    , JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -166,10 +151,10 @@ class CreateAssignment extends JDialog {
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(6, 2, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel3, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        abgabedatumTextField = new JTextField();
-        abgabedatumTextField.setText("");
-        abgabedatumTextField.setToolTipText("Abgabedatum. Es wird von dem Tag um 23:59:59 ausgegangen");
-        panel3.add(abgabedatumTextField, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
+        deadlineTextField = new JTextField();
+        deadlineTextField.setText("");
+        deadlineTextField.setToolTipText("Abgabedatum. Es wird von dem Tag um 23:59:59 ausgegangen");
+        panel3.add(deadlineTextField, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         comboBox1.setEditable(false);
         final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
         comboBox1.setModel(defaultComboBoxModel1);

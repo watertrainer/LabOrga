@@ -153,7 +153,7 @@ class Subject {
      * Updates the {@link Color} of the {@link JLabel} to the {@link Color} of the {@link MainSubject}
      */
     void updateColor() {
-        if (((mainSubject.getColor().getBlue() + mainSubject.getColor().getRed() + mainSubject.getColor().getGreen()) / 3) < 128)
+        if ((mainSubject.getColor().getBlue() + mainSubject.getColor().getRed() + mainSubject.getColor().getGreen()) / 3 < 128)
             label.setForeground(Color.white);
         label.setBackground(mainSubject.getColor());
     }
