@@ -84,7 +84,7 @@ class Assignment {
     }
 
     /**
-     * Calculates the number of days remaining for the assignment
+     * Calculates the number of daays remaining for the assignment
      *
      * @return A long representing the number of days remaining
      */
